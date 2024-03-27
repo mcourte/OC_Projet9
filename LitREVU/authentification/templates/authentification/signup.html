@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="main-content">
+    <div class="wrapper">
+        <!-- Boîte de Création de Compte -->
+        <div class="form-container">
+            <div id="formContent">
+                <div class="fadeIn first">
+                    <img src="../static/images/logo.png" id="logo" alt="logo_connexion" />
+                </div>
+                <h2 class="active"> Créer un compte </h2>
+                <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {% if form.errors %}
+                    {{ form.errors }}
+                {% endif %}
+                <form method="post" action="{% url 'home' %}">
+                    <div class="form-group">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <input type="submit" class="fadeIn fourth" value="S'inscrire">
+                    </div>
+                </form>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>  
+</main>
+{% endblock %}

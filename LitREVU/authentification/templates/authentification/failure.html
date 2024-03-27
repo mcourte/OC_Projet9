@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends 'review/base.html' %}
+
+{% block content %}
+
+
+    <h1>CSRF Verification Failed</h1>
+    <p>{{ reason }}</p>
+    <!-- Add your custom content here -->
+</body>
+</html>
+<main class="main-content">
+    <div class="wrapper">
+        <!-- Boîte de connexion -->
+        <div class="form-container">
+            <div id="formContent">
+                <div class="fadeIn first">
+                    <img src="../static/images/logo.png" id="logo" alt="logo_connexion" />
+                </div>
+                <h2 class="active"> CSRF Verification Failed</h2><h1>
+                <p>{{ reason }}</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

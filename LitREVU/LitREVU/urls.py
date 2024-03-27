@@ -16,7 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from authentification.AuthentificationViews import SignupView, disconnect, home, custom_csrf_failure
+from review import ReviewViews
+from django.contrib.auth.views import LoginView
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Define a path for the root URL
+    path('admin/', admin.site.urls, name="admin"),
+    path('login/', LoginView.as_view(
+         template_name='authentification/login.html',
+         redirect_authenticated_user=True),  # Pass redirect_authenticated_user here
+         name='login'),
+    path('signup/', SignupView.as_view(
+         template_name='authentification/signup.html'),
+         name='signup'),
+    path('logout/', disconnect, name="logout"),
+    path('home/', home, name="home"),  # Use the imported home view directly
+    path('failure/', custom_csrf_failure, name="failure"),
+    path('add_review/', ReviewViews.add_review, name="add_review"),
+    path('delete_review/', ReviewViews.delete_review, name="delete_review"),
+    path('ticket/', ReviewViews.TicketView.as_view(), name='ticket'),
 ]
