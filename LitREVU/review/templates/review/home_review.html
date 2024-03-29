@@ -1,0 +1,42 @@
+{% extends 'base_menu.html' %}
+{% block content %}
+<script src="input-hover.js"></script>
+<main class="main-content">
+    <div class="container">
+        <div class="form-body">
+            <!-- 3 colonnes -->
+            <div class="register-column">
+                <div id="formContent">
+                    <div class="fadeIn first">
+                    <h2 class="active"> Publier une critique </h2>
+                    <form method="post" action="{% url 'ticket_create' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="Description">Description:</label>
+                        <input type="text" id="Description" name="Description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Image">Image:</label>
+                        <input type="file" id="Image" name="Image">
+                    </div>
+                    <input type="submit" class="fadeIn second" value="Publier une critique">
+                    </form>
+                </div>
+            </div>
+            <div class="empty-column">
+                <!-- Colonne vide -->
+            </div>
+            <div class="login-column">
+                <div id="formContent">
+                    <div class="fadeIn first">
+                    <h2 class="active"> Demander une critique </h2>
+                    <form method="post" action="{% url 'ticket_ask' %}">
+                    {% csrf_token %}
+                    <input type="submit" class="fadeIn second" value="Demander une critique">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

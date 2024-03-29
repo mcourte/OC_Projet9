@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-{% extends 'base.html' %}
+{% extends 'base_log.html' %}
 {% block content %}
+<script src="input-hover.js"></script>
 <main class="main-content">
     <div class="container">
-        <div class="form-header">
-            <h2 class="active">Bienvenue sur le site de LitREVU</h2>
-            <p>Notre nouveau site web permet de demander ou publier des critiques de livres ou d’articles.</p>
-            <p>L’application présente <strong>trois cas d’utilisation principaux </strong> :</p>
-            <ol>
-                <li>La publication des critiques de livres ou d’articles ;</li> 
-                <li>La demande des critiques sur un livre ou sur un article particulier ;</li> 
-                <li>La recherche d’articles et de livres intéressants à lire, en se basant sur les critiques des autres.</li> 
-            </ol>
-            <p>Vous pouvez également suivre d'autres utilisateurs du site, afin de voir leurs demandes de critiques.</p>
-        </div>
         <div class="form-body">
             <!-- 3 colonnes -->
             <div class="register-column">
@@ -23,10 +10,12 @@
                     <div class="fadeIn first">
                         <img src="../static/images/logo.png" id="logo" alt="logo_connexion" />
                     </div>
+                    <div class="fadeIn second">
                     <h2 class="active"> Inscrivez-vous maintenant</h2>
                     <form method="post" action="{% url 'signup' %}">
                     {% csrf_token %}
                     <div class="form-group">
+                    </div>
                     <input type="submit" class="fadeIn fourth" value="Créer un compte">
                     </div>
                     </form>
@@ -40,14 +29,20 @@
                     <div class="fadeIn first">
                         <img src="../static/images/logo.png" id="logo" alt="logo_connexion" />
                     </div>
+                    <div class="fadeIn second">
                     <h2 class="active"> Se connecter </h2>
-                    <form method="post" action="{% url 'home' %}">
+                    <form method="post" action="{% url 'home_review' %}">
                     {% csrf_token %}
+                    </div>
                     <div class="form-group">
+                    <div class="fadeIn third">
                         <label for="username">Nom d'utilisateur :</label>
                         <input type="text" id="username" name="username" autocomplete="off" required>
+                        <p class="help-text">Ce champ est obligatoire.</p>
                         <label for="password">Mot de passe :</label>
                         <input type="password" id="password" name="password" autocomplete="off" required>
+                        <p class="help-text">Ce champ est obligatoire.</p>
+                    </div>
                         <input type="submit" class="fadeIn fourth" value="Se connecter">
                     </form>
                 </div>

@@ -128,6 +128,10 @@ STATICFILES_DIRS = [BASE_DIR.joinpath("static/")]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/home'
+AUTH_USER_MODEL = "authentication.User"
 
-APPEND_SLASH = False
+LOGIN_REDIRECT_URL = '/home_review'
+
+LOGIN_URL = '/login'
+
+APPEND_SLASH = True

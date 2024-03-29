@@ -20,22 +20,27 @@ class SignupForm(UserCreationForm):
     email = forms.EmailField(
         max_length=254,
         label='Email',
-        widget=forms.TextInput(attrs={'title': 'Votre adresse email sera utilisée pour vous contacter.'})
+        help_text="Votre adresse email sera utilisée pour vous contacter.",
+        error_messages={'required': 'Ce champ est obligatoire.'}  # Customize error message
     )
     password1 = forms.CharField(
         label='Mot de passe',
-        widget=forms.PasswordInput(attrs={'title': "Le mot de passe doit contenir au moins 8 caractères "
-                                          "avec au moins un caractère numérique et un caractère spécial."}),
+        widget=forms.PasswordInput(),
+        help_text="Le mot de passe doit contenir au moins 8 caractères avec au moins un caractère numérique"
+                  " et un caractère spécial.",
+        error_messages={'required': 'Ce champ est obligatoire.'}  # Customize error message
     )
     password2 = forms.CharField(
         label='Confirmation du mot de passe',
-        widget=forms.PasswordInput(attrs={'title': "Saisissez le même mot de passe que précédemment, "
-                                          "pour vérification."}),
+        widget=forms.PasswordInput(),
+        help_text="Saisissez le même mot de passe que précédemment, pour vérification.",
+        error_messages={'required': 'Ce champ est obligatoire.'}  # Customize error message
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = 'Nom d\'utilisateur'
+        self.fields['username'].error_messages['required'] = 'Ce champ est obligatoire.'  # Customize error message
 
     class Meta:
         model = User
