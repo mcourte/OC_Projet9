@@ -16,25 +16,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from authentification.AuthentificationViews import SignupView, disconnect, home, custom_csrf_failure
+from authentification.AuthentificationViews import SignupView, LogoutView, home, custom_csrf_failure
 from review import ReviewViews
 from django.contrib.auth.views import LoginView
 
+app_name = 'accounts'
 
 urlpatterns = [
     # Define a path for the root URL
     path('admin/', admin.site.urls, name="admin"),
     path('login/', LoginView.as_view(
          template_name='authentification/login.html',
-         redirect_authenticated_user=True),  # Pass redirect_authenticated_user here
-         name='login'),
+         redirect_authenticated_user=True),
+         name="login"),
     path('signup/', SignupView.as_view(
          template_name='authentification/signup.html'),
-         name='signup'),
-    path('logout/', disconnect, name="logout"),
-    path('home/', home, name="home"),  # Use the imported home view directly
+         name="signup"),
+    path('logout/', LogoutView.as_view(
+         template_name='authentification/logout.html'),
+         name="logout"),
+    path('home/', home, name="home"),
     path('failure/', custom_csrf_failure, name="failure"),
-    path('add_review/', ReviewViews.add_review, name="add_review"),
-    path('delete_review/', ReviewViews.delete_review, name="delete_review"),
-    path('ticket/', ReviewViews.TicketView.as_view(), name='ticket'),
+    path('ticket/<int:pk>/delete/', ReviewViews.ticket_delete_view, name='ticket_confirm_delete'),
+    path('ticket/<int:pk>/update/', ReviewViews.ticket_update_view, name='ticket_update'),
+    path('ticket/<int:pk>/create/', ReviewViews.ticket_create_view, name='ticket_create'),
+    path('home_review/', ReviewViews.HomeReviewView.as_view(), name='home_review'),
 ]

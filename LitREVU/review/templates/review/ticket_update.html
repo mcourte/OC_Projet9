@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+{% extends 'base.html' %}
+{% block content %}
+<main class="main-content">
+    <div class="container">
+        <div class="form-header">
+            <h1 class="active">Ticket</h1>
+            <div class="formContent">
+                <h3 class="active"> Critique : {{ ticket.title }} </h3>
+                <form method="post" action="{% url 'home_review' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" class="fadeIn fourth" value="Modifier la critique">
+                    </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

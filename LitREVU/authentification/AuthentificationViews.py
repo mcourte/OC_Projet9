@@ -1,7 +1,6 @@
-from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import requires_csrf_token
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.views.generic import View
 from . import forms
 
@@ -13,16 +12,6 @@ def custom_csrf_failure(request, reason=""):
     This function renders a custom HTML template for CSRF failure.
     """
     return render(request, 'custom_csrf_failure.html', {'reason': reason})
-
-
-@csrf_protect
-def connect(request):
-    return render(request, 'authentification/login.html')
-
-
-@csrf_protect
-def disconnect(request):
-    return render(request, 'authentification/logout.html')
 
 
 def home(request):
@@ -47,7 +36,12 @@ class LoginView(View):
             )
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                # Check if the 'next' parameter exists in the request
+                next_url = request.GET.get('next')
+                if next_url:
+                    return redirect(next_url)  # Redirect to the next URL if provided
+                else:
+                    return redirect('home_review')  # Redirect to home_review if no next URL provided
         message = 'Identifiants invalides.'
         return render(request, self.template_name, context={'form': form, 'message': message})
 
@@ -65,5 +59,13 @@ class SignupView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('ticket')
         return render(request, self.template_name, {'form': form})
+
+
+class LogoutView(View):
+    template_name = 'authentication/logout.html'
+
+    def get(self, request):
+        logout(request)
+        return redirect('home')

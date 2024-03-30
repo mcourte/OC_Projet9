@@ -13,7 +13,10 @@
         <div class="navbar">
             <img src="../static/images/logoWBG.png" alt="Logo de LITRevu." class="logo">
             <nav>
-                <a href="{% url 'login' %}">Se Connecter</a>
+                <a href="{% url 'home_review' %}">Accueil</a>
+                <a href="{% url 'home_review' %}">Mes posts</a>
+                <a href="{% url 'home_review' %}">Mes abonnements</a>
+                <a href="{% url 'logout' %}">Se déconnecter</a>
             </nav>
         </div>
     </header>

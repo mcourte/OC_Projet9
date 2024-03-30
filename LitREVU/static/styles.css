@@ -24,13 +24,14 @@ header {
 }
 
 .logo {
-  margin-right: 20px; /* Marge à droite du logo */
+  margin-left: 20px; /* Marge à droite du logo */
   width: 50px; /* Largeur de l'image */
   height: auto; /* Hauteur ajustée automatiquement pour conserver les proportions */
 }
 
 nav {
   margin-left: auto; /* Place le nav à droite */
+  padding-right: 20px;
 }
 
 nav ul {
@@ -102,7 +103,7 @@ ol li::before {
 
 .form-body {
   display: grid;
-  grid-template-columns: 1fr 10px 1fr; /* 3 colonnes avec une colonne vide au milieu */
+  grid-template-columns: 1fr 1fr 1fr; /* 3 colonnes avec une colonne vide au milieu */
   gap: 20px; /* Espace entre les colonnes */
 }
 
@@ -121,6 +122,21 @@ ol li::before {
 .empty-column {
   padding: 20px;
 }
+
+.empty-column-signup {
+  flex:  1;
+}
+
+.register-column-signup {
+  background-color: #fbf2e9;
+  padding: 20px;
+  flex: 1; /* Les colonnes vont prendre autant d'espace que possible */
+}
+
+.register-column-signup input[type="submit"] {
+  margin: 0 auto; /* Centrer le bouton "Se connecter" horizontalement */
+  margin-top: 25px;}
+
 
 .main-content {
   grid-column: 3;
@@ -163,6 +179,16 @@ display:inline-block;
 margin: 10px  10px 10px 10px; 
 color: black;
 }
+
+h3 {
+  text-align: left;
+  font-size: 18.5px;
+  font-weight: 600;
+  text-transform: capitalize;
+  display:inline-block;
+  margin: 10px  10px 10px 10px; 
+  color: black;
+  }
 
 p {
   font-size: 18.5px;
@@ -226,7 +252,9 @@ border-radius: 0 0 10px 10px;
 
 label {
   display: block;
+  margin-top: 10px;
   margin-bottom: 5px;
+  font-weight: 600;
 }
 
 input[type="text"],
@@ -343,6 +371,20 @@ input[type="password"][value] {
     color: white;
 }
 
+
+.help-text {
+  display: none;  /* Hide the help text by default */
+  color: black;    /* Adjust color as needed */
+  font-size: 18.5px; /* Adjust font size as needed */
+  margin-top: 5px; /* Adjust margin as needed */
+
+  
+}
+
+/* CSS to show the help text when the input field is hovered over */
+input:hover + .help-text {
+  display: block;
+}
 /* ANIMATIONS */
 
 /* Simple CSS3 Fade-in-down Animation */
@@ -451,9 +493,9 @@ width: 100%;
 } 
 
 #logo {
-margin:5px;
-width:25px;
-height:30px ;
+margin:10px;
+width:35px;
+height:40px ;
 }
 
 
