@@ -134,7 +134,7 @@ ol li::before {
 
 .register-column, .login-column {
   background-color: #fbf2e9;
-  padding: 20px;
+  padding: 0px;
   flex: 1; /* Les colonnes vont prendre autant d'espace que possible */
 }
 
@@ -154,7 +154,7 @@ ol li::before {
 
 .register-column-signup {
   background-color: #fbf2e9;
-  padding: 20px;
+  padding: 0px;
   flex: 1; /* Les colonnes vont prendre autant d'espace que possible */
 }
 
