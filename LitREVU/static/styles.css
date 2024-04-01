@@ -1,8 +1,23 @@
 /* HTML et BODY */
-html, body {
+/* BASIC */
+html {
+  /* Change background-color to transparent */
+  background-color: transparent;
+  /* Set background image */
+  background-image: url('LitREVU/static/images/hero.jpg');
+  /* Adjust background image properties */
+  background-size: cover; /* Cover the entire viewport */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+}
+
+body {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100vh;
   margin: 0;
   padding: 0;
-  background-color: #fbf2e9;
 }
 
 /* HEADER */
