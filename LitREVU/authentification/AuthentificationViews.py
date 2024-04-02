@@ -59,7 +59,7 @@ class SignupView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('ticket')
+            return redirect('home_review')
         return render(request, self.template_name, {'form': form})
 
 
