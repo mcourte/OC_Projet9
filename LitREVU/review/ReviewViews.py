@@ -9,7 +9,7 @@ from .forms import TicketForm
 
 class HomeReviewView(LoginRequiredMixin, View):
     def get(self, request):
-        # Retrieve all tickets related to the logged-in user
+        # Retrouvez tous les tickets en rapport avec l'utilisateur connecté pour les afficher sur home_review
         tickets = Ticket.objects.filter(user=request.user)
         return render(request, 'home_review.html', {'tickets': tickets})
 
@@ -21,8 +21,8 @@ class TicketView(LoginRequiredMixin, View):
         return render(request, 'ticket', {'tickets': tickets})
 
     def post(self, request):
-        print(request)  # Print the entire request object
-        print(request.user)  # Print the user attribute of the request object
+        print(request)
+        print(request.user)
         if request.method == 'POST':
             # Récupérer les données du formulaire
             description = request.POST.get('description')
