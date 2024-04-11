@@ -52,15 +52,7 @@ class Review(models.Model):
 
 
 class UserFollows(models.Model):
-    """Modèle pour suivre les utilisateurs.
-
-    Ce modèle représente les relations de suivi entre les utilisateurs.
-    Chaque instance relie un utilisateur à un autre utilisateur qu'il suit.
-
-    Attributes:
-        user: L'utilisateur qui suit un autre utilisateur.
-        followed_user: L'utilisateur suivi.
-    """
+    """Modèle pour suivre les utilisateurs."""
 
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
@@ -74,6 +66,8 @@ class UserFollows(models.Model):
         related_name="followed_by",
     )
 
+    blocked = models.BooleanField(default=False)
+
     class Meta:
         """Options du modèle UserFollows."""
 
@@ -83,3 +77,16 @@ class UserFollows(models.Model):
             "user",
             "followed_user",
         )
+
+    def __str__(self):
+        """Afficher les noms des users dans le shell"""
+        return f"Utilisateur qui suit : {self.user.username} - Utilisateur suivi : {self.followed_user.username}"
+
+    def unfollow(self):
+        """Arrêter de suivre l'utilisateur suivi."""
+        self.delete()
+
+    def block(self):
+        """Bloquer l'utilisateur suivi."""
+        self.blocked = True
+        self.save()
