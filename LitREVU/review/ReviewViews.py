@@ -5,9 +5,18 @@ from django.contrib.auth.decorators import login_required
 from .models import Ticket
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import TicketForm
+from django.contrib.auth.mixins import AccessMixin
 
 
-class HomeReviewView(LoginRequiredMixin, View):
+class CustomLoginRequiredMixin(AccessMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            # Handle unauthenticated users
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
+
+class HomeReviewView(CustomLoginRequiredMixin, View):
     def get(self, request):
         # Retrouvez tous les tickets en rapport avec l'utilisateur connecté pour les afficher sur home_review
         tickets = Ticket.objects.filter(user=request.user)

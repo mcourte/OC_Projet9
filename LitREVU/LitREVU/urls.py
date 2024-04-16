@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from authentification.AuthentificationViews import SignupView, LogoutView, home, custom_csrf_failure
-from review import ReviewViews
-from django.contrib.auth.views import LoginView
+from authentification.AuthentificationViews import SignUpView, LogoutView, LoginView, home, custom_csrf_failure
+from review.ReviewViews import HomeReviewView
+
 
 app_name = 'accounts'
+
 
 urlpatterns = [
     # Define a path for the root URL
@@ -29,7 +30,7 @@ urlpatterns = [
          template_name='authentification/login.html',
          redirect_authenticated_user=True),
          name="login"),
-    path('signup/', SignupView.as_view(
+    path('signup/', SignUpView.as_view(
          template_name='authentification/signup.html'),
          name="signup"),
     path('logout/', LogoutView.as_view(
@@ -37,8 +38,5 @@ urlpatterns = [
          name="logout"),
     path('home/', home, name="home"),
     path('failure/', custom_csrf_failure, name="failure"),
-    path('ticket/<int:pk>/delete/', ReviewViews.ticket_delete_view, name='ticket_confirm_delete'),
-    path('ticket/<int:pk>/update/', ReviewViews.ticket_update_view, name='ticket_update'),
-    path('ticket/<int:pk>/create/', ReviewViews.ticket_create_view, name='ticket_create'),
-    path('home_review/', ReviewViews.HomeReviewView.as_view(), name='home_review'),
+    path('home_review/', HomeReviewView.as_view(), name='home_review'),  # Update this line
 ]

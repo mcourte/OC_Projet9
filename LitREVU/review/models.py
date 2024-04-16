@@ -53,25 +53,23 @@ class Review(models.Model):
 
 class UserFollows(models.Model):
     """Modèle pour suivre les utilisateurs."""
-
+    followers = models.ManyToManyField('self', symmetrical=False, blank=True)
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="following",
     )
-
     followed_user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="followed_by",
     )
-
     blocked = models.BooleanField(default=False)
 
     class Meta:
         """Options du modèle UserFollows."""
 
-        # garantit qu'il n'y a pas d'instances UserFollows multiples pour les
+        # garanti qu'il n'y a pas d'instances UserFollows multiples pour les
         # paires unique
         unique_together = (
             "user",
@@ -79,14 +77,22 @@ class UserFollows(models.Model):
         )
 
     def __str__(self):
-        """Afficher les noms des users dans le shell"""
+        """Affiche dans le shell le nom de l'user & le nom de l'user qu'il suit."""
         return f"Utilisateur qui suit : {self.user.username} - Utilisateur suivi : {self.followed_user.username}"
 
+    def count_followers(self):
+        """Permet de compter le nombre de followers que l'user à"""
+        return UserFollows.objects.filter(followed_user=self.user).count()
+
+    def count_following(self):
+        """Permet de compter le nombre de compte que l'user suit"""
+        return UserFollows.objects.filter(user=self.user).count()
+
     def unfollow(self):
-        """Arrêter de suivre l'utilisateur suivi."""
+        """Arrêter de suivre un utilisteur"""
         self.delete()
 
     def block(self):
-        """Bloquer l'utilisateur suivi."""
+        """Bloquer un utilisateur suivi"""
         self.blocked = True
         self.save()

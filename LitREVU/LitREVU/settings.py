@@ -130,8 +130,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AUTH_USER_MODEL = "authentication.User"
 
-LOGIN_REDIRECT_URL = '/home_review'
+LOGIN_REDIRECT_URL = '/home_review/'
 
-LOGIN_URL = '/login'
+LOGIN_URL = '/login/'
 
 APPEND_SLASH = True

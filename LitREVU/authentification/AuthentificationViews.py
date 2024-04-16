@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import requires_csrf_token
-from django.contrib.auth import login, authenticate, logout
-from django.views.generic import View
-from . import forms
+from django.contrib.auth import login
+from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as BaseLogoutView
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 
 @requires_csrf_token
@@ -18,54 +20,46 @@ def home(request):
     return render(request, 'authentification/home.html')
 
 
-class LoginView(View):
-    template_name = 'authentication/login.html'
-    form_class = forms.LoginForm
+class LoginView(BaseLoginView):
+    template_name = 'authentification/login.html'
 
-    def get(self, request):
-        form = self.form_class()
-        message = ''
-        return render(request, self.template_name, context={'form': form, 'message': message})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Pass the 'next' parameter from the request to the context
+        context['next'] = self.request.GET.get('next', '')
+        return context
 
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            user = authenticate(
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password'],
-            )
-            if user is not None:
-                login(request, user)
-                # Check if the 'next' parameter exists in the request
-                next_url = request.GET.get('next')
-                if next_url:
-                    return redirect(next_url)  # Redirect to the next URL if provided
-                else:
-                    return redirect('home_review')  # Redirect to home_review if no next URL provided
-        message = 'Identifiants invalides.'
-        return render(request, self.template_name, context={'form': form, 'message': message})
+    def form_valid(self, form):
+        # Log the user in
+        self.user = form.get_user()
+        login(self.request, self.user)
+
+        # Check if the 'next' parameter exists in the request
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return redirect(next_url)  # Redirect to the next URL if provided
+        else:
+            return redirect('home_review')  # Redirect to home_review if no next URL provided
 
 
-class SignupView(View):
-    template_name = 'authentication/signup.html'
-    form_class = forms.SignupForm
+class SignUpView(CreateView):
+    template_name = 'authentification/signup.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
 
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home_review')
-        return render(request, self.template_name, {'form': form})
+    def form_valid(self, form):
+        # Register the user
+        response = super().form_valid(form)
+        # Log the user in after successful registration
+        user = form.save()
+        login(self.request, user)
+        return response
 
 
-class LogoutView(View):
-    template_name = 'authentication/logout.html'
-
-    def get(self, request):
-        logout(request)
-        return redirect('home')
+class LogoutView(BaseLogoutView):
+    def get_next_page(self):
+        next_page = super().get_next_page()
+        # Redirect to the home page after logout
+        if next_page == reverse_lazy('login'):
+            next_page = reverse_lazy('home')
+        return next_page
