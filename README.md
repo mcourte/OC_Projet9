@@ -1,15 +1,19 @@
-# Projet 6 : Développez une interface utilisateur pour une application web Python  
+# Projet 9 : Développez une application Web en utilisant Django
 
-*Lien vers [LucidChart - diagramme ](https://lucid.app/lucidchart/fe330ca5-6e06-43e0-86a7-d09c18cdb81b/edit?viewport_loc=-748%2C-50%2C3328%2C1526%2CHWEp-vi-RSFO&invitationId=inv_b138fe45-32a1-4c4c-937d-484b37f59914)  
-Lien vers [LucidChart - carte ](https://lucid.app/lucidspark/d397a584-41f6-4f46-ac97-21bb25c4b730/edit?invitationId=inv_5a1cfc63-1855-4fa8-854d-f9e4e41bd9c9)*
+*Lien vers [LucidChart - diagramme ](https://lucid.app/lucidchart/fe330ca5-6e06-43e0-86a7-d09c18cdb81b/edit?viewport_loc=-748%2C-50%2C3328%2C1526%2CHWEp-vi-RSFO&invitationId=inv_b138fe45-32a1-4c4c-937d-484b37f59914)*  
+*Lien vers [LucidChart - carte ](https://lucid.app/lucidspark/d397a584-41f6-4f46-ac97-21bb25c4b730/edit?invitationId=inv_5a1cfc63-1855-4fa8-854d-f9e4e41bd9c9)*  
   
-## 1. Initialisation du projet
+## But du projet :
+
+Création d'un site web permettant de demander et de poster des critiques sur articles ou des livres.  
+
+## Etape 1 : Initialisation du projet
 
 Cliquer sur le bouton vert "<> Code" puis sur Download ZIP.
 Extraire l'ensemble des éléments dans le dossier dans lequel vous voulez stockez les datas qui seront téléchargées.
 
 
-## 2. Mise en route du serveur
+## Etape 2 :  Mise en route du serveur
  
 
 Pour lancer le serveur, ouvrez le terminal de commande :   
@@ -27,6 +31,6 @@ Dans le terminal de commande, executer la commande suivante :
 python3 manage.py runserver
 ```
 
-## 3. Utilisation du programme
+## Etape 3 :  Utilisation du programme
 
 En cours   
