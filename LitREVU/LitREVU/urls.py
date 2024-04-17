@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, home, custom_csrf_failure, contact
-from review.ReviewViews import HomeReviewView, TicketView, ReviewView
+from review.ReviewViews import HomeReviewView, TicketView, ReviewView, remove_follow, FollowingView
 
 app_name = 'accounts'
 
@@ -30,13 +30,13 @@ urlpatterns = [
     path('signup/', SignUpView.as_view(
          template_name='authentication/signup.html'),
          name="signup"),
-    path('logout/', LogoutView.as_view(
-         template_name='authentication/logout.html'),
-         name="logout"),
-    path('home/', home, name="home"),
+    path('logout/', LogoutView.as_view(), name="logout"),
     path('failure/', custom_csrf_failure, name="failure"),
-    path('review/home_review/', HomeReviewView.as_view(), name='home_review'),
+    path('accounts/review/home_review/', HomeReviewView.as_view(), name='home_review'),
     path('review/add_ticket/', TicketView.as_view(), name='add_ticket'),
     path('review/add_review/', ReviewView.as_view(), name='add_review'),
+    path('review/following/', FollowingView.as_view(), name='following'),
     path('authentication/contact-us/', contact, name='contact'),
+    path('remove_follow/<int:follow_id>/', remove_follow, name='remove_follow'),
+    path('', home, name='home'),
 ]

@@ -1,7 +1,7 @@
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Ticket, Review
+from .models import Ticket, Review, UserFollows
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import TicketForm, DeleteTicketForm, ReviewForm, DeleteReviewForm
 from django.contrib.auth.mixins import AccessMixin
@@ -128,3 +128,24 @@ def edit_delete_review(request, review_id):
         'delete_form': delete_form,
     }
     return render(request, '/review_update.html', context=context)
+
+
+class FollowingView(LoginRequiredMixin, View):
+    def get(self, request):
+        # Logique pour récupérer la liste des utilisateurs suivis par l'utilisateur connecté
+        # Par exemple, vous pouvez utiliser le modèle UserFollows pour récupérer ces informations
+        followed_users = UserFollows.objects.filter(user=request.user)
+        return render(request, 'review/following.html', {'followed_users': followed_users})
+
+
+@login_required
+def remove_follow(request, follow_id):
+    follow = get_object_or_404(UserFollows, id=follow_id)
+    if request.method == 'POST':
+        # Supprimer l'entrée de suivi de l'utilisateur
+        follow.delete()
+        # Rediriger vers la page des utilisateurs suivis
+        return redirect('review/following.html')
+    else:
+        # Si la méthode de requête n'est pas POST, rediriger vers une page appropriée ou afficher un message d'erreur
+        return redirect('review/following.html')

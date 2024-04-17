@@ -9,7 +9,7 @@
             <h1 class="active">Ticket</h1>
             <div class="formContent">
                 <h3 class="active"> Critique : {{ ticket.title }} </h3>
-                <form method="post" action="{% url 'home_review' %}" enctype="multipart/form-data">
+                <form method="post" action="{% url 'review/home_review' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <input type="submit" class="fadeIn fourth" value="Modifier la critique">

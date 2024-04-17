@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import requires_csrf_token
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as BaseLogoutView
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import CreateView, TemplateView
 from authentication.forms import ContactUsForm
 from django.core.mail import send_mail
 
@@ -27,21 +27,21 @@ class LoginView(BaseLoginView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Pass the 'next' parameter from the request to the context
+        # Passer le paramètre 'next' de la requête au contexte
         context['next'] = self.request.GET.get('next', '')
         return context
 
     def form_valid(self, form):
-        # Log the user in
+        # Connexion de l'user
         self.user = form.get_user()
         login(self.request, self.user)
 
-        # Check if the 'next' parameter exists in the request
+        # Vérifiez si le paramètre « next » existe dans la requête
         next_url = self.request.GET.get('next')
         if next_url:
-            return redirect(next_url)  # Redirect to the next URL if provided
+            return redirect(next_url)  # Redirection vers l'URL suivante si fournie et existante
         else:
-            return redirect(reverse_lazy('home'))  # Redirect to home if no next URL provided
+            return redirect(reverse_lazy('home'))  # Redirection vers "home" si aucune URL suivante n'est fournie
 
 
 class SignUpView(CreateView):
@@ -50,21 +50,21 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        # Register the user
         response = super().form_valid(form)
-        # Log the user in after successful registration
         user = form.save()
         login(self.request, user)
         return response
 
+    def get_success_url(self):
+        return reverse('accounts:home_review')
 
-class LogoutView(BaseLogoutView):
-    def get_next_page(self):
-        next_page = super().get_next_page()
-        # Redirect to the home page after logout
-        if next_page == reverse_lazy('login'):
-            next_page = reverse_lazy('home')
-        return next_page
+
+class LogoutView(TemplateView):
+    template_name = 'authentication/logout.html'
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('home')
 
 
 def contact(request):

@@ -9,7 +9,7 @@
                 <div id="formContent">
                     <div class="fadeIn first">
                     <h2 class="active"> Publier une critique </h2>
-                    <form method="post" action="{% url 'ticket_create' %}">
+                    <form method="post" action="{% url 'add_ticket' %}">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="Description">Description:</label>
@@ -30,7 +30,7 @@
                 <div id="formContent">
                     <div class="fadeIn first">
                     <h2 class="active"> Demander une critique </h2>
-                    <form method="post" action="{% url 'ticket_ask' %}">
+                    <form method="post" action="{% url 'add_ticket' %}">
                     {% csrf_token %}
                     <input type="submit" class="fadeIn second" value="Demander une critique">
                     </form>
