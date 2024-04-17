@@ -1,58 +1,31 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 {% extends 'base.html' %}
 {% block content %}
 <main class="main-content">
     <div class="container">
         <div class="form-header">
-            <h2 class="active">Bienvenue sur le site de LitREVU</h2>
-            <p>Notre nouveau site web permet de demander ou publier des critiques de livres ou d’articles.</p>
-            <p>L’application présente <strong>trois cas d’utilisation principaux </strong> :</p>
-            <ol>
-                <li>La publication des critiques de livres ou d’articles ;</li> 
-                <li>La demande des critiques sur un livre ou sur un article particulier ;</li> 
-                <li>La recherche d’articles et de livres intéressants à lire, en se basant sur les critiques des autres.</li> 
-            </ol>
-        </div>
-        <div class="form-body">
-            <!-- 3 colonnes -->
-            <div class="register-column">
-                <div id="formContent">
-                    <div class="fadeIn first">
-                        <img src="../static/images/logo.png" id="logo" alt="logo_connexion" />
-                    </div>
-                    <h2 class="active"> Inscrivez-vous maintenant</h2>
-                    <form method="post" action="{% url 'register' %}">
+            <h1 class="active">Ticket</h1>
+            <div class="formContent">
+                <h3 class="active"> Critique : {{ ticket.title }} </h3>
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
-                    <input type="submit" class="fadeIn fourth" value="Créer un compte">
+                        <label for="id_title">Titre:</label>
+                        <input type="text" id="id_title" name="Titre" maxlength="128" required>
                     </div>
-                    </form>
-                </div>
-            </div>
-            <div class="empty-column">
-                <!-- Colonne vide -->
-            </div>
-            <div class="login-column">
-                <div id="formContent">
-                    <div class="fadeIn first">
-                        <img src="../static/images/logo.png" id="logo" alt="logo_connexion" />
-                    </div>
-                    <h2 class="active"> Se connecter </h2>
-                    <form method="post" action="{% url 'home' %}">
-                    {% csrf_token %}
                     <div class="form-group">
-                        <label for="username">Nom d'utilisateur :</label>
-                        <input type="text" id="username" name="username" autocomplete="off" required>
-                        <label for="password">Mot de passe :</label>
-                        <input type="password" id="password" name="password" autocomplete="off" required>
-                        <input type="submit" class="fadeIn fourth" value="Se connecter">
-                    </form>
-                </div>
+                        <label for="id_description">Description:</label>
+                        <textarea id="id_description" name="Description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_image">Image:</label>
+                        <input type="file" id="id_image" name="Image">
+                    </div>
+                    <input type="submit" class="fadeIn fourth" value="Demander une critique">
+                </form>
             </div>
         </div>
     </div>
 </main>
-
 {% endblock content %}

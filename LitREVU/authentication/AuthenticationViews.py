@@ -5,6 +5,8 @@ from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as 
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from authentication.forms import ContactUsForm
+from django.core.mail import send_mail
 
 
 @requires_csrf_token
@@ -39,7 +41,7 @@ class LoginView(BaseLoginView):
         if next_url:
             return redirect(next_url)  # Redirect to the next URL if provided
         else:
-            return redirect(reverse_lazy('login'))  # Redirect to login if no next URL provided
+            return redirect(reverse_lazy('home'))  # Redirect to home if no next URL provided
 
 
 class SignUpView(CreateView):
@@ -63,3 +65,28 @@ class LogoutView(BaseLogoutView):
         if next_page == reverse_lazy('login'):
             next_page = reverse_lazy('home')
         return next_page
+
+
+def contact(request):
+    if request.method == 'POST':
+        # créer une instance de notre formulaire et le remplir avec les données POST
+        form = ContactUsForm(request.POST)
+
+        if form.is_valid():
+            send_mail(
+                     subject=f'Message from {form.cleaned_data["name"]}',
+                     message=form.cleaned_data['message'],
+                     from_email=form.cleaned_data['email'],
+                     recipient_list=['courte.magali@gmail.com'],
+                    )
+            return redirect('email-sent')  # ajoutez cette instruction de retour
+    # si le formulaire n'est pas valide, nous laissons l'exécution continuer jusqu'au return
+    # ci-dessous et afficher à nouveau le formulaire (avec des erreurs).
+
+    else:
+        # ceci doit être une requête GET, donc créer un formulaire vide
+        form = ContactUsForm()
+
+    return render(request,
+                  'authentication/contact-us.html',
+                  {'form': form})

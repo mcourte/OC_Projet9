@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="main-content">
+    <div class="container">
+        <div class="form-header">
+            <h2 class="active">Nous sommes là pour vous aider.</h2>
+            <form action="" method="post" novalidate>
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Envoyer">
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

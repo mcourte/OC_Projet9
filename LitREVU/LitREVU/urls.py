@@ -16,20 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, home, custom_csrf_failure
-from review.ReviewViews import HomeReviewView
-
+from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, home, custom_csrf_failure, contact
+from review.ReviewViews import HomeReviewView, TicketView, ReviewView
 
 app_name = 'accounts'
 
-
 urlpatterns = [
-    # Define a path for the root URL
     path('admin/', admin.site.urls, name="admin"),
     path('login/', LoginView.as_view(
-         template_name='authentication/login.html',
-         redirect_authenticated_user=True),
-         name="login"),
+        template_name='authentication/login.html',
+        redirect_authenticated_user=True),
+        name="login"),
     path('signup/', SignUpView.as_view(
          template_name='authentication/signup.html'),
          name="signup"),
@@ -38,5 +35,8 @@ urlpatterns = [
          name="logout"),
     path('home/', home, name="home"),
     path('failure/', custom_csrf_failure, name="failure"),
-    path('home_review/', HomeReviewView.as_view(), name='home_review'),  # Update this line
+    path('review/home_review/', HomeReviewView.as_view(), name='home_review'),
+    path('review/add_ticket/', TicketView.as_view(), name='add_ticket'),
+    path('review/add_review/', ReviewView.as_view(), name='add_review'),
+    path('authentication/contact-us/', contact, name='contact'),
 ]

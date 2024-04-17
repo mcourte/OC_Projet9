@@ -11,10 +11,15 @@ class TicketForm(forms.ModelForm):
     title = forms.CharField(label="Titre", widget=forms.TextInput)
     description = forms.CharField(label="Description", widget=forms.Textarea)
     image = forms.CharField(label="Image :")
+    edit_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'image']
+
+
+class DeleteTicketForm(forms.Form):
+    delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
 
 class ReviewForm(forms.ModelForm):
@@ -24,10 +29,15 @@ class ReviewForm(forms.ModelForm):
     )
     body = forms.CharField(label="Commentaire", widget=forms.Textarea)
     headline = forms.CharField(label="Titre", widget=forms.TextInput)
+    edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     class Meta:
         model = models.Review
         fields = ["headline", "rating", "body"]
+
+
+class DeleteReviewForm(forms.Form):
+    delete_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
 
 class FollowUsersForm(forms.ModelForm):
