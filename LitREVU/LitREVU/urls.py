@@ -31,6 +31,7 @@ urlpatterns = [
          template_name='authentication/signup.html'),
          name="signup"),
     path('logout/', LogoutView.as_view(), name="logout"),
+    path('home/', home, name="home"),
     path('failure/', custom_csrf_failure, name="failure"),
     path('accounts/review/home_review/', HomeReviewView.as_view(), name='home_review'),
     path('review/add_ticket/', TicketView.as_view(), name='add_ticket'),
@@ -38,5 +39,4 @@ urlpatterns = [
     path('review/following/', FollowingView.as_view(), name='following'),
     path('authentication/contact-us/', contact, name='contact'),
     path('remove_follow/<int:follow_id>/', remove_follow, name='remove_follow'),
-    path('', home, name='home'),
 ]
