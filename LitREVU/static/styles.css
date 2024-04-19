@@ -127,10 +127,34 @@ ol li::before {
   left: 0; /* Aligner le point avec le bord gauche */
 }
 
+ul {
+  list-style: none; /* Supprimer les puces par défaut */
+  padding-left: 0; /* Supprimer le décalage par défaut */
+  font-size: 18.5px;
+  text-align: left;
+}
+
+ul li {
+  position: relative; /* Position relative pour permettre le positionnement */
+  padding-left: 1em; /* Ajouter un décalage au texte des éléments de liste */
+  text-align: left;
+}
+
+ul li::before {
+  content: ""; /* Ne rien afficher avant chaque élément de liste */
+  position: absolute; /* Position absolue pour permettre le positionnement */
+  left: 0; /* Aligner le début du texte avec le bord gauche */
+}
+
 .form-body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr; /* 3 colonnes avec une colonne vide au milieu */
   gap: 20px; /* Espace entre les colonnes */
+}
+
+.review-column {
+  width: 50%; /* Largeur de votre colonne */
+  margin-top: 50px;
 }
 
 .register-column, .login-column {
@@ -139,6 +163,7 @@ ol li::before {
 }
 
 .login-column input[type="submit"],
+.review-column input[type="file"]
 .register-column input[type="submit"] {
   margin: 0 auto; /* Centrer le bouton "Se connecter" horizontalement */
   margin-top: 25px;
@@ -250,6 +275,21 @@ text-align: center;
 font-size: 18.5px;
 }
 
+#formReviewContent {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #fbf2e9;
+  width: 300px;
+  max-width: 1500px;
+  margin: 20px auto;
+  margin-top: 100px;
+  padding: 20px;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  text-align: center;
+  font-size: 18.5px;
+}
+
 
 #formFooter {
 background-color: #fbf2e9;
@@ -283,6 +323,7 @@ label {
 }
 
 input[type="text"],
+input[type="file"], 
 input[type="email"]
 input[type="password"],
 input[type="submit"] {
@@ -331,7 +372,7 @@ border-bottom: 2px solid  #cccccc;
   color: #333; /* Couleur de l'étiquette lorsque le champ est en focus ou rempli */
 }
 
-input[type=button], input[type=submit], input[type=reset]  {
+input[type=button], input[type=submit], input[type=reset], input[type=file]  {
 background-color: #FFB276;
 border: none;
 color: black;
@@ -353,11 +394,11 @@ margin: 5px 20px 40px 20px;
 transition: all 0.3s ease-in-out;
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=file]:hover   {
 background-color: #FFB276;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active, input[type=file]:active  {
 -moz-transform: scale(0.95);
 -webkit-transform: scale(0.95);
 -o-transform: scale(0.95);
@@ -403,8 +444,17 @@ input[type="password"][value] {
   color: black;    /* Adjust color as needed */
   font-size: 18.5px; /* Adjust font size as needed */
   margin-top: 5px; /* Adjust margin as needed */
-
   
+}
+
+.ticket_posts, .review_posts {
+  border-bottom: 1.5px solid grey; /* Ajoute une bordure en bas de chaque ticket */
+  padding-bottom: 10px; /* Ajoute un espace en bas du ticket */
+}
+
+.ticket_posts:last-child, .review_posts:last-child {
+  border-bottom: none; /* Supprime la bordure du dernier ticket */
+  padding-bottom: 0; /* Supprime l'espace en bas du dernier ticket */
 }
 
 /* CSS to show the help text when the input field is hovered over */

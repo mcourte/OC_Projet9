@@ -7,8 +7,9 @@ class Ticket(models.Model):
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=2048, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, default='../static/images/no-image.jpg')
     time_created = models.DateTimeField(auto_now_add=True)
+    user_ticket_number = models.IntegerField(default=1)
 
     @property
     def has_review(self):
@@ -16,6 +17,10 @@ class Ticket(models.Model):
 
     def __str__(self):
         return self.title
+
+    # Pour accéder à l'ID de l'instance de ticket
+    def get_ticket_id(self):
+        return self.id
 
 
 class Review(models.Model):
@@ -41,9 +46,6 @@ class UserFollows(models.Model):
 
     class Meta:
         unique_together = ("user", "followed_user")
-
-    def __str__(self):
-        return f"L'utilisateur {self.user.username} suit {self.followed_user.username}"
 
     def count_followers(self):
         return UserFollows.objects.filter(followed_user=self.user).count()

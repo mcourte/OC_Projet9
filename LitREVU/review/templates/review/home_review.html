@@ -9,35 +9,54 @@
             <div class="register-column">
                 <div id="formContent">
                     <div class="fadeIn first">
-                    <h2 class="active"> Publier une critique </h2>
-                    <form method="post" action="{% url 'add_ticket' %}">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="Description">Description:</label>
-                        <input type="text" id="Description" name="Description" required>
+                        <div>
+                            <h2 class="active"> Publier une critique </h2>
+                            <form method="post" action="{% url 'create_ticket_review' %}">
+                            {% csrf_token %}
+                            <input type="submit" class="fadeIn second" value="Publier une critique">
+                        </div>    
+                        <div>
+                        <h2 class="active"> Demander une critique </h2>
+                        <form method="post" action="{% url 'add_ticket' %}">
+                        {% csrf_token %}
+                        <input type="submit" class="fadeIn second" value="Demander une critique">
+                        </form>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="Image">Image:</label>
-                        <input type="file" id="Image" name="Image">
-                    </div>
-                    <input type="submit" class="fadeIn second" value="Publier une critique">
-                    </form>
                 </div>
-            </div>
-            <div class="empty-column">
-                <!-- Colonne vide -->
-            </div>
-            <div class="login-column">
-                <div id="formContent">
-                    <div class="fadeIn first">
-                    <h2 class="active"> Demander une critique </h2>
-                    <form method="post" action="{% url 'add_ticket' %}">
-                    {% csrf_token %}
-                    <input type="submit" class="fadeIn second" value="Demander une critique">
-                    </form>
-                </div>
-            </div>
+            </div>         
+        <div class="empty-column">
+            <!-- Colonne vide -->
         </div>
+        <div class="register-column">
+            <div id="formContent">
+                <div class="fadeIn first">
+                    <div>
+                        <h2 class="active"> Tickets des utilisateurs suivis </h2>
+                        {% for ticket in following_tickets %}
+                        <h3 class="active"> Ticket {{ forloop.counter }} </h3>
+                        <ul>
+                            <li><strong>Titre :</strong> {{ ticket.title }}</li>
+                            <li><strong>Description :</strong> {{ ticket.description }}</li>
+                            <li><strong>Créé par :</strong> {{ ticket.user.username }}</li>
+                            {% if ticket.image %}
+                            <li><strong>Image :</strong> <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></li>
+                            {% endif %}
+                            <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
+                        </ul>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <h2 class="active"> Critiques des utilisateurs suivis </h2>
+                        <ul>
+                        {% for review in following_reviews %}
+                            <li>{{ review.headline }}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>    
+            </div>
+        </div>    
     </div>
 </main>
 {% endblock content %}

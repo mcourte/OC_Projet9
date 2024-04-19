@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-{% extends 'base.html' %}
+{% extends 'base_menu.html' %}
 {% block content %}
+{% load static %}
 <main class="main-content">
     <div class="container">
-        <div class="form-header">
-            <h1 class="active">Ticket</h1>
-            <div class="formContent">
-                <h3 class="active"> Critique : {{ ticket.title }} </h3>
-                <form method="post" action="{% url 'home_review' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Utilisateur à l'origine du ticket :</label>
-                    <input type="text" id="username" name="username" autocomplete="off" required>
-                    <label for="description">Description: {{ ticket.description }}</label>
-                    <input type="description" name="Description" autocomplete="off" required> {{ ticket.description }}
-                    {% if ticket.image %}
-                    <img src="{{ ticket.image.url }}" alt="Ticket Image">
-                    {% endif %}
-                    <label for="text">Date et heure de création :{{ ticket.time_created }}</label>
-                    <input type="submit" class="fadeIn fourth" value="Poster une critique">
-                </form>
-            </div>
-        </div>
+                <div id="formReviewContent">
+                    <div class="fadeIn first">
+                        <div>
+                            <h1 class="active">Publier un Ticket</h1>
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <h3 class="active">Ticket</h3>
+                                <label for="title">Titre:</label>
+                                <input type="text" name="title" id="title">
+                                <label for="description">Description:</label>
+                                <input type="text" name="description" id="description">
+                                <label for="image">Image:</label>
+                                <input type="file" name="image" accept="image/*">
+                                {% if ticket.image %}
+                                <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}">
+                                {% endif %}
+                        </div>
+                    </div>
+                </div>        
     </div>
 </main>
 
 {% endblock content %}
-

@@ -1,0 +1,51 @@
+{% extends 'base_menu.html' %}
+{% block content %}
+{% load static %}
+<main class="main-content">
+    <div class="container">
+        <div class="form-body">
+            <!-- 3 colonnes -->
+            <div class="register-column">
+                <div id="formContent">
+                    <div class="fadeIn first">
+                        <h2 class="active"> Mes tickets </h2>
+                        <div class="ticket_posts">
+                            {% for ticket in tickets %}
+                            <h3 class="active"> Ticket {{ forloop.counter }} (ID : {{ ticket.id }}) </h3>
+                            <ul>
+                                <li>Titre : {{ ticket.title }}</li>
+                                <li>Description : {{ ticket.description }}</li>
+                                <li>Créé par : {{ ticket.user.username }}</li>
+                                <li>Date de création : {{ ticket.time_created }}</li>
+                            </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>        
+            <div class="empty-column">
+                <!-- Colonne vide -->
+            </div>
+            <div class="register-column">
+                        <div id="formContent">
+                            <div class="fadeIn first">
+                                <h2 class="active"> Mes critiques </h2>
+                                <div class="review_posts">
+                                    {% for review in reviews %}
+                                    <h3 class="active"> Critique pour le ticket "{{ review.ticket.title }}" (ID: {{ review.ticket.id }}) </h3>
+                                    <ul>
+                                        <li>Titre : {{ review.headline }}</li>
+                                        <li>Note : {{ review.rating }}</li>
+                                        <li>Description :{{ review.body }}</li>
+                                        <li>Critique demandée par : {{ review.ticket.user.username }}</li>
+                                    </ul>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>    
+                    </div>    
+                </div>  
+            </div>
+        </div>
+</main>
+{% endblock content %}

@@ -5,34 +5,40 @@
 <main class="main-content">
     <div class="container">
         <div class="form-body">
-            <div>
-                <h2>Follow Users</h2>
-                <form method="post">
-                    {% csrf_token %}
+            <div class="register-column">
+                <div id="formContent">
                     <div>
-                        <label for="follows">Nom d'utilisateur à suivre :</label>
-                        <input type="text" id="follows" name="follows" placeholder="Entrez le nom d'utilisateur à suivre">
-                        {% if form.follows.errors %}
-                            <p>{{ form.follows.errors }}</p>
-                        {% endif %}
+                        <h2>Utilisateurs à suivre</h2>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div>
+                                <label for="follows">Nom d'utilisateur à suivre :</label>
+                                <input type="text" id="follows" name="follows" placeholder="Entrez le nom d'utilisateur à suivre">
+                                {% if form.follows.errors %}
+                                    <p>{{ form.follows.errors }}</p>
+                                {% endif %}
+                            </div>
+                            <button type="submit">Suivre</button>
+                        </form>
                     </div>
-                    <button type="submit">Suivre</button>
-                </form>
+                </div>
+            </div>    
+            <div class="empty-column">
+                <!-- Colonne vide -->
             </div>
-            <div>
-                <h2>Utilisateurs suivis</h2>
-                <ul>
-                    {% for follow in follows %}
-                        <li>
-                            {{ follow.followed_user.username }}
-                            <form method="post" action="{% url 'remove_follow' follow.id %}">
-                                {% csrf_token %}
-                                <button type="submit">Ne plus suivre</button>
-                            </form>
-                        </li>
-                    {% endfor %}
-                </ul>
+            <div class="register-column">
+                <div id="formContent">
+                    <div>
+                        <h2>Utilisateurs suivis</h2>
+                        <ul>
+                            {% for follow in followed_by %}
+                            <li>{{ follow.followed_user.username }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>    
             </div>
+        </div>   
     </div>
 </main>
 {% endblock content %}

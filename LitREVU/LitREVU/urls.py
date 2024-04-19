@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, home, custom_csrf_failure, contact
 from review.ReviewViews import HomeReviewView, TicketView, ReviewView, remove_follow, FollowingView
+from review.ReviewViews import PostsView, create_ticket_review
 
 app_name = 'accounts'
 
@@ -34,9 +35,11 @@ urlpatterns = [
     path('home/', home, name="home"),
     path('failure/', custom_csrf_failure, name="failure"),
     path('accounts/review/home_review/', HomeReviewView.as_view(), name='home_review'),
+    path('accounts/review/posts/', PostsView.as_view(), name='posts'),
     path('review/add_ticket/', TicketView.as_view(), name='add_ticket'),
     path('review/add_review/', ReviewView.as_view(), name='add_review'),
     path('review/following/', FollowingView.as_view(), name='following'),
     path('authentication/contact-us/', contact, name='contact'),
     path('remove_follow/<int:follow_id>/', remove_follow, name='remove_follow'),
+    path('create_ticket_review/', create_ticket_review, name='create_ticket_review'),
 ]
