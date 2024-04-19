@@ -80,10 +80,19 @@ def edit_delete_ticket(request, ticket_id):
 
 class FollowingView(LoginRequiredMixin, View):
     def get(self, request):
-        # Logique pour récupérer la liste des utilisateurs suivis par l'utilisateur connecté
-        # Par exemple, vous pouvez utiliser le modèle UserFollows pour récupérer ces informations
-        followed_users = UserFollows.objects.filter(user=request.user)
+        # Récupérer tous les objets UserFollows où l'utilisateur connecté est le follower
+        user_follows = UserFollows.objects.filter(followed_user=request.user)
+        print("User follows:", user_follows)
+
+        # Extraire les utilisateurs suivis à partir de ces objets UserFollows
+        followed_users = [user_follow.followed_user for user_follow in user_follows]
+        print("Followed users:", followed_users)
+
         return render(request, 'review/following.html', {'followed_users': followed_users})
+
+    def post(self, request):
+        # Logique pour suivre un utilisateur ici
+        return redirect('following')  # Rediriger vers la même page après le traitement POST
 
 
 @login_required

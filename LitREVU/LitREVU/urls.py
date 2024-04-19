@@ -24,10 +24,7 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin"),
-    path('login/', LoginView.as_view(
-        template_name='authentication/login.html',
-        redirect_authenticated_user=True),
-        name="login"),
+    path('login/', LoginView.as_view(template_name='authentication/login.html'), name='login'),
     path('signup/', SignUpView.as_view(
          template_name='authentication/signup.html'),
          name="signup"),

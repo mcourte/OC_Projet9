@@ -1,14 +1,13 @@
 {% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
-<script src="{% static 'input-hover.js' %}"></script>
 <main class="main-content">
     <div class="container">
         <div class="form-body">
             <div class="register-column">
                 <div id="formContent">
                     <div>
-                        <h2>Utilisateurs à suivre</h2>
+                        <h2 class="active"> Utilisateurs à suivre </h2>
                         <form method="post">
                             {% csrf_token %}
                             <div>
@@ -18,7 +17,7 @@
                                     <p>{{ form.follows.errors }}</p>
                                 {% endif %}
                             </div>
-                            <button type="submit">Suivre</button>
+                            <input type="submit" class="fadeIn second" value="Suivre">
                         </form>
                     </div>
                 </div>
@@ -29,10 +28,10 @@
             <div class="register-column">
                 <div id="formContent">
                     <div>
-                        <h2>Utilisateurs suivis</h2>
+                        <h2 class="active"> Utilisateurs suivis</h2>
                         <ul>
-                            {% for follow in followed_by %}
-                            <li>{{ follow.followed_user.username }}</li>
+                            {% for user_follow in followed_users %}
+                            <li>{{ user_follow.username }}</li>
                             {% endfor %}
                         </ul>
                     </div>

@@ -39,7 +39,7 @@ class Review(models.Model):
 
 
 class UserFollows(models.Model):
-    followers = models.ManyToManyField('self', symmetrical=False, blank=True)
+    follower = models.ManyToManyField('self', symmetrical=False, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following")
     followed_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="followed_by")
     blocked = models.BooleanField(default=False)

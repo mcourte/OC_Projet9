@@ -39,9 +39,9 @@ class LoginView(BaseLoginView):
         # Vérifiez si le paramètre « next » existe dans la requête
         next_url = self.request.GET.get('next')
         if next_url:
-            return redirect(next_url)  # Redirection vers l'URL suivante si fournie et existante
+            return redirect(next_url)
         else:
-            return redirect(reverse_lazy('home'))  # Redirection vers "home" si aucune URL suivante n'est fournie
+            return redirect('home_review')
 
 
 class SignUpView(CreateView):
