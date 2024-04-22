@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'review',
     'authentication',
+    'debug_toolbar',
 
 ]
 
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'LitREVU.urls'
@@ -120,7 +122,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR.joinpath("static/")]
 
 
@@ -136,3 +138,14 @@ LOGIN_REDIRECT_URL = '/accounts/review/home_review/'
 LOGIN_URL = '/login/'
 
 APPEND_SLASH = True
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
+    'INTERCEPT_REDIRECTS': False,
+    'ENABLE_STACKTRACES': True,
+    'RENDER_PANELS': True,
+    'SHOW_TEMPLATE_CONTEXT': True,
+    'SHOW_COLLAPSED': True,
+    'HIDE_DJANGO_SQL': False,
+    'INTERNAL_IPS': ['127.0.0.1'],  # Adresse IP locale par défaut
+}

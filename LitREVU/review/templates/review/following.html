@@ -8,7 +8,7 @@
                 <div id="formContent">
                     <div>
                         <h2 class="active"> Utilisateurs à suivre </h2>
-                        <form method="post">
+                        <form method="post" action="{% url 'following' %}">
                             {% csrf_token %}
                             <div>
                                 <label for="follows">Nom d'utilisateur à suivre :</label>
@@ -28,16 +28,16 @@
             <div class="register-column">
                 <div id="formContent">
                     <div>
-                        <h2 class="active"> Utilisateurs suivis</h2>
+                        <h2 class="active">Utilisateurs suivis</h2>
                         <ul>
-                            {% for user_follow in followed_users %}
-                            <li>{{ user_follow.username }}</li>
+                            {% for followed_user in followed_users %}
+                                <li>{{ followed_user.followed_user.username }}</li>
                             {% endfor %}
                         </ul>
-                    </div>
+                    </div>        
                 </div>    
             </div>
-        </div>   
+        </div>    
     </div>
 </main>
 {% endblock content %}

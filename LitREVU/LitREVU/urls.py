@@ -15,14 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, home, custom_csrf_failure, contact
-from review.ReviewViews import HomeReviewView, TicketView, ReviewView, remove_follow, FollowingView
-from review.ReviewViews import PostsView, create_ticket_review
+from review.ReviewViews import HomeReviewView, TicketView, ReviewView, FollowingView
+from review.ReviewViews import PostsView
+from django.conf import settings
+
+if settings.DEBUG:
+    import debug_toolbar
 
 app_name = 'accounts'
 
 urlpatterns = [
+    path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls, name="admin"),
     path('login/', LoginView.as_view(template_name='authentication/login.html'), name='login'),
     path('signup/', SignUpView.as_view(
@@ -33,10 +38,9 @@ urlpatterns = [
     path('failure/', custom_csrf_failure, name="failure"),
     path('accounts/review/home_review/', HomeReviewView.as_view(), name='home_review'),
     path('accounts/review/posts/', PostsView.as_view(), name='posts'),
-    path('review/add_ticket/', TicketView.as_view(), name='add_ticket'),
+    path('create_ticket/', TicketView.create_ticket, name='create_ticket'),
     path('review/add_review/', ReviewView.as_view(), name='add_review'),
     path('review/following/', FollowingView.as_view(), name='following'),
     path('authentication/contact-us/', contact, name='contact'),
-    path('remove_follow/<int:follow_id>/', remove_follow, name='remove_follow'),
-    path('create_ticket_review/', create_ticket_review, name='create_ticket_review'),
+    path('create_ticket_review/', ReviewView.create_ticket_review, name='create_ticket_review'),
 ]

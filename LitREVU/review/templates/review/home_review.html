@@ -17,7 +17,7 @@
                         </div>    
                         <div>
                         <h2 class="active"> Demander une critique </h2>
-                        <form method="post" action="{% url 'add_ticket' %}">
+                        <form method="post" action="{% url 'create_ticket' %}">
                         {% csrf_token %}
                         <input type="submit" class="fadeIn second" value="Demander une critique">
                         </form>

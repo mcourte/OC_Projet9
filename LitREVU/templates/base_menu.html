@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Bienvenue sur LitREVU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="../static/styles.css" rel="stylesheet">
+  <link href="{% static 'styles.css' %}" rel="stylesheet">
+  <script src="{% static 'script-js.js' %}"></script>
 </head>
 
 <body>
     <header class = "header" role="banner">
         <div class="navbar">
-            <img src="../static/images/logoWBG.png" alt="Logo de LITRevu." class="logo">
+            <img src="{% static 'images/logoWBG.png' %}" alt="Logo de LITRevu." class="logo">
             <nav>
-                <a href="{% url 'home_review' %}">Accueil</a>
-                <a href="{% url 'home_review' %}">Mes posts</a>
-                <a href="{% url 'home_review' %}">Mes abonnements</a>
+                <a href="{% url 'home_review' %}">Mon Flux</a>
+                <a href="{% url 'posts' %}">Mes Post</a>
+                <a href="{% url 'following' %}">Mes abonnements</a>
                 <a href="{% url 'logout' %}">Se déconnecter</a>
             </nav>
         </div>
     </header>
-
-{% block content %}
-{% endblock %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
 </body>
 </html>
