@@ -23,13 +23,12 @@ html::before {
 
 body {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center; /* Ajustez la justification pour centrer les éléments */
   align-items: center;
   height: 100vh;
   margin: 0;
   padding: 0;
 }
-
 /* HEADER */
 
 header {
@@ -152,11 +151,6 @@ ul li::before {
   gap: 20px; /* Espace entre les colonnes */
 }
 
-.review-column {
-  width: 50%; /* Largeur de votre colonne */
-  margin-top: 50px;
-}
-
 .register-column, .login-column {
   padding: 0px;
   flex: 1; /* Les colonnes vont prendre autant d'espace que possible */
@@ -185,7 +179,44 @@ ul li::before {
 
 .register-column-signup input[type="submit"] {
   margin: 0 auto; /* Centrer le bouton "Se connecter" horizontalement */
-  margin-top: 25px;}
+  margin-top: 25px;
+}
+
+.main-content-row {
+  grid-column: 3;
+  grid-row: 3;
+  width: 100%;
+  margin-top: 70px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-body-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.publish-row, .review-row {
+  width: auto; /* Ajustez la largeur au contenu */
+}
+
+.publish-row, .critique-empty-row, .review-row {
+  display: flex; /* Utilisez la disposition flexbox */
+  flex-direction: row; /* Disposez les éléments en ligne */
+  justify-content: center; /* Centrez les éléments horizontalement */
+  align-items: flex-start; /* Alignez les éléments en haut */
+}
+
+.publish-column, .critique-empty-column, .review-column {
+  flex: 1; /* Chaque colonne prend autant d'espace que possible */
+}
+
+
 
 
 .main-content {
@@ -587,4 +618,47 @@ height:40px ;
 
 .btn-back:hover {
   background-color: #999;
+}
+
+
+/* Stylez le tableau des critiques */
+.critique-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.critique-column {
+  background-color: #fbf2e9;
+  padding: 20px;
+}
+
+.critique-empty-column {
+  padding: 20px;
+}
+
+.critique-column h2 {
+  text-align: center;
+}
+
+.critique-form {
+  text-align: center;
+}
+
+/* Stylez les critiques suivies */
+.review-column {
+  background-color: #fbf2e9;
+  padding: 20px;
+}
+
+.review-column h2 {
+  text-align: center;
+}
+
+.review-column ul {
+  padding-left: 0;
+}
+
+.review-column ul li {
+  margin-bottom: 10px;
 }

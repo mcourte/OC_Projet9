@@ -7,7 +7,7 @@ class Ticket(models.Model):
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=2048, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True, default='../static/images/no-image.jpg')
+    image = models.ImageField(null=True, blank=True, upload_to='ticket_images/', default='static/no-image.jpg')
     time_created = models.DateTimeField(auto_now_add=True)
     user_ticket_number = models.IntegerField(default=1)
 

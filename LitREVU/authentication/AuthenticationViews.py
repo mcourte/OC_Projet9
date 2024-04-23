@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import requires_csrf_token
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView as BaseLoginView
-from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserCreationForm
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, TemplateView
 from authentication.forms import ContactUsForm
@@ -46,7 +46,7 @@ class LoginView(BaseLoginView):
 
 class SignUpView(CreateView):
     template_name = 'authentication/signup.html'
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
@@ -56,7 +56,7 @@ class SignUpView(CreateView):
         return response
 
     def get_success_url(self):
-        return reverse('accounts:home_review')
+        return reverse('home_review')
 
 
 class LogoutView(TemplateView):

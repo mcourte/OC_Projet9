@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<script src="input-hover.js"></script>
+
 <main class="main-content">
     <div class="wrapper">
         <!-- Boîte de Création de Compte -->
@@ -16,7 +16,7 @@
                         <div class="fadeIn first">
                             <img src="../static/images/logo.png" id="logo" alt="logo_connexion" />
                         </div>
-                            <form method="post" action="{% url 'home' %}">
+                            <form method="post" action="{% url 'login' %}">
                                 <div class="form-group">
                                     <div class="fadeIn second">
                                 {% csrf_token %}

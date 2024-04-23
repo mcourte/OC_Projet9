@@ -24,6 +24,7 @@ from django.conf import settings
 if settings.DEBUG:
     import debug_toolbar
 
+
 app_name = 'accounts'
 
 urlpatterns = [

@@ -11,11 +11,13 @@
                         <h2 class="active"> Mes tickets </h2>
                         <div class="ticket_posts">
                             {% for ticket in tickets %}
-                            <h3 class="active"> Ticket {{ forloop.counter }} (ID : {{ ticket.id }}) </h3>
+                            <h3 class="active" enctype="multipart/form-data"> Ticket {{ forloop.counter }} (ID : {{ ticket.id }}) </h3>
                             <ul>
                                 <li>Titre : {{ ticket.title }}</li>
                                 <li>Description : {{ ticket.description }}</li>
-                                <li>Créé par : {{ ticket.user.username }}</li>
+                                {% if ticket.image %}
+                                <li>Image : <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></li>
+                                {% endif %}
                                 <li>Date de création : {{ ticket.time_created }}</li>
                             </ul>
                             {% endfor %}

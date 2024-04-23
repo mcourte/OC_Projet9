@@ -1,62 +1,53 @@
 {% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
-<script src="{% static 'input-hover.js' %}"></script>
-<main class="main-content">
-    <div class="container">
-        <div class="form-body">
-            <!-- 3 colonnes -->
-            <div class="register-column">
-                <div id="formContent">
-                    <div class="fadeIn first">
-                        <div>
-                            <h2 class="active"> Publier une critique </h2>
-                            <form method="post" action="{% url 'create_ticket_review' %}">
-                            {% csrf_token %}
-                            <input type="submit" class="fadeIn second" value="Publier une critique">
-                        </div>    
-                        <div>
-                        <h2 class="active"> Demander une critique </h2>
-                        <form method="post" action="{% url 'create_ticket' %}">
-                        {% csrf_token %}
-                        <input type="submit" class="fadeIn second" value="Demander une critique">
-                        </form>
-                        </div>
-                    </div>
-                </div>
-            </div>         
-        <div class="empty-column">
-            <!-- Colonne vide -->
-        </div>
-        <div class="register-column">
-            <div id="formContent">
-                <div class="fadeIn first">
-                    <div>
-                        <h2 class="active"> Tickets des utilisateurs suivis </h2>
-                        {% for ticket in following_tickets %}
-                        <h3 class="active"> Ticket {{ forloop.counter }} </h3>
-                        <ul>
-                            <li><strong>Titre :</strong> {{ ticket.title }}</li>
-                            <li><strong>Description :</strong> {{ ticket.description }}</li>
-                            <li><strong>Créé par :</strong> {{ ticket.user.username }}</li>
-                            {% if ticket.image %}
-                            <li><strong>Image :</strong> <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></li>
-                            {% endif %}
-                            <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
-                        </ul>
-                        {% endfor %}
-                    </div>
-                    <div>
-                        <h2 class="active"> Critiques des utilisateurs suivis </h2>
-                        <ul>
-                        {% for review in following_reviews %}
-                            <li>{{ review.headline }}</li>
-                        {% endfor %}
-                        </ul>
-                    </div>
-                </div>    
-            </div>
-        </div>    
+
+<div class="critique-grid">
+    <div class="critique-empty-column"></div> <!-- Colonne vide -->
+    <div class="critique-column">
+        <h2 class="active">Publier une critique</h2>
+        <form method="post" action="{% url 'create_ticket_review' %}" class="critique-form">
+            {% csrf_token %}
+            <input type="submit" class="fadeIn second" value="Publier une critique">
+        </form>
     </div>
-</main>
+    <div class="critique-column">
+        <h2 class="active">Demander une critique</h2>
+        <form method="post" action="{% url 'create_ticket' %}" class="critique-form">
+            {% csrf_token %}
+            <input type="submit" class="fadeIn second" value="Demander une critique">
+        </form>
+    </div>
+    <div class="critique-empty-column"></div> <!-- Colonne vide -->
+    <div class="critique-empty-column"></div> <!-- Colonne vide -->
+    <div class="critique-column" style="grid-column: span 2;">
+        <h2 class="active"> Tickets des utilisateurs suivis </h2>
+        {% for ticket in following_tickets %}
+        <h3 class="active"> Ticket {{ forloop.counter }} </h3>
+        <ul>
+            <li><strong>Titre :</strong> {{ ticket.title }}</li>
+            <li><strong>Description :</strong> {{ ticket.description }}</li>
+            <li><strong>Créé par :</strong> {{ ticket.user.username }}</li>
+            {% if ticket.image %}
+            <li><strong>Image :</strong> <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></li>
+            {% endif %}
+            <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
+        </ul>
+        {% endfor %}
+        <h2 class="active">Critiques des utilisateurs suivis</h2>
+        {% for review in following_reviews %}
+        <h3 class="active">Critique de {{ review.user.username }}</h3>
+        <ul>
+            <li><strong>Titre :</strong> {{ review.headline }}</li>
+            <li><strong>Description :</strong> {{ review.body }}</li>
+            <li><strong>Note :</strong> {{ review.rating }}</li>
+            <li><strong>En réponse à un Ticket de : {{ ticket.user.username }}</strong></li>
+            <li><strong>Date de création :</strong> {{ review.time_created }}</li>
+        </ul>
+        {% endfor %}
+    </div>
+<div class="critique-empty-column"></div> <!-- Colonne vide -->
+
+
+
 {% endblock content %}

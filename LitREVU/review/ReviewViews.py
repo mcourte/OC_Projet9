@@ -41,7 +41,8 @@ class TicketView(LoginRequiredMixin, View):
             # Afficher le formulaire vide
             return render(request, 'review/add_ticket.html')
 
-    def create_ticket(request):
+    @classmethod
+    def create_ticket(cls, request):
         if request.method == 'POST':
             form = TicketForm(request.POST, request.FILES)
             if form.is_valid():
@@ -53,7 +54,8 @@ class TicketView(LoginRequiredMixin, View):
             form = TicketForm()
         return render(request, 'review/create_ticket.html', {'form': form})
 
-    def edit_delete_ticket(request, ticket_id):
+    @classmethod
+    def edit_delete_ticket(cls, request, ticket_id):
         ticket = get_object_or_404(Ticket, id=ticket_id)
         edit_form = TicketForm(instance=ticket)
         delete_form = DeleteTicketForm()

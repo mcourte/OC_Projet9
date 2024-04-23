@@ -10,8 +10,7 @@ User = get_user_model()
 class TicketForm(forms.ModelForm):
     title = forms.CharField(label="Titre", widget=forms.TextInput)
     description = forms.CharField(label="Description", widget=forms.Textarea)
-    image = forms.ImageField(label="Image")
-    edit_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    image = forms.FileField(label="Image", widget=forms.FileInput)
 
     class Meta:
         model = Ticket
@@ -44,7 +43,7 @@ class TicketReviewForm(forms.ModelForm):
     # Champs pour le ticket
     title = forms.CharField(max_length=100)
     description = forms.CharField(widget=forms.Textarea)
-    image = forms.ImageField(required=False)
+    image = forms.FileField(label="Image", widget=forms.FileInput)
 
     # Champs pour la critique
     headline = forms.CharField(max_length=100)
