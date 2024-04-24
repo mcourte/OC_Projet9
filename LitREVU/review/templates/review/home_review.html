@@ -48,7 +48,7 @@
             <li><strong>Titre :</strong> {{ review.headline }}</li>
             <li><strong>Description :</strong> {{ review.body }}</li>
             <li><strong>Note :</strong> {{ review.rating }}</li>
-            <li><strong>En réponse à un Ticket de : {{ review.ticket.user.username }}</strong></li> <!-- Utilisez review.ticket.user.username pour accéder à l'utilisateur du ticket -->
+            <li><strong>En réponse à un Ticket de : {{ review.ticket.user.username }}</strong></li>
             <li><strong>Date de création :</strong> {{ review.time_created }}</li>
         </ul>
         {% endfor %}

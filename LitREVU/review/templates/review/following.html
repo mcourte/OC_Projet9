@@ -41,8 +41,8 @@
                     </ul>
                     <h2 class="active">Utilisateurs qui vous suivent</h2>
                     <ul>
-                        {% for user_following_current_user in users_following_current_user %}
-                            <li>{{ user_following_current_user.user.username }}</li>
+                        {% for user_following in users_following %}
+                            <li>{{ user_following.user.username }}</li>
                         {% endfor %}
                     </ul>
                     </div>

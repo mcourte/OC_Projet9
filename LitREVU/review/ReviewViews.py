@@ -83,13 +83,13 @@ class FollowingView(LoginRequiredMixin, View):
         followed_users = UserFollows.objects.filter(user=request.user)
 
         # Récupérer les utilisateurs qui vous suivent
-        users_following_current_user = UserFollows.objects.filter(followed_user=request.user)
+        users_following = UserFollows.objects.filter(followed_user=request.user)
 
         form = FollowUsersForm()
         context = {
             "form": form,
             "followed_users": followed_users,
-            "users_following_current_user": users_following_current_user
+            "users_following_current_user": users_following
         }
         return render(request, "review/following.html", context=context)
 
