@@ -1,17 +1,10 @@
-from django.contrib.auth.mixins import AccessMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.contrib import messages
 from .models import Review, Ticket, UserFollows
-from .forms import TicketReviewForm, TicketForm, DeleteTicketForm, FollowUsersForm
+from .forms import TicketReviewForm, TicketForm, DeleteTicketForm, FollowUsersForm, ReviewForm
 from authentication.models import User
-
-
-class CustomLoginRequiredMixin(AccessMixin):
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
 
 
 class TicketView(LoginRequiredMixin, View):
@@ -77,6 +70,46 @@ class TicketView(LoginRequiredMixin, View):
         return render(request, 'ticket_update.html', context=context)
 
 
+class ReviewView(LoginRequiredMixin, View):
+    def get(self, request):
+        reviews = Review.objects.filter(user=request.user)
+        return render(request, 'review/add_review.html', {'reviews': reviews})
+
+    def post(self, request):
+        if request.method == 'POST':
+            form = ReviewForm(request.POST, request.FILES)
+            if form.is_valid():
+                # Créer la critique
+                review = form.save(commit=False)
+                review.user = request.user
+                review.save()
+            review.save()
+            return redirect('home_review')
+
+    def create_ticket_review(request):
+        if request.method == 'POST':
+            form = TicketReviewForm(request.POST, request.FILES)
+            if form.is_valid():
+                # Créer le ticket
+                ticket = form.save(commit=False)
+                ticket.user = request.user
+                ticket.save()
+
+                # Créer la critique associée au ticket
+                review = Review.objects.create(
+                    headline=form.cleaned_data['headline'],
+                    rating=form.cleaned_data['rating'],
+                    body=form.cleaned_data['body'],
+                    user=request.user,
+                    ticket=ticket
+                )
+                review.save()
+                return redirect('home_review')
+        else:
+            form = TicketReviewForm()
+        return render(request, 'review/create_ticket_review.html', {'form': form})
+
+
 class FollowingView(LoginRequiredMixin, View):
     def get(self, request):
         # Récupérer les utilisateurs que vous suivez
@@ -121,11 +154,8 @@ class UnfollowUserView(View):
     def post(self, request):
         followed_user_id = request.POST.get('followed_user_id')
         if followed_user_id:
-            try:
-                follow = UserFollows.objects.get(id=followed_user_id)
-                follow.unfollow()
-            except UserFollows.DoesNotExist:
-                messages.error(request, "L'utilisateur que vous souhaitez suivre n'existe pas.")
+            follow = UserFollows.objects.get(id=followed_user_id)
+            follow.unfollow()
         return redirect("following")
 
 
@@ -155,48 +185,3 @@ class PostsView(LoginRequiredMixin, View):
         tickets = Ticket.objects.filter(user=request.user)
         reviews = Review.objects.filter(user=request.user)
         return render(request, 'review/posts.html', {'tickets': tickets, 'reviews': reviews})
-
-
-class ReviewView(LoginRequiredMixin, View):
-    def get(self, request):
-        reviews = Review.objects.filter(user=request.user)
-        return render(request, 'review/add_review.html', {'reviews': reviews})
-
-    def post(self, request):
-        if request.method == 'POST':
-            headline = request.POST.get('headline')
-            rating = request.POST.get('rating')
-            body = request.POST.get('body')
-            review = Review.objects.create(
-                headline=headline,
-                rating=rating,
-                body=body,
-                user=request.user
-            )
-            review.save()
-            return redirect('home_review')
-        else:
-            return render(request, 'review/add_review.html')
-
-    def create_ticket_review(request):
-        if request.method == 'POST':
-            form = TicketReviewForm(request.POST, request.FILES)
-            if form.is_valid():
-                # Créer le ticket
-                ticket = form.save(commit=False)
-                ticket.user = request.user
-                ticket.save()
-
-                # Créer la critique associée au ticket
-                review = Review.objects.create(
-                    headline=form.cleaned_data['headline'],
-                    rating=form.cleaned_data['rating'],
-                    body=form.cleaned_data['body'],
-                    user=request.user,
-                    ticket=ticket
-                )
-                review.save()
-                return redirect('home_review')
-        else:
-            form = TicketReviewForm()
-        return render(request, 'review/create_ticket_review.html', {'form': form})
