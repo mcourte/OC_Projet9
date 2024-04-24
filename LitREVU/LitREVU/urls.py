@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, home, custom_csrf_failure, contact
-from review.ReviewViews import HomeReviewView, TicketView, ReviewView, FollowingView
+from review.ReviewViews import HomeReviewView, TicketView, ReviewView, FollowingView, UnfollowUserView
 from review.ReviewViews import PostsView
 from django.conf import settings
 
@@ -43,5 +43,6 @@ urlpatterns = [
     path('review/add_review/', ReviewView.as_view(), name='add_review'),
     path('review/following/', FollowingView.as_view(), name='following'),
     path('authentication/contact-us/', contact, name='contact'),
+    path('unfollow/', UnfollowUserView.as_view(), name='unfollow_user'),
     path('create_ticket_review/', ReviewView.create_ticket_review, name='create_ticket_review'),
 ]

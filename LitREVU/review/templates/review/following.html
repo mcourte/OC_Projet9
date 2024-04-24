@@ -27,15 +27,26 @@
             </div>
             <div class="register-column">
                 <div id="formContent">
-                    <div>
-                        <h2 class="active">Utilisateurs suivis</h2>
-                        <ul>
-                            {% for followed_user in followed_users %}
-                                <li>{{ followed_user.followed_user.username }}</li>
+                    <h2 class="active">Utilisateurs que vous suivez</h2>
+                    <ul>
+                        {% for followed_user in followed_users %}
+                        <li>{{ followed_user.followed_user.username }}
+                        <form action="{% url 'unfollow_user' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="followed_user_id" value="{{ followed_user.id }}">
+                            <input type="submit" class="fadeIn second" value="Se désabonner">
+                        </form>
+                        </li>
                             {% endfor %}
-                        </ul>
-                    </div>        
-                </div>    
+                    </ul>
+                    <h2 class="active">Utilisateurs qui vous suivent</h2>
+                    <ul>
+                        {% for user_following_current_user in users_following_current_user %}
+                            <li>{{ user_following_current_user.user.username }}</li>
+                        {% endfor %}
+                    </ul>
+                    </div>
+                </div>
             </div>
         </div>    
     </div>

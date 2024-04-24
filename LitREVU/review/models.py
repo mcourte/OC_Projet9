@@ -58,3 +58,7 @@ class UserFollows(models.Model):
     def block(self):
         self.blocked = True
         self.save()
+
+    @classmethod
+    def is_following(cls, user, followed_user):
+        return cls.objects.filter(user=user, followed_user=followed_user).exists()

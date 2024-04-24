@@ -79,11 +79,17 @@ class TicketView(LoginRequiredMixin, View):
 
 class FollowingView(LoginRequiredMixin, View):
     def get(self, request):
+        # Récupérer les utilisateurs que vous suivez
         followed_users = UserFollows.objects.filter(user=request.user)
+
+        # Récupérer les utilisateurs qui vous suivent
+        users_following_current_user = UserFollows.objects.filter(followed_user=request.user)
+
         form = FollowUsersForm()
         context = {
             "form": form,
-            "followed_users": followed_users
+            "followed_users": followed_users,
+            "users_following_current_user": users_following_current_user
         }
         return render(request, "review/following.html", context=context)
 
@@ -96,23 +102,14 @@ class FollowingView(LoginRequiredMixin, View):
             try:
                 followed_user = User.objects.get(username=follows_username)
                 if followed_user != request.user:
-                    UserFollows.objects.get_or_create(
-                        user=request.user,
-                        followed_user=followed_user
-                    )
-                    # Rediriger vers une autre vue ou effectuer une autre action après
-                    # avoir suivi l'utilisateur avec succès
+                    # Enregistrer la relation de suivi dans un seul sens
+                    UserFollows.objects.get_or_create(user=request.user, followed_user=followed_user)
                     return redirect('following')
                 else:
-                    messages.error(
-                        request, "Vous ne pouvez pas vous abonner à vous-même."
-                    )
+                    messages.error(request, "Vous ne pouvez pas vous abonner à vous-même.")
             except User.DoesNotExist:
-                messages.error(
-                    request, "L'utilisateur que vous souhaitez suivre n'existe pas."
-                )
+                messages.error(request, "L'utilisateur que vous souhaitez suivre n'existe pas.")
 
-        # Si le formulaire n'est pas valide ou s'il y a une erreur, revenez à la page de suivi
         context = {
             "form": form,
             "followed_users": followed_users
@@ -120,18 +117,37 @@ class FollowingView(LoginRequiredMixin, View):
         return render(request, "review/following.html", context=context)
 
 
-class HomeReviewView(CustomLoginRequiredMixin, View):
-    def get(self, request):
-        tickets = Ticket.objects.filter(user=request.user)
-        return render(request, 'review/home_review.html', {'tickets': tickets})
+class UnfollowUserView(View):
+    def post(self, request):
+        followed_user_id = request.POST.get('followed_user_id')
+        if followed_user_id:
+            try:
+                follow = UserFollows.objects.get(id=followed_user_id)
+                follow.unfollow()
+            except UserFollows.DoesNotExist:
+                messages.error(request, "L'utilisateur que vous souhaitez suivre n'existe pas.")
+        return redirect("following")
 
-    def posts_view(request):
+
+class HomeReviewView(View):
+    def get(self, request):
+        # Récupérer les utilisateurs suivis par l'utilisateur actuel
+        following_users = UserFollows.objects.filter(user=request.user).values_list('followed_user', flat=True)
+
+        # Récupérer les tickets et les critiques associés aux utilisateurs suivis
+        following_tickets = Ticket.objects.filter(user__in=following_users)
+        following_reviews = Review.objects.filter(ticket__user__in=following_users)
+
+        return render(request, 'review/home_review.html', {'following_tickets': following_tickets,
+                                                           'following_reviews': following_reviews})
+
+    def posts_view(self, request):
         user = request.user
         following_users = UserFollows.objects.filter(user=user, blocked=False).values_list('followed_user', flat=True)
         following_tickets = Ticket.objects.filter(user__in=following_users)
         following_reviews = Review.objects.filter(ticket__user__in=following_users)
-        return render(request, '/home_review.html', {'following_tickets': following_tickets,
-                                                     'following_reviews': following_reviews})
+        return render(request, 'home_review.html', {'following_tickets': following_tickets,
+                                                    'following_reviews': following_reviews})
 
 
 class PostsView(LoginRequiredMixin, View):

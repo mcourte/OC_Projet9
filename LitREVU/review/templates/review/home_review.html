@@ -11,6 +11,7 @@
             <input type="submit" class="fadeIn second" value="Publier une critique">
         </form>
     </div>
+    <div class="critique-empty-column"></div> <!-- Colonne vide -->
     <div class="critique-column">
         <h2 class="active">Demander une critique</h2>
         <form method="post" action="{% url 'create_ticket' %}" class="critique-form">
@@ -20,7 +21,10 @@
     </div>
     <div class="critique-empty-column"></div> <!-- Colonne vide -->
     <div class="critique-empty-column"></div> <!-- Colonne vide -->
-    <div class="critique-column" style="grid-column: span 2;">
+    <div class="critique-empty-column"></div> <!-- Colonne vide -->
+    <div class="critique-empty-column"></div> <!-- Colonne vide -->
+    <div class="critique-empty-column"></div> <!-- Colonne vide -->
+    <div class="critique-column">
         <h2 class="active"> Tickets des utilisateurs suivis </h2>
         {% for ticket in following_tickets %}
         <h3 class="active"> Ticket {{ forloop.counter }} </h3>
@@ -34,6 +38,9 @@
             <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
         </ul>
         {% endfor %}
+    </div>
+    <div class="critique-empty-column"></div> <!-- Colonne vide -->
+    <div class="critique-column">
         <h2 class="active">Critiques des utilisateurs suivis</h2>
         {% for review in following_reviews %}
         <h3 class="active">Critique de {{ review.user.username }}</h3>
@@ -41,13 +48,11 @@
             <li><strong>Titre :</strong> {{ review.headline }}</li>
             <li><strong>Description :</strong> {{ review.body }}</li>
             <li><strong>Note :</strong> {{ review.rating }}</li>
-            <li><strong>En réponse à un Ticket de : {{ ticket.user.username }}</strong></li>
+            <li><strong>En réponse à un Ticket de : {{ review.ticket.user.username }}</strong></li> <!-- Utilisez review.ticket.user.username pour accéder à l'utilisateur du ticket -->
             <li><strong>Date de création :</strong> {{ review.time_created }}</li>
         </ul>
         {% endfor %}
     </div>
-<div class="critique-empty-column"></div> <!-- Colonne vide -->
-
-
+</div>
 
 {% endblock content %}

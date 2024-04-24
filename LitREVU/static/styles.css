@@ -621,13 +621,15 @@ height:40px ;
 }
 
 
-/* Stylez le tableau des critiques */
+/* Stylez la grille de critiques */
 .critique-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-rows: 150px 70px auto;
   gap: 20px;
 }
 
+/* Stylez les colonnes de la grille */
 .critique-column {
   background-color: #fbf2e9;
   padding: 20px;
