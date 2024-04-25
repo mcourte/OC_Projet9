@@ -39,6 +39,7 @@ class Review(models.Model):
 
 
 class UserFollows(models.Model):
+    """Modèle pour représenter la relation de suivi entre les utilisateurs."""
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following")
     followed_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="followed_by")
     blocked = models.BooleanField(default=False)
@@ -47,18 +48,23 @@ class UserFollows(models.Model):
         unique_together = ("user", "followed_user")
 
     def count_followers(self):
+        """Compte le nombre d'abonnés d'un utilisateur."""
         return UserFollows.objects.filter(followed_user=self.user).count()
 
     def count_following(self):
+        """Compte le nombre d'utilisateurs suivis par un utilisateur."""
         return UserFollows.objects.filter(user=self.user).count()
 
     def unfollow(self):
+        """Met fin à la relation de suivi entre les utilisateurs."""
         self.delete()
 
     def block(self):
+        """Bloque la relation de suivi entre les utilisateurs."""
         self.blocked = True
         self.save()
 
     @classmethod
     def is_following(cls, user, followed_user):
+        """Vérifie si un utilisateur suit un autre utilisateur."""
         return cls.objects.filter(user=user, followed_user=followed_user).exists()

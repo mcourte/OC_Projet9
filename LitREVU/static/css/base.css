@@ -3,7 +3,7 @@
 html {
   position: relative; /* Set position to relative so that ::before pseudo-element can be positioned relative to it */
   /* Set background image */
-  background-image: url("../static/images/hero.jpg");
+  background-image: url("../images/hero.jpg");
   /* Adjust background image properties */
   background-size: cover; /* Cover the entire viewport */
   background-position: center; /* Center the image */

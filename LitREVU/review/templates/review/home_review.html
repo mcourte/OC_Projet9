@@ -1,9 +1,8 @@
 {% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
-
+<link href="{% static 'css/posts.css' %}" rel="stylesheet">
 <div class="critique-grid">
-    <div class="critique-empty-column"></div> <!-- Colonne vide -->
     <div class="critique-column">
         <h2 class="active">Publier une critique</h2>
         <form method="post" action="{% url 'create_ticket_review' %}" class="critique-form">
@@ -23,36 +22,43 @@
     <div class="critique-empty-column"></div> <!-- Colonne vide -->
     <div class="critique-empty-column"></div> <!-- Colonne vide -->
     <div class="critique-empty-column"></div> <!-- Colonne vide -->
-    <div class="critique-empty-column"></div> <!-- Colonne vide -->
     <div class="critique-column">
-        <h2 class="active"> Tickets des utilisateurs suivis </h2>
-        {% for ticket in following_tickets %}
-        <h3 class="active"> Ticket {{ forloop.counter }} </h3>
-        <ul>
-            <li><strong>Titre :</strong> {{ ticket.title }}</li>
-            <li><strong>Description :</strong> {{ ticket.description }}</li>
-            <li><strong>Créé par :</strong> {{ ticket.user.username }}</li>
-            {% if ticket.image %}
-            <li><strong>Image :</strong> <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></li>
+        <h2 class="active"> Tickets et Critiques des utilisateurs suivis </h2>
+        {% for item in combined_list %}
+            {% if item.ticket %}
+                <h3 class="active"> Ticket {{ forloop.counter }} </h3>
+                <ul>
+                    <li><strong>Titre :</strong> {{ item.ticket.title }}</li>
+                    <li><strong>Description :</strong> {{ item.ticket.description }}</li>
+                    <li><strong>Créé par :</strong> {{ item.ticket.user.username }}</li>
+                    {% if item.ticket.image %}
+                        <li><strong>Image :</strong> <img src="{{ item.ticket.image.url }}" alt="{{ item.ticket.title }}"></li>
+                    {% endif %}
+                    <li><strong>Date de création :</strong> {{ item.ticket.time_created }}</li>
+                </ul>
+                
+                <!-- Condition pour afficher le bouton "Créer une critique" -->
+                {% if not item.ticket.has_review %}
+                    <form method="post" action="{% url 'add_review' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="ticket_id" value="{{ item.ticket.id }}">
+                        <input type="submit" class="fadeIn second" value="Créer une critique">
+                    </form>
+                {% endif %}
             {% endif %}
-            <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
-        </ul>
+            {% if item.review %}
+                <!-- Afficher les critiques existantes -->
+                <h3 class="active">Critique de {{ item.review.user.username }}</h3>
+                <ul>
+                    <li><strong>Titre :</strong> {{ item.review.headline }}</li>
+                    <li><strong>Description :</strong> {{ item.review.body }}</li>
+                    <li><strong>Note :</strong> {{ item.review.rating }}</li>
+                    <li><strong>En réponse à un Ticket de : {{ item.review.ticket.user.username }}</strong></li>
+                    <li><strong>Date de création :</strong> {{ item.review.time_created }}</li>
+                </ul>
+            {% endif %}
         {% endfor %}
     </div>
     <div class="critique-empty-column"></div> <!-- Colonne vide -->
-    <div class="critique-column">
-        <h2 class="active">Critiques des utilisateurs suivis</h2>
-        {% for review in following_reviews %}
-        <h3 class="active">Critique de {{ review.user.username }}</h3>
-        <ul>
-            <li><strong>Titre :</strong> {{ review.headline }}</li>
-            <li><strong>Description :</strong> {{ review.body }}</li>
-            <li><strong>Note :</strong> {{ review.rating }}</li>
-            <li><strong>En réponse à un Ticket de : {{ review.ticket.user.username }}</strong></li>
-            <li><strong>Date de création :</strong> {{ review.time_created }}</li>
-        </ul>
-        {% endfor %}
-    </div>
 </div>
-
 {% endblock content %}

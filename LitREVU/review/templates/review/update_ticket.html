@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
 <main class="main-content">
@@ -7,19 +7,13 @@
             <h1 class="active">Ticket</h1>
             <div class="formContent">
                 <h3 class="active">Titre : {{ ticket.title }}</h3>
-                <form method="post" action="{% url 'review/edit_delete_review' review.id %}">
+                <form method="post" action="{% url 'update_ticket' ticket.id %}">
                     {% csrf_token %}
                     {{ edit_form.as_p }}
                     <input type="submit" class="fadeIn fourth" value="Modifier le ticket">
-                </form>
-                <form method="post" action="{% url 'review/edit_delete_review' review.id %}">
-                    {% csrf_token %}
-                    {{ delete_form.as_p }}
-                    <input type="submit" class="fadeIn fourth" value="Supprimer le ticket">
                 </form>
             </div>
         </div>
     </div>
 </main>
-
 {% endblock content %}

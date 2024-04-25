@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
+    """Modèle personnalisé pour représenter un utilisateur dans le système.
+    Ce modèle hérite de la classe AbstractUser de Django et ajoute des champs supplémentaires."""
     username_validator = RegexValidator(
         regex=r'^[\w.@+-]+$',
         message=_("Le nom d'utilisateur doit contenir uniquement des caractères alphanumériques"),

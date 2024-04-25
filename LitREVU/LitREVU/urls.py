@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, home, custom_csrf_failure, contact
+from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, HomeView
+from authentication.AuthenticationViews import custom_csrf_failure, ContactView
 from review.ReviewViews import HomeReviewView, TicketView, ReviewView, FollowingView, UnfollowUserView
 from review.ReviewViews import PostsView
 from django.conf import settings
@@ -35,14 +36,19 @@ urlpatterns = [
          template_name='authentication/signup.html'),
          name="signup"),
     path('logout/', LogoutView.as_view(), name="logout"),
-    path('home/', home, name="home"),
+    path('home/', HomeView.as_view(), name="home"),
     path('failure/', custom_csrf_failure, name="failure"),
     path('accounts/review/home_review/', HomeReviewView.as_view(), name='home_review'),
     path('accounts/review/posts/', PostsView.as_view(), name='posts'),
     path('create_ticket/', TicketView.create_ticket, name='create_ticket'),
-    path('review/add_review/', ReviewView.as_view(), name='add_review'),
+    path('review/create_review/', ReviewView.as_view(), name='create_review'),
     path('review/following/', FollowingView.as_view(), name='following'),
-    path('authentication/contact-us/', contact, name='contact'),
+    path('authentication/contact-us/', ContactView.as_view(), name='contact'),
     path('unfollow/', UnfollowUserView.as_view(), name='unfollow_user'),
     path('create_ticket_review/', ReviewView.create_ticket_review, name='create_ticket_review'),
+    path('review/edit_delete_review/<int:review_id>/', ReviewView.edit_delete_review, name='edit_delete_review'),
+    path('review/edit_delete_ticket/<int:ticket_id>/', TicketView.edit_delete_ticket, name='edit_delete_ticket'),
+    path('review/edit_ticket/<int:ticket_id>/', TicketView.edit_ticket, name='edit_ticket'),
+    path('review/update_ticket/<int:ticket_id>/', TicketView.update_ticket, name='update_ticket'),
+
 ]

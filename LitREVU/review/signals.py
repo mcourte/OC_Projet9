@@ -5,6 +5,13 @@ from review.models import Ticket
 
 @receiver(post_save, sender=Ticket)
 def increment_user_ticket_number(sender, instance, created, **kwargs):
+    """Fonction qui incrémente le numéro de ticket de l'utilisateur chaque fois qu'un nouveau ticket est créé.
+
+    Args:
+        sender: Le modèle qui envoie le signal (Ticket).
+        instance: L'instance du modèle qui a déclenché le signal.
+        created: Un drapeau indiquant si l'instance a été créée pour la première fois.
+        **kwargs: Arguments supplémentaires."""
     if created:
         # Récupérer l'utilisateur associé au ticket
         user = instance.user

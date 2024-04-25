@@ -8,6 +8,7 @@ User = get_user_model()
 
 
 class TicketForm(forms.ModelForm):
+    """ Formulaire pour la création et la modification d'un ticket."""
     title = forms.CharField(label="Titre", widget=forms.TextInput)
     description = forms.CharField(label="Description", widget=forms.Textarea)
     image = forms.FileField(label="Image", widget=forms.FileInput)
@@ -17,12 +18,8 @@ class TicketForm(forms.ModelForm):
         fields = ['title', 'description', 'image']
 
 
-class DeleteTicketForm(forms.Form):
-    delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-
-
 class ReviewForm(forms.ModelForm):
-
+    """Formulaire pour la création et la modification d'une critique."""
     rating = forms.IntegerField(
         label="Notation", widget=forms.HiddenInput(), required=True
     )
@@ -35,11 +32,8 @@ class ReviewForm(forms.ModelForm):
         fields = ["headline", "rating", "body"]
 
 
-class DeleteReviewForm(forms.Form):
-    delete_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-
-
 class TicketReviewForm(forms.ModelForm):
+    """Formulaire combiné pour la création d'un ticket et d'une critique associée."""
     # Champs pour le ticket
     title = forms.CharField(max_length=100)
     description = forms.CharField(widget=forms.Textarea)
@@ -56,6 +50,7 @@ class TicketReviewForm(forms.ModelForm):
 
 
 class FollowUsersForm(forms.ModelForm):
+    """Formulaire pour suivre un utilisateur."""
     follows = forms.CharField(
         label="Nom d'utilisateur à suivre",
         max_length=128,
@@ -69,6 +64,7 @@ class FollowUsersForm(forms.ModelForm):
         fields = ["follows"]
 
     def clean_follows(self):
+        """Vérifie si l'utilisateur à suivre existe dans la base de données."""
         follows = self.cleaned_data["follows"]
 
         if not User.objects.filter(username=follows):

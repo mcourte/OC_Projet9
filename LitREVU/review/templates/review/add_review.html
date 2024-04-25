@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
 <main class="main-content">
@@ -10,18 +10,20 @@
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="id_title">Titre:</label>
-                        <input type="text" id="id_title" name="Titre" maxlength="128" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_description">Description:</label>
-                        <textarea id="id_description" name="Description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_image">Image:</label>
-                        <input type="file" id="id_image" name="Image">
-                    </div>
-                    <input type="submit" class="fadeIn fourth" value="Demander une critique">
+                        <label for="headline">Titre:</label>
+                        <input type="text" name="headline" id="headline">
+                        <label for="rating">Note:</label>
+                        <div id="rating-stars">
+                            <span class="star" data-rating="1">&#9733;</span>
+                            <span class="star" data-rating="2">&#9733;</span>
+                            <span class="star" data-rating="3">&#9733;</span>
+                            <span class="star" data-rating="4">&#9733;</span>
+                            <span class="star" data-rating="5">&#9733;</span>
+                        </div>
+                        <input type="hidden" name="rating" id="rating"> 
+                        <label for="body">Description:</label>
+                        <input type="text" name="body" id="body">
+                    <input type="submit" class="fadeIn fourth" value="Poster une critique">
                 </form>
             </div>
         </div>

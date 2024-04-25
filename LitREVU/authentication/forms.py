@@ -3,6 +3,8 @@ from .models import User
 
 
 class CustomUserCreationForm(forms.ModelForm):
+    """Formulaire personnalisé pour la création d'un nouvel utilisateur.
+    Ce formulaire hérite du modèle User pour la création d'un nouvel utilisateur avec nom d'utilisateur et email."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
@@ -11,6 +13,9 @@ class CustomUserCreationForm(forms.ModelForm):
         fields = ['username', 'email']
 
     def clean_password2(self):
+        """Valide la confirmation du mot de passe.
+        Cette méthode vérifie si les champs password1 et password2 contiennent les mêmes valeurs.
+        Si les valeurs sont différentes, une exception ValidationError est levée."""
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
@@ -18,6 +23,9 @@ class CustomUserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
+        """Enregistre un nouvel utilisateur.
+        Cette méthode sauvegarde un nouvel utilisateur avec le mot de passe crypté.
+        Si commit est True, l'utilisateur est enregistré dans la base de données."""
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
@@ -26,10 +34,14 @@ class CustomUserCreationForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
+    """Formulaire pour la connexion des utilisateurs existants.
+    Ce formulaire permet à l'utilisateur de saisir son nom d'utilisateur et son mot de passe."""
     username = forms.CharField(max_length=63, label='Nom d’utilisateur')
     password = forms.CharField(max_length=63, widget=forms.PasswordInput, label='Mot de passe')
 
     def clean(self):
+        """Valide les champs username et password.Si l'un des champs est vide,
+        une exception ValidationError est levée."""
         cleaned_data = super().clean()
         username = cleaned_data.get('username')
         password = cleaned_data.get('password')
@@ -39,6 +51,8 @@ class LoginForm(forms.Form):
 
 
 class SignupForm(CustomUserCreationForm):
+    """Formulaire pour l'inscription de nouveaux utilisateurs.
+    Ce formulaire hérite de CustomUserCreationForm et ajoute le champ email pour l'inscription."""
     email = forms.EmailField(
         max_length=254,
         label='Email',
@@ -70,6 +84,8 @@ class SignupForm(CustomUserCreationForm):
 
 
 class ContactUsForm(forms.Form):
+    """Formulaire de contact pour les utilisateurs du système.
+    Ce formulaire permet aux utilisateurs de saisir leur nom, email et un message pour contacter l'administrateur."""
     name = forms.CharField(required=True)
     email = forms.EmailField()
     message = forms.CharField(max_length=1000)

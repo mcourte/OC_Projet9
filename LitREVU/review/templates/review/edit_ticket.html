@@ -1,0 +1,18 @@
+{% extends 'base_menu.html' %}
+{% block content %}
+{% load static %}
+<main class="main-content">
+    <div class="container">
+        <div class="form-header">
+            <h1 class="active">Modifier Ticket</h1>
+            <div class="formContent">
+                <form method="post" enctype="multipart/form-data" action="{% url 'update_ticket' ticket.id %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="fadeIn fourth" value="Enregistrer les modifications">
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

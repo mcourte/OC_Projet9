@@ -1,0 +1,17 @@
+{% extends 'base_menu.html' %}
+{% block content %}
+<main class="main-content">
+    <div class="container">
+        <div class="form-header">
+            <h1 class="active">Confirmation de suppression de la critique</h1>
+            <div class="formContent">
+                <h3 class="active">Êtes-vous sûr de vouloir supprimer la critique "{{ review.title }}" ?</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="submit" name="confirm_delete" class="fadeIn fourth" value="Confirmer la suppression">
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
