@@ -59,11 +59,6 @@ class UserFollows(models.Model):
         """Met fin à la relation de suivi entre les utilisateurs."""
         self.delete()
 
-    def block(self):
-        """Bloque la relation de suivi entre les utilisateurs."""
-        self.blocked = True
-        self.save()
-
     @classmethod
     def is_following(cls, user, followed_user):
         """Vérifie si un utilisateur suit un autre utilisateur."""

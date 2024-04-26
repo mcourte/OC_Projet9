@@ -26,6 +26,7 @@
         <h2 class="active"> Tickets et Critiques des utilisateurs suivis </h2>
         {% for item in combined_list %}
             {% if item.ticket %}
+            {% if not item.ticket.has_review %}
                 <h3 class="active"> Ticket {{ forloop.counter }} </h3>
                 <ul>
                     <li><strong>Titre :</strong> {{ item.ticket.title }}</li>
@@ -36,9 +37,7 @@
                     {% endif %}
                     <li><strong>Date de création :</strong> {{ item.ticket.time_created }}</li>
                 </ul>
-                
                 <!-- Condition pour afficher le bouton "Créer une critique" -->
-                {% if not item.ticket.has_review %}
                     <form method="post" action="{% url 'add_review' %}">
                         {% csrf_token %}
                         <input type="hidden" name="ticket_id" value="{{ item.ticket.id }}">
@@ -50,10 +49,14 @@
                 <!-- Afficher les critiques existantes -->
                 <h3 class="active">Critique de {{ item.review.user.username }}</h3>
                 <ul>
-                    <li><strong>Titre :</strong> {{ item.review.headline }}</li>
-                    <li><strong>Description :</strong> {{ item.review.body }}</li>
-                    <li><strong>Note :</strong> {{ item.review.rating }}</li>
                     <li><strong>En réponse à un Ticket de : {{ item.review.ticket.user.username }}</strong></li>
+                    <li><strong>Titre :</strong> {{ item.ticket.title }}</li>
+                    {% if item.ticket.image %}
+                        <li><strong>Image :</strong> <img src="{{ item.ticket.image.url }}" alt="{{ item.ticket.title }}"></li>
+                    {% endif %}
+                    <li><strong>Titre :</strong> {{ item.review.headline }} - <strong>Note :</strong> {{ item.review.rating }}</li>
+                    <li><strong>Description :</strong> {{ item.review.body }}</li>
+                    
                     <li><strong>Date de création :</strong> {{ item.review.time_created }}</li>
                 </ul>
             {% endif %}

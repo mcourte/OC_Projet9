@@ -664,3 +664,20 @@ height:40px ;
 .review-column ul li {
   margin-bottom: 10px;
 }
+
+/* Bouton de suppression */
+.delete-ticket-button,
+.delete-review-button {
+  background-color: #FFB276; /* Rouge */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.delete-ticket-button:hover,
+.delete-review-button:hover {
+  background-color: #ff9176 /* Rouge plus foncé au survol */
+}

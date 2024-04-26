@@ -3,40 +3,36 @@
 {% load static %}
 <main class="main-content">
     <div class="container">
-                <div id="formReviewContent">
-                    <div class="fadeIn first">
-                        <div>
-                            <h1 class="active">Publier un Ticket pour demander une critique</h1>
-                            <form method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <h3 class="active">Ticket</h3>
-                                <label for="title">Titre:</label>
-                                <input type="text" name="title" id="title">
-                                <label for="description">Description:</label>
-                                <input type="text" name="description" id="description">
-                                <label for="image">Image:</label>
-                                <input type="file" name="image" accept="image/*">
-                                {% if ticket.image %}
-                                <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}">
-                                {% endif %}
-                                <h3 class="active">Critique</h3>
-                                <label for="headline">Titre:</label>
-                                <input type="text" name="headline" id="headline">
-                                <label for="rating">Note:</label>
-                                <div id="rating-stars">
-                                    <span class="star" data-rating="1">&#9733;</span>
-                                    <span class="star" data-rating="2">&#9733;</span>
-                                    <span class="star" data-rating="3">&#9733;</span>
-                                    <span class="star" data-rating="4">&#9733;</span>
-                                    <span class="star" data-rating="5">&#9733;</span>
-                                </div>
-                                <input type="hidden" name="rating" id="rating"> 
-                                <label for="body">Description:</label>
-                                <input type="text" name="body" id="body">
-                                <input type="submit" class="fadeIn second" value="Publier un ticket et une critique">
-                            </form>
-                        </div>    
+        <div id="formReviewContent">
+            <div class="fadeIn first">
+                <div>
+                    <h1 class="active">Publier un Ticket pour demander une critique</h1>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- Champs pour le ticket -->
+                        <h3 class="active">Ticket</h3>
+                        {{ ticket_form.as_p }}
+
+                        <!-- Champs pour la critique -->
+                        <h3 class="active">Critique</h3>
+                        {{ review_form.as_p }}
+
+                        <!-- Étoiles de notation -->
+                        <div id="rating-stars">
+                            <span class="star" data-rating="1">&#9733;</span>
+                            <span class="star" data-rating="2">&#9733;</span>
+                            <span class="star" data-rating="3">&#9733;</span>
+                            <span class="star" data-rating="4">&#9733;</span>
+                            <span class="star" data-rating="5">&#9733;</span>
+                        </div>
+                        <input type="hidden" name="rating" id="rating">
+
+                        <!-- Bouton de soumission -->
+                        <input type="submit" class="fadeIn second" value="Publier un ticket et une critique">
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
-
 {% endblock content %}

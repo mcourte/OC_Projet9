@@ -19,7 +19,7 @@ from django.urls import path, include
 from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, HomeView
 from authentication.AuthenticationViews import custom_csrf_failure, ContactView
 from review.ReviewViews import HomeReviewView, TicketView, ReviewView, FollowingView, UnfollowUserView
-from review.ReviewViews import PostsView
+from review.ReviewViews import PostsView, TicketReviewView
 from django.conf import settings
 
 if settings.DEBUG:
@@ -32,23 +32,22 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls, name="admin"),
     path('login/', LoginView.as_view(template_name='authentication/login.html'), name='login'),
-    path('signup/', SignUpView.as_view(
-         template_name='authentication/signup.html'),
-         name="signup"),
+    path('signup/', SignUpView.as_view(template_name='authentication/signup.html'), name="signup"),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('home/', HomeView.as_view(), name="home"),
     path('failure/', custom_csrf_failure, name="failure"),
     path('accounts/review/home_review/', HomeReviewView.as_view(), name='home_review'),
     path('accounts/review/posts/', PostsView.as_view(), name='posts'),
-    path('create_ticket/', TicketView.create_ticket, name='create_ticket'),
+    path('review/create_ticket/', TicketView.as_view(), name='create_ticket'),
     path('review/create_review/', ReviewView.as_view(), name='create_review'),
     path('review/following/', FollowingView.as_view(), name='following'),
     path('authentication/contact-us/', ContactView.as_view(), name='contact'),
     path('unfollow/', UnfollowUserView.as_view(), name='unfollow_user'),
-    path('create_ticket_review/', ReviewView.create_ticket_review, name='create_ticket_review'),
+    path('review/create_ticket_review/', TicketReviewView.as_view(), name='create_ticket_review'),
+    path('create_review/<int:ticket_id>/', ReviewView.create_review, name='create_review'),
     path('review/edit_delete_review/<int:review_id>/', ReviewView.edit_delete_review, name='edit_delete_review'),
     path('review/edit_delete_ticket/<int:ticket_id>/', TicketView.edit_delete_ticket, name='edit_delete_ticket'),
     path('review/edit_ticket/<int:ticket_id>/', TicketView.edit_ticket, name='edit_ticket'),
     path('review/update_ticket/<int:ticket_id>/', TicketView.update_ticket, name='update_ticket'),
-
+    path('review/update_review/<int:review_id>/', ReviewView.update_review, name='update_review'),
 ]

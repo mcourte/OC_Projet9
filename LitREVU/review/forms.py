@@ -24,7 +24,7 @@ class ReviewForm(forms.ModelForm):
         label="Notation", widget=forms.HiddenInput(), required=True
     )
     body = forms.CharField(label="Commentaire", widget=forms.Textarea)
-    headline = forms.CharField(label="Titre", widget=forms.TextInput)
+    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput)
     edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     class Meta:
@@ -35,14 +35,17 @@ class ReviewForm(forms.ModelForm):
 class TicketReviewForm(forms.ModelForm):
     """Formulaire combiné pour la création d'un ticket et d'une critique associée."""
     # Champs pour le ticket
-    title = forms.CharField(max_length=100)
-    description = forms.CharField(widget=forms.Textarea)
+    title = forms.CharField(label="Titre", widget=forms.TextInput)
+    description = forms.CharField(label="Description", widget=forms.Textarea)
     image = forms.FileField(label="Image", widget=forms.FileInput)
 
     # Champs pour la critique
-    headline = forms.CharField(max_length=100)
-    rating = forms.IntegerField(min_value=1, max_value=5)
-    body = forms.CharField(widget=forms.Textarea)
+    rating = forms.IntegerField(
+        label="Notation", widget=forms.HiddenInput(), required=True
+    )
+    body = forms.CharField(label="Commentaire", widget=forms.Textarea)
+    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput)
+    edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     class Meta:
         model = Ticket

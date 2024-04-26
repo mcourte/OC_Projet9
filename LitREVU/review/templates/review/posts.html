@@ -11,7 +11,7 @@
                         <h2 class="active"> Mes tickets </h2>
                         <div class="ticket_posts">
                             {% for ticket in tickets %}
-                            <h3 class="active" enctype="multipart/form-data"> Ticket {{ forloop.counter }} (ID : {{ ticket.id }}) </h3>
+                            <h3 class="active" enctype="multipart/form-data"> Ticket  - ID : {{ ticket.id }} </h3>
                             <ul>
                                 <li>Titre : {{ ticket.title }}</li>
                                 <li>Description : {{ ticket.description }}</li>
@@ -21,7 +21,6 @@
                                 <li>Date de création : {{ ticket.time_created }}</li>
                             </ul>
                             <!-- Ajouter des boutons pour modifier et supprimer un ticket -->
-                            
                             <form method="get" action="{% url 'edit_ticket' ticket.id %}">
                                 {% csrf_token %}
                                 <input type="submit" class="fadeIn fourth" value="Modifier le ticket">
@@ -45,7 +44,7 @@
                         <h2 class="active"> Mes critiques </h2>
                         <div class="review_posts">
                             {% for review in reviews %}
-                            <h3 class="active"> Critique pour le ticket "{{ review.ticket.title }}" (ID: {{ review.ticket.id }}) </h3>
+                            <h3 class="active"> Critique pour le ticket "{{ review.ticket.title }}"  - ID: {{ review.ticket.id }} </h3>
                             <ul>
                                 <li>Titre : {{ review.ticket.title }}</li>
                                 <li>Description : {{ review.ticket.description }}</li>
@@ -61,9 +60,12 @@
                             
                             <form id="delete_review_form_{{ review.id }}" method="post" action="{% url 'edit_delete_review' review.id %}">
                                 {% csrf_token %}
-                                <input type="hidden" name="review_id" value="{{ review.id }}">
                                 <input type="submit" class="fadeIn third" value="Modifier la critique">
-                                <input type="button" class="fadeIn third delete-review-button" value="Supprimer la critique" data-review-id="{{ review.id }}">
+                            </form>
+                            <form method="post" action="{% url 'edit_delete_review' review.id %}">
+                                {% csrf_token %}
+                                {{ delete_form.as_p }}
+                                <input type="submit" class="fadeIn fourth" value="Supprimer la critique">
                             </form>
                             {% endfor %}
                         </div>
