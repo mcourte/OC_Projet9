@@ -92,3 +92,23 @@ document.addEventListener('DOMContentLoaded', function() {
       return cookieValue;
   }
 });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const stars = document.querySelectorAll(".rating-stars .star");
+
+    stars.forEach(function(star) {
+        star.addEventListener("click", function() {
+            const rating = this.getAttribute("data-rating");
+            document.getElementById("rating").value = rating;
+            // Mettre en surbrillance les étoiles sélectionnées
+            stars.forEach(function(s) {
+                if (s.getAttribute("data-rating") <= rating) {
+                    s.classList.add("selected");
+                } else {
+                    s.classList.remove("selected");
+                }
+            });
+        });
+    });
+});

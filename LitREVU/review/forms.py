@@ -20,15 +20,14 @@ class TicketForm(forms.ModelForm):
 
 class ReviewForm(forms.ModelForm):
     """Formulaire pour la création et la modification d'une critique."""
+    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput(attrs={'id': 'headline'}))
     rating = forms.IntegerField(
         label="Notation",
-        widget=forms.HiddenInput(),
+        widget=forms.HiddenInput(attrs={'id': 'rating'}),
         required=True,
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    body = forms.CharField(label="Commentaire", widget=forms.Textarea)
-    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput)
-    edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    body = forms.CharField(label="Commentaire", widget=forms.Textarea(attrs={'id': 'body'}))
 
     class Meta:
         model = Review

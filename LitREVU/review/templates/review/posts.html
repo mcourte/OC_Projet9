@@ -21,10 +21,13 @@
                                 <li>Date de création : {{ ticket.time_created }}</li>
                             </ul>
                             <!-- Ajouter un bouton pour créer une critique -->
+                            {% if not ticket.has_review %}
+                            <!-- Ajouter un bouton pour créer une critique seulement si le ticket n'a pas de critique -->
                             <form method="get" action="{% url 'create_review' ticket.id %}">
                                 {% csrf_token %}
                                 <input type="submit" class="fadeIn fourth" value="Ajouter une critique">
                             </form>
+                            {% endif %}
                             <!-- Ajouter des boutons pour modifier et supprimer un ticket -->
                             <form method="get" action="{% url 'edit_ticket' ticket.id %}">
                                 {% csrf_token %}
@@ -51,9 +54,25 @@
                             {% for review in reviews %}
                             <h3 class="active"> Critique pour le ticket "{{ review.ticket.title }}"  - ID: {{ review.ticket.id }} </h3>
                             <ul>
+                                <li>Titre : {{ review.ticket.title }}</li>
+                                <li>Description : {{ review.ticket.description }}</li>
+                                <li>Date de création : {{ review.ticket.time_created }}</li>
+                                <form method="post" action="{% url 'edit_delete_ticket' review.ticket.id %}">
+                                    {% csrf_token %}
+                                    <input type="submit" class="fadeIn fourth" value="Supprimer le ticket">
+                                </form>
+                            </ul>
+                            <ul>
                                 <li>Titre : {{ review.headline }}</li>
-                                <li>Note : {{ review.rating }}</li>
+                                <li>Note : 
+                                    <div class="rating-stars">
+                                        {% for _ in "x"|rjust:review.rating %}
+                                        <span class="star" data-rating="{{ forloop.counter }}">&#9733;</span>
+                                        {% endfor %}
+                                    </div>
+                                </li>
                                 <li>Description :{{ review.body }}</li>
+                                <li>Date de création : {{ review.time_created }}</li>
                             </ul>
                             <!-- Ajouter des boutons pour modifier et supprimer une critique -->
                             <form method="get" action="{% url 'update_review' review.id %}">

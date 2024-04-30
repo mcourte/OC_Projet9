@@ -15,6 +15,9 @@ class Ticket(models.Model):
     def has_review(self):
         return self.reviews.exists()
 
+    def user_has_review(self, user):
+        return self.reviews.filter(user=user).exists()
+
     def __str__(self):
         return self.title
 

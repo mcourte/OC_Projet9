@@ -21,41 +21,39 @@
         <div class="critique-empty-column"></div> <!-- Empty column -->
         <div class="critique-column">
             <h2 class="active">Tickets et Critiques des utilisateurs suivis</h2>
-            {% for item in combined_list %}
-                {% if item.ticket %}
-                    {% if not item.ticket.has_review %}
-                        <h3 class="active">Ticket {{ forloop.counter }}</h3>
-                        <ul>
-                            <li><strong>Titre :</strong> {{ item.ticket.title }}</li>
-                            <li><strong>Description :</strong> {{ item.ticket.description }}</li>
-                            <li><strong>Créé par :</strong> {{ item.ticket.user.username }}</li>
-                            {% if item.ticket.image %}
-                                <li><strong>Image :</strong> <img src="{{ item.ticket.image.url }}" alt="{{ item.ticket.title }}"></li>
-                            {% endif %}
-                            <li><strong>Date de création :</strong> {{ item.ticket.time_created }}</li>
-                        </ul>
-                        <!-- Form to create a review -->
-                        <form method="post" action="{% url 'add_review' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="ticket_id" value="{{ item.ticket.id }}">
-                            <input type="submit" class="fadeIn second" value="Créer une critique">
-                        </form>
-                    {% endif %}
-                {% endif %}
-                {% if item.review %}
-                    <!-- Display existing reviews -->
-                    <h3 class="active">Critique de {{ item.review.user.username }}</h3>
+            {% for ticket in following_tickets %}
+                {% if not ticket.has_review %}
+                    <h3 class="active">Ticket {{ forloop.counter }}</h3>
                     <ul>
-                        <li><strong>En réponse à un Ticket de :</strong> {{ item.review.ticket.user.username }}</li>
-                        <li><strong>Titre :</strong> {{ item.review.ticket.title }}</li>
-                        {% if item.review.ticket.image %}
-                            <li><strong>Image :</strong> <img src="{{ item.review.ticket.image.url }}" alt="{{ item.review.ticket.title }}"></li>
+                        <li><strong>Titre :</strong> {{ ticket.title }}</li>
+                        <li><strong>Description :</strong> {{ ticket.description }}</li>
+                        <li><strong>Créé par :</strong> {{ ticket.user.username }}</li>
+                        {% if ticket.image %}
+                            <li><strong>Image :</strong> <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></li>
                         {% endif %}
-                        <li><strong>Titre :</strong> {{ item.review.headline }} - <strong>Note :</strong> {{ item.review.rating }}</li>
-                        <li><strong>Description :</strong> {{ item.review.body }}</li>
-                        <li><strong>Date de création :</strong> {{ item.review.time_created }}</li>
+                        <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
                     </ul>
+                    <!-- Form to create a review -->
+                    <form method="post" action="{% url 'create_review' ticket.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
+                        <input type="submit" class="fadeIn second" value="Créer une critique">
+                    </form>
                 {% endif %}
+            {% endfor %}
+
+            {% for review in following_reviews %}
+                <h3 class="active">Critique de {{ review.user.username }}</h3>
+                <ul>
+                    <li><strong>En réponse à un Ticket de :</strong> {{ review.ticket.user.username }}</li>
+                    <li><strong>Titre :</strong> {{ review.ticket.title }}</li>
+                    {% if review.ticket.image %}
+                        <li><strong>Image :</strong> <img src="{{ review.ticket.image.url }}" alt="{{ review.ticket.title }}"></li>
+                    {% endif %}
+                    <li><strong>Titre :</strong> {{ review.headline }} - <strong>Note :</strong> {{ review.rating }}</li>
+                    <li><strong>Description :</strong> {{ review.body }}</li>
+                    <li><strong>Date de création :</strong> {{ review.time_created }}</li>
+                </ul>
             {% endfor %}
         </div>
         <div class="critique-empty-column"></div> <!-- Empty column -->
