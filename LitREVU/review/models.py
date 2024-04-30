@@ -26,16 +26,22 @@ class Ticket(models.Model):
 class Review(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="reviews")
     rating = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(5)],
-        verbose_name="notation",
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        verbose_name="Notation",
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    headline = models.CharField(max_length=128, verbose_name="title")
-    body = models.CharField(max_length=8192, blank=True, verbose_name="comments")
+    headline = models.CharField(max_length=128, verbose_name="Titre")
+    body = models.CharField(max_length=8192, blank=True, verbose_name="Commentaires")
     time_created = models.DateTimeField(auto_now_add=True)
+    responded = models.BooleanField(default=False)  # Champ indiquant si une réponse a été postée
 
     def __str__(self):
         return f"Review for {self.ticket.title}"
+
+
+class TicketReview(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='ticket_reviews')
 
 
 class UserFollows(models.Model):

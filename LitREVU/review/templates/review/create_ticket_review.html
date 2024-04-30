@@ -6,18 +6,15 @@
         <div id="formReviewContent">
             <div class="fadeIn first">
                 <div>
-                    <h1 class="active">Publier un Ticket pour demander une critique</h1>
-                    <form method="post" enctype="multipart/form-data">
+                    <h1 class="active">Publier un Ticket et sa Critique</h1>
+                    <form method="post" action="{% url 'create_ticket_review' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         <!-- Champs pour le ticket -->
-                        <h3 class="active">Ticket</h3>
-                        {{ ticket_form.as_p }}
-
-                        <!-- Champs pour la critique -->
-                        <h3 class="active">Critique</h3>
-                        {{ review_form.as_p }}
-
+                        <h3 class="active">Ticket & Critique</h3>
+                        {{ ticket_review_form.as_p }}
+                    
                         <!-- Étoiles de notation -->
+                        <h3 class="active">Notation</h3>
                         <div id="rating-stars">
                             <span class="star" data-rating="1">&#9733;</span>
                             <span class="star" data-rating="2">&#9733;</span>
@@ -26,7 +23,7 @@
                             <span class="star" data-rating="5">&#9733;</span>
                         </div>
                         <input type="hidden" name="rating" id="rating">
-
+                    
                         <!-- Bouton de soumission -->
                         <input type="submit" class="fadeIn second" value="Publier un ticket et une critique">
                     </form>

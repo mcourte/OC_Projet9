@@ -2,17 +2,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.contrib import messages
-from .models import Review, Ticket, UserFollows
-from .forms import TicketForm, FollowUsersForm, ReviewForm
+from .models import Review, Ticket, UserFollows, TicketReview
+from .forms import TicketForm, FollowUsersForm, ReviewForm, TicketReviewForm
+from django.urls import reverse_lazy
 from authentication.models import User
 from itertools import chain
 from operator import attrgetter
 
 
-class HomeReviewView(View):
-    """ Cette vue gère l'affichage de la page d'accueil des critiques et des tickets."""
+class HomeReviewView(LoginRequiredMixin, View):
+
     def get(self, request):
-        """ Affiche les critiques et les tickets associés aux utilisateurs suivis."""
         # Récupérer les utilisateurs suivis par l'utilisateur actuel
         following_users = UserFollows.objects.filter(user=request.user).values_list('followed_user', flat=True)
 
@@ -20,17 +20,24 @@ class HomeReviewView(View):
         following_tickets = Ticket.objects.filter(user__in=following_users)
         following_reviews = Review.objects.filter(ticket__user__in=following_users)
 
-        return render(request, 'review/home_review.html', {'following_tickets': following_tickets,
-                                                           'following_reviews': following_reviews})
+        # Combinez les tickets et les critiques dans une seule liste et triez-les par date de création
+        combined_list = sorted(
+            chain(following_tickets, following_reviews),
+            key=attrgetter('time_created'),
+            reverse=True
+        )
 
-    def posts_view(self, request):
+        return render(request, 'review/home_review.html', {'combined_list': combined_list})
+
+    @classmethod
+    def posts_view(cls, request):
         """ Affiche les critiques et les tickets associés aux utilisateurs suivis (vue alternative)."""
         user = request.user
         following_users = UserFollows.objects.filter(user=user, blocked=False).values_list('followed_user', flat=True)
         following_tickets = Ticket.objects.filter(user__in=following_users)
         following_reviews = Review.objects.filter(ticket__user__in=following_users)
-        return render(request, 'home_review.html', {'following_tickets': following_tickets,
-                                                    'following_reviews': following_reviews})
+        return render(request, 'review/home_review.html', {'following_tickets': following_tickets,
+                                                           'following_reviews': following_reviews})
 
 
 class PostsView(LoginRequiredMixin, View):
@@ -117,65 +124,42 @@ class TicketView(LoginRequiredMixin, View):
 
 class ReviewView(LoginRequiredMixin, View):
     """Cette vue gère l'affichage des critiques, leur création, leur modification et leur suppression."""
-    def get(self, request):
-        """Affiche les critiques de l'utilisateur actuel."""
-        reviews = Review.objects.filter(user=request.user)
-        return render(request, 'review/add_review.html', {'reviews': reviews})
 
-    def create_ticket_review(request):
-        if request.method == 'POST':
-            ticket_form = TicketForm(request.POST, request.FILES)
-            review_form = ReviewForm(request.POST)
-            if ticket_form.is_valid() and review_form.is_valid():
-                # Traitement des formulaires valides
-                ticket = ticket_form.save(commit=False)
-                ticket.user = request.user
-                ticket.save()
+    def get(self, request, ticket_id):
+        """Affiche le formulaire pour créer une critique en réponse à un ticket."""
+        ticket = get_object_or_404(Ticket, id=ticket_id)
+        form = ReviewForm()
+        return render(request, 'review/create_review.html', {'form': form, 'ticket': ticket})
 
-                review = review_form.save(commit=False)
-                review.user = request.user
-                review.ticket = ticket
-                review.save()
-
-                # Redirection ou autre traitement après la création réussie
-        else:
-            ticket_form = TicketForm()
-            review_form = ReviewForm()
-
-        return render(request, 'review/create_ticket_review.html', {'ticket_form': ticket_form,
-                                                                    'review_form': review_form})
-
-    def create_review(request, ticket_id):
+    def post(self, request, ticket_id):
         """Crée une critique en réponse à un ticket."""
         ticket = get_object_or_404(Ticket, id=ticket_id)
 
         if request.method == 'POST':
             form = ReviewForm(request.POST, request.FILES)
             if form.is_valid():
-                # Créer la critique associée au ticket spécifié
                 review = form.save(commit=False)
                 review.user = request.user
                 review.ticket = ticket
                 review.save()
-                return redirect('home_review')
+                return redirect('posts')
         else:
             form = ReviewForm()
-        return render(request, 'review/add_review.html', {'form': form})
+        return render(request, 'review/create_review.html', {'form': form, 'ticket': ticket})
 
     def edit_delete_review(request, review_id):
-        """Affiche le formulaire de confirmation de suppression d'une critique."""
+        """Affiche le formulaire de confirmation de suppression d'un ticket."""
         review = get_object_or_404(Review, id=review_id)
 
         if request.method == 'POST':
             # Vérifie si l'utilisateur a confirmé la suppression
             if 'confirm_delete' in request.POST:
-                # Suppression de la critique
+                # Suppression du ticket
                 review.delete()
-                messages.success(request, "La critique a été supprimée avec succès.")
-                return redirect('home_review')  # Rediriger vers la page des critiques après suppression
+                messages.success(request, "La critique a été supprimé avec succès.")
+                return redirect('posts')  # Rediriger vers la page des posts après suppression
             else:
-                messages.info(request, "La suppression de la critique a été annulée.")
-                return redirect('home_review')  # Rediriger vers la page des critiques sans suppression
+                return redirect('edit_delete_review', review_id=review_id)  # Rediriger vers la page de confirmation
 
         context = {
             'review': review,
@@ -195,33 +179,76 @@ class ReviewView(LoginRequiredMixin, View):
         return render(request, 'review/edit_review.html', {'form': form, 'review': review})
 
 
-class TicketReviewView(LoginRequiredMixin, View):
-    """Cette vue gère la publication d'un ticket et d'une critique associée."""
+class TicketReviewView(View):
+    """Cette vue gère la publication, la modification et la suppression d'un ticket et d'une critique associée."""
+
     def get(self, request):
         """Affiche le formulaire pour publier un ticket et une critique associée."""
-        ticket_form = TicketForm()
-        review_form = ReviewForm()
-        return render(request, 'review/create_ticket_review.html',
-                      {'ticket_form': ticket_form, 'review_form': review_form})
+        ticket_review_form = TicketReviewForm()  # Utilisez le formulaire combiné
+        return render(request, 'review/create_ticket_review.html', {'ticket_review_form': ticket_review_form})
 
     def post(self, request):
         """Traite le formulaire soumis pour publier un ticket et une critique associée."""
-        ticket_form = TicketForm(request.POST, request.FILES)
-        review_form = ReviewForm(request.POST)
-        if ticket_form.is_valid() and review_form.is_valid():
-            # Enregistrer le ticket
-            ticket = ticket_form.save(commit=False)
-            ticket.user = request.user
-            ticket.save()
-            # Enregistrer la critique associée
-            review = review_form.save(commit=False)
-            review.user = request.user
-            review.ticket = ticket
-            review.save()
-            return redirect('posts')  # Rediriger vers la page d'accueil après publication
+        ticket_review_form = TicketReviewForm(request.POST, request.FILES)
+        if ticket_review_form.is_valid():
+            # Enregistrer le ticket et la critique associée
+            ticket = Ticket.objects.create(
+                title=request.POST['title'],
+                description=request.POST['description'],
+                image=request.FILES.get('image'),
+                user=request.user
+            )
+            review = Review.objects.create(
+                rating=request.POST['rating'],
+                headline=request.POST['headline'],
+                body=request.POST['body'],
+                user=request.user,
+                ticket=ticket  # Associate the review with the created ticket
+            )
+            TicketReview.objects.create(ticket=ticket, review=review)
+            return redirect(reverse_lazy('posts'))  # Rediriger vers la page des posts après publication
         else:
-            return render(request, 'review/create_ticket_review.html',
-                          {'ticket_form': ticket_form, 'review_form': review_form})
+            print(ticket_review_form.errors)  # Affichez les erreurs dans la console pour déboguer
+            return render(request, 'review/create_ticket_review.html', {'ticket_review_form': ticket_review_form})
+
+    def delete_review(request, review_id):
+        """Supprime une critique."""
+        review = get_object_or_404(Review, id=review_id)
+        if request.method == 'POST':
+            # Vérifie si l'utilisateur a confirmé la suppression
+            if 'confirm_delete' in request.POST:
+                # Suppression du ticket
+                review.delete()
+                messages.success(request, "La critique a été supprimé avec succès.")
+                return redirect('posts')  # Rediriger vers la page des posts après suppression
+            else:
+                return redirect('edit_delete_review', review_id=review_id)  # Rediriger vers la page de confirmation
+
+        context = {
+            'review': review,
+        }
+        return render(request, 'review/edit_delete_review.html', context=context)
+
+    def update_review(request, review_id):
+        """Met à jour les informations d'une critique."""
+        review = get_object_or_404(Review, id=review_id)
+        if request.method == 'POST':
+            form = ReviewForm(request.POST, request.FILES, instance=review)
+            if form.is_valid():
+                form.save()
+                return redirect('posts')
+        else:
+            form = ReviewForm(instance=review)
+        return render(request, 'review/edit_review.html', {'form': form, 'review': review})
+
+    def delete_ticket(request, ticket_id):
+        """Supprime un ticket et les critiques associées."""
+        ticket = get_object_or_404(Ticket, id=ticket_id)
+        if request.method == 'POST':
+            ticket.delete()
+            messages.success(request, "Le ticket et ses critiques associées ont été supprimés avec succès.")
+            return redirect('posts')
+        return render(request, 'review/edit_delete_ticket.html', {'ticket': ticket})
 
 
 class FollowingView(LoginRequiredMixin, View):

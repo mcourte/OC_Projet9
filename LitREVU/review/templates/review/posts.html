@@ -20,6 +20,11 @@
                                 {% endif %}
                                 <li>Date de création : {{ ticket.time_created }}</li>
                             </ul>
+                            <!-- Ajouter un bouton pour créer une critique -->
+                            <form method="get" action="{% url 'create_review' ticket.id %}">
+                                {% csrf_token %}
+                                <input type="submit" class="fadeIn fourth" value="Ajouter une critique">
+                            </form>
                             <!-- Ajouter des boutons pour modifier et supprimer un ticket -->
                             <form method="get" action="{% url 'edit_ticket' ticket.id %}">
                                 {% csrf_token %}
@@ -46,25 +51,18 @@
                             {% for review in reviews %}
                             <h3 class="active"> Critique pour le ticket "{{ review.ticket.title }}"  - ID: {{ review.ticket.id }} </h3>
                             <ul>
-                                <li>Titre : {{ review.ticket.title }}</li>
-                                <li>Description : {{ review.ticket.description }}</li>
-                                <li>Image : <img src="{{ review.ticket.image.url }}" alt="{{ review.ticket.title }}"></li>
-                                <li>Critique demandée par : {{ review.ticket.user.username }}</li>
-                            </ul>
-                            <ul>
                                 <li>Titre : {{ review.headline }}</li>
                                 <li>Note : {{ review.rating }}</li>
                                 <li>Description :{{ review.body }}</li>
                             </ul>
                             <!-- Ajouter des boutons pour modifier et supprimer une critique -->
-                            
-                            <form id="delete_review_form_{{ review.id }}" method="post" action="{% url 'edit_delete_review' review.id %}">
+                            <form method="get" action="{% url 'update_review' review.id %}">
                                 {% csrf_token %}
-                                <input type="submit" class="fadeIn third" value="Modifier la critique">
+                                <input type="submit" class="fadeIn fourth" value="Modifier la critique">
                             </form>
                             <form method="post" action="{% url 'edit_delete_review' review.id %}">
                                 {% csrf_token %}
-                                {{ delete_form.as_p }}
+                                <input type="hidden" name="review_id" value="{{ review.id }}">
                                 <input type="submit" class="fadeIn fourth" value="Supprimer la critique">
                             </form>
                             {% endfor %}

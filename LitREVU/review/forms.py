@@ -1,8 +1,8 @@
 from django import forms
-from .models import Ticket
+from .models import Ticket, Review, TicketReview
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-from . import models
 
 User = get_user_model()
 
@@ -21,14 +21,17 @@ class TicketForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     """Formulaire pour la création et la modification d'une critique."""
     rating = forms.IntegerField(
-        label="Notation", widget=forms.HiddenInput(), required=True
+        label="Notation",
+        widget=forms.HiddenInput(),
+        required=True,
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
     body = forms.CharField(label="Commentaire", widget=forms.Textarea)
     headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput)
     edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     class Meta:
-        model = models.Review
+        model = Review
         fields = ["headline", "rating", "body"]
 
 
@@ -45,11 +48,15 @@ class TicketReviewForm(forms.ModelForm):
     )
     body = forms.CharField(label="Commentaire", widget=forms.Textarea)
     headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput)
-    edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     class Meta:
-        model = Ticket
-        fields = ['title', 'description', 'image', 'headline', 'rating', 'body']
+        model = TicketReview
+        fields = ['title', 'description', 'image',  'headline', 'rating', 'body']
+        widgets = {
+            'rating': forms.HiddenInput(),
+            'headline': forms.TextInput(attrs={'placeholder': 'Titre de la critique'}),
+            'body': forms.Textarea(attrs={'placeholder': 'Commentaire'}),
+        }
 
 
 class FollowUsersForm(forms.ModelForm):
