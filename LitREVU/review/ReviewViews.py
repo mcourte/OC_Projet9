@@ -20,6 +20,10 @@ class HomeReviewView(LoginRequiredMixin, View):
         following_tickets = Ticket.objects.filter(user__in=following_users)
         following_reviews = Review.objects.filter(ticket__user__in=following_users)
 
+        # Trier les tickets et les critiques par date de création de la plus récente à la plus ancienne
+        following_tickets = following_tickets.order_by('-time_created')
+        following_reviews = following_reviews.order_by('-time_created')
+
         return render(request, 'review/home_review.html', {'following_tickets': following_tickets,
                                                            'following_reviews': following_reviews})
 
