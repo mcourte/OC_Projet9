@@ -6,34 +6,28 @@ from .models import Review, Ticket, UserFollows, TicketReview
 from .forms import TicketForm, FollowUsersForm, ReviewForm, TicketReviewForm
 from django.urls import reverse_lazy
 from authentication.models import User
-from itertools import chain
 from operator import attrgetter
+from django.db.models import Q
+from itertools import chain
 
 
 class HomeReviewView(LoginRequiredMixin, View):
 
     def get(self, request):
-        # Récupérer les utilisateurs suivis par l'utilisateur actuel
+        # Récupérer tous les utilisateurs suivis par l'utilisateur actuel
         following_users = UserFollows.objects.filter(user=request.user).values_list('followed_user', flat=True)
 
-        # Récupérer les tickets et les critiques associés aux utilisateurs suivis
-        following_tickets = Ticket.objects.filter(user__in=following_users)
+        # Récupérer tous les utilisateurs que l'utilisateur suit et ceux qui le suivent
+        users_related = Q(user__in=following_users) | Q(user=request.user)
+
+        # Récupérer tous les tickets et critiques associés aux utilisateurs suivis par l'utilisateur actuel
+        following_tickets = Ticket.objects.filter(users_related)
         following_reviews = Review.objects.filter(ticket__user__in=following_users)
 
         # Trier les tickets et les critiques par date de création de la plus récente à la plus ancienne
         following_tickets = following_tickets.order_by('-time_created')
         following_reviews = following_reviews.order_by('-time_created')
 
-        return render(request, 'review/home_review.html', {'following_tickets': following_tickets,
-                                                           'following_reviews': following_reviews})
-
-    @classmethod
-    def posts_view(cls, request):
-        """ Affiche les critiques et les tickets associés aux utilisateurs suivis (vue alternative)."""
-        user = request.user
-        following_users = UserFollows.objects.filter(user=user, blocked=False).values_list('followed_user', flat=True)
-        following_tickets = Ticket.objects.filter(user__in=following_users)
-        following_reviews = Review.objects.filter(ticket__user__in=following_users)
         return render(request, 'review/home_review.html', {'following_tickets': following_tickets,
                                                            'following_reviews': following_reviews})
 
