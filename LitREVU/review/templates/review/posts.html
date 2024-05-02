@@ -16,7 +16,8 @@
                                 <li>Titre : {{ ticket.title }}</li>
                                 <li>Description : {{ ticket.description }}</li>
                                 {% if ticket.image %}
-                                <li>Image : <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></li>
+                                <li>Image :</li>
+                                <li><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
                                 {% endif %}
                                 <li>Date de création : {{ ticket.time_created }}</li>
                             </ul>
@@ -64,13 +65,7 @@
                             </ul>
                             <ul>
                                 <li>Titre : {{ review.headline }}</li>
-                                <li>Note : 
-                                    <div class="rating-stars">
-                                        {% for _ in "x"|rjust:review.rating %}
-                                        <span class="star" data-rating="{{ forloop.counter }}">&#9733;</span>
-                                        {% endfor %}
-                                    </div>
-                                </li>
+                                <li>Note : {{ review.rating }} /5 </li>
                                 <li>Description :{{ review.body }}</li>
                                 <li>Date de création : {{ review.time_created }}</li>
                             </ul>

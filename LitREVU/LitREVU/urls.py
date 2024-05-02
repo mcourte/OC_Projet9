@@ -21,10 +21,10 @@ from authentication.AuthenticationViews import custom_csrf_failure, ContactView
 from review.ReviewViews import HomeReviewView, TicketView, ReviewView, FollowingView, UnfollowUserView
 from review.ReviewViews import PostsView, TicketReviewView
 from django.conf import settings
+from django.conf.urls.static import static
 
 if settings.DEBUG:
     import debug_toolbar
-
 
 app_name = 'accounts'
 
@@ -50,3 +50,7 @@ urlpatterns = [
     path('review/update_ticket/<int:ticket_id>/', TicketView.update_ticket, name='update_ticket'),
     path('review/update_review/<int:review_id>/', ReviewView.update_review, name='update_review'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

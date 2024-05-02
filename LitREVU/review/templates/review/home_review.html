@@ -28,7 +28,8 @@
                     <li><strong>Titre :</strong> {{ ticket.title }}</li>
                     <li><strong>Description :</strong> {{ ticket.description }}</li>
                     {% if ticket.image %}
-                        <li><strong>Image :</strong> <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></li>
+                    <li><strong>Image :</strong></li>
+                    <li><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
                     {% endif %}
                     <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
                 </ul>

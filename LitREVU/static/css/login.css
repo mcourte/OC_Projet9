@@ -668,7 +668,7 @@ height:40px ;
 /* Bouton de suppression */
 .delete-ticket-button,
 .delete-review-button {
-  background-color: #FFB276; /* Rouge */
+  background-color: #a4846f; 
   color: white;
   border: none;
   border-radius: 5px;
@@ -681,3 +681,4 @@ height:40px ;
 .delete-review-button:hover {
   background-color: #ff9176 /* Rouge plus foncé au survol */
 }
+

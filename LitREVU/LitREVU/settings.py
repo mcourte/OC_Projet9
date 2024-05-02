@@ -88,8 +88,8 @@ DATABASES = {
 }
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'medias')
 MEDIA_URL = '/medias/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'medias')
 
 
 # Password validation
