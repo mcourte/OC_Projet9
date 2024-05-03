@@ -31,6 +31,16 @@ Dans le terminal de commande, executer la commande suivante :
 python3 manage.py runserver
 ```
 
-## Etape 3 :  Utilisation du programme
+Le terminal de commande affiche le message suivant :
+```System check identified no issues (0 silenced).
+May 03, 2024 - 06:10:48
+Django version 5.0, using settings 'LitREVU.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.```
 
-En cours   
+Vous avez alors deux possibilités : cliquez directement sur le lien dans le terminal, ou tapez [http://127.0.0.1:8000/](http://127.0.0.1:8000/) dans votre navigateur
+
+## Etape 3 :  Utilisation du site
+
+Créez-vous un compte ou connectez-vous avec les identifiants d'un des utilisateurs existant ( fichier xxxx )
+Bonne navigation ! 
