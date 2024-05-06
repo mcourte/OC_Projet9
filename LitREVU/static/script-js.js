@@ -1,20 +1,21 @@
-// Wait for the DOM content to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-  // Get all input fields
-  var inputs = document.querySelectorAll('input');
 
-  // Loop through each input field
-  inputs.forEach(function(input) {
-      // Add event listeners for mouse enter and mouse leave
-      input.addEventListener('mouseenter', function() {
-          // Add a class to highlight the input field on hover
-          this.classList.add('input-hover');
-      });
-      input.addEventListener('mouseleave', function() {
-          // Remove the class when the mouse leaves the input field
-          this.classList.remove('input-hover');
-      });
-  });
+function addInputHoverEffect() {
+    // Obtenir tous les champs d'entrée
+    var inputs = document.querySelectorAll('input');
+
+    // Parcourir chaque champ d'entrée
+    inputs.forEach(function(input) {
+        // Ajouter des écouteurs d'événements pour la souris entrante et sortante
+        input.addEventListener('mouseenter', function() {
+            // Ajouter une classe pour mettre en surbrillance le champ d'entrée au survol
+            this.classList.add('input-hover');
+        });
+        input.addEventListener('mouseleave', function() {
+            // Supprimer la classe lorsque la souris quitte le champ d'entrée
+            this.classList.remove('input-hover');
+        });
+    });
+}
 
   // JavaScript pour la sélection de la note en cliquant sur les étoiles
   const stars = document.querySelectorAll(".star");
@@ -91,9 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       return cookieValue;
   }
-});
+;
 
-
+// Fonction pour gérer la sélection de la note en cliquant sur les étoiles
 document.addEventListener("DOMContentLoaded", function() {
     const stars = document.querySelectorAll(".rating .star");
 
@@ -117,55 +118,56 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+// Fonction pour afficher une page de tickets et de critiques
 document.addEventListener("DOMContentLoaded", function() {
     const tickets = document.querySelectorAll('.ticket');
     const reviews = document.querySelectorAll('.review');
     const itemsPerPage = 2;
     let currentPage = 1;
-
+  
     function showPage(page) {
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-
-        tickets.forEach((ticket, index) => {
-            ticket.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
-        });
-
-        reviews.forEach((review, index) => {
-            review.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
-        });
-
-        const totalPages = Math.ceil(Math.max(tickets.length, reviews.length) / itemsPerPage);
-        const prevButton = document.getElementById('prevPage');
-        const nextButton = document.getElementById('nextPage');
-
-        if (currentPage === 1) {
-            prevButton.style.display = 'none';
-        } else {
-            prevButton.style.display = 'block';
-        }
-
-        if (currentPage === totalPages) {
-            nextButton.style.display = 'none';
-        } else {
-            nextButton.style.display = 'block';
-        }
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+  
+      tickets.forEach((ticket, index) => {
+        ticket.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+      });
+  
+      reviews.forEach((review, index) => {
+        review.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+      });
+  
+      const totalPages = Math.ceil(Math.max(tickets.length, reviews.length) / itemsPerPage);
+      const prevButton = document.getElementById('prevPage');
+      const nextButton = document.getElementById('nextPage');
+  
+      if (currentPage === 1) {
+        prevButton.style.display = 'none';
+      } else {
+        prevButton.style.display = 'block';
+      }
+  
+      if (currentPage === totalPages) {
+        nextButton.style.display = 'none';
+      } else {
+        nextButton.style.display = 'block';
+      }
     }
-
+  
     document.getElementById('prevPage').addEventListener('click', function() {
-        if (currentPage > 1) {
-            currentPage--;
-            showPage(currentPage);
-        }
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+      }
     });
-
+  
     document.getElementById('nextPage').addEventListener('click', function() {
-        const totalPages = Math.ceil(Math.max(tickets.length, reviews.length) / itemsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            showPage(currentPage);
-        }
+      const totalPages = Math.ceil(Math.max(tickets.length, reviews.length) / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
+      }
     });
-
+  
     showPage(currentPage);
-});
+  });
