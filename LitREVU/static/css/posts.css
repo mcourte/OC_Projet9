@@ -1,90 +1,3 @@
-/* HTML et BODY */
-/* BASIC */
-html {
-  position: relative; /* Set position to relative so that ::before pseudo-element can be positioned relative to it */
-  /* Set background image */
-  background-image: url("../images/hero.jpg");
-  /* Adjust background image properties */
-  background-size: cover; /* Cover the entire viewport */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Do not repeat the image */
-}
-
-html::before {
-  content: ""; /* Required for pseudo-elements */
-  position: absolute; /* Position the pseudo-element */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.6); /* Change the last value (0.6) to adjust transparency */
-  z-index: -1; /* Ensure the pseudo-element is behind other content */
-}
-
-body {
-  display: flex;
-  justify-content: center; /* Ajustez la justification pour centrer les éléments */
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-/* HEADER */
-
-header {
-  position: fixed;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #FFB276;
-  color: #fff;
-  padding: 10px;
-  z-index: 1000; /* Assurez-vous que le header est au-dessus de tout le contenu */
-}
-
-.navbar {
-  display: flex;
-  align-items: center; /* Centrer verticalement les éléments */
-}
-
-.logo {
-  margin-left: 20px; /* Marge à droite du logo */
-  width: 50px; /* Largeur de l'image */
-  height: auto; /* Hauteur ajustée automatiquement pour conserver les proportions */
-}
-
-nav {
-  margin-left: auto; /* Place le nav à droite */
-  padding-right: 20px;
-}
-
-nav ul {
-  list-style: none; /* Supprimer les puces de liste */
-  padding: 0;
-  margin: 0;
-}
-
-nav li {
-  display: inline-block; /* Afficher les éléments en ligne */
-  margin-right: 20px; /* Marge à droite entre les éléments */
-}
-
-
-nav a {
-  color: black; /* Couleur du texte des liens */
-  text-decoration: none; /* Supprime le soulignement des liens */
-  margin: 0 10px; /* Marge entre les liens */
-  text-align: center;
-  font-size: 24px;
-  font-weight: 600;
-  display:inline-block;
-  margin: 10px  10px 10px 10px; 
-}
-
-nav a:hover {
-  text-decoration: underline; /* Soulignement au survol des liens */
-}
 
 
 .container {
@@ -151,7 +64,25 @@ ul li::before {
   gap: 20px; /* Espace entre les colonnes */
 }
 
+.line {
+  margin-bottom: 20px; /* Espace entre chaque ligne */
+}
+
+.ticket {
+  border: 1px solid #ccc; /* Bordure pour les tickets */
+  padding: 10px; /* Espacement interne */
+  background-color: #f9f9f9; /* Couleur de fond */
+}
+
+.review {
+  border: 1px solid #ccc; /* Bordure pour les critiques */
+  padding: 10px; /* Espacement interne */
+  background-color: #f9f9f9; /* Couleur de fond */
+}
+
 .register-column, .login-column {
+  text-align: center;
+  background-color: #fbf2e9;
   padding: 0px;
   flex: 1; /* Les colonnes vont prendre autant d'espace que possible */
 }
@@ -167,31 +98,6 @@ ul li::before {
   padding: 20px;
 }
 
-.empty-column-signup {
-  flex:  1;
-}
-
-.register-column-signup {
-  background-color: #fbf2e9;
-  padding: 0px;
-  flex: 1; /* Les colonnes vont prendre autant d'espace que possible */
-}
-
-.register-column-signup input[type="submit"] {
-  margin: 0 auto; /* Centrer le bouton "Se connecter" horizontalement */
-  margin-top: 25px;
-}
-
-.main-content-row {
-  grid-column: 3;
-  grid-row: 3;
-  width: 100%;
-  margin-top: 70px;
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .form-body-row {
   display: flex;
@@ -212,111 +118,38 @@ ul li::before {
   align-items: flex-start; /* Alignez les éléments en haut */
 }
 
-.publish-column, .critique-empty-column, .review-column {
+.publish-column, .critique-empty-column, .review-column, .critique-column {
   flex: 1; /* Chaque colonne prend autant d'espace que possible */
 }
 
-
-
+.main-content-container {
+  position: relative; /* Utilisez position: relative */
+  width: 100%;
+  padding-bottom: calc(100vh - 70px); /* Ajustez la marge inférieure en fonction de la hauteur de la fenêtre - hauteur du header */
+}
 
 .main-content {
-  grid-column: 3;
+  position: absolute; /* Utilisez position: absolute */
+  top: 70px; /* Ajustez en fonction de la hauteur du header */
+  left: 0;
   width: 100%;
-  margin-top: 70px;
-  flex-grow: 1;
-  display: flex; /* Utiliser flexbox pour centrer le contenu verticalement */
-  justify-content: center; /* Centrer le contenu horizontalement */
-  align-items: center; /* Centrer le contenu verticalement */
+  padding-top: 30px;
+  overflow-y: auto; /* Ajoutez un défilement vertical si nécessaire */
 }
 
 
 /* BASIC */
-html {
-background-color: #fbf2e9;
-}
 
-body {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
-a {
-color: white;
-display:inline-block;
-text-decoration: none;
-font-weight: 400;
-}
-
-h2 {
-text-align: center;
-font-size: 24px;
-font-weight: 600;
-text-transform: uppercase;
-display:inline-block;
-margin: 10px  10px 10px 10px; 
-color: black;
-}
-
-h3 {
-  text-align: left;
-  font-size: 18.5px;
-  font-weight: 600;
-  text-transform: capitalize;
-  display:inline-block;
-  margin: 10px  10px 10px 10px; 
-  color: black;
-  }
-
-p {
-  font-size: 18.5px;
-  color: black;
-  }
-
-ol {
-  font-size: 18.5px;
-  color: black;
-  }
-
-/* STRUCTURE */
-.wrapper {
-display: flex;
-align-items: center;
-flex-direction: column; 
-justify-content: center;
-width: 100%;
-min-height: 100%;
-padding: 20px;
-}
 
 #formContent {
--webkit-border-radius: 10px 10px 10px 10px;
-border-radius: 10px 10px 10px 10px;
-background: #fbf2e9;
-width: 300px;
-max-width: 700px;
-position: center;
-padding: 20px;
--webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-text-align: center;
-font-size: 18.5px;
-}
-
-#formReviewContent {
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
   background: #fbf2e9;
   width: 300px;
-  max-width: 1500px;
-  margin: 20px auto;
-  margin-top: 100px;
+  max-width: 700px;
+  margin: 0 auto; /* Centrer l'élément */
   padding: 20px;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  box-shadow:
+      var(--shadow-elevation-medium); /* Utilisation de la variable --shadow-elevation-medium pour l'ombrage */
   text-align: center;
   font-size: 18.5px;
 }
@@ -329,144 +162,6 @@ padding: 25px;
 text-align: center;
 -webkit-border-radius: 0 0 10px 10px;
 border-radius: 0 0 10px 10px;
-}
-
-
-
-.form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%; /* Faites en sorte que chaque conteneur de formulaire prenne la largeur totale de sa colonne */
-  text-align: center; /* Centrer le contenu des formulaires */
-}
-
-.form-group {
-  margin-bottom: 5px;
-}
-
-label {
-  display: block;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-weight: 600;
-}
-
-input[type="text"],
-input[type="file"], 
-input[type="email"]
-input[type="password"],
-input[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-
-/* TABS */
-h2.inactive {
-color: #cccccc;
-}
-
-h2.active {
-color: #0d0d0d;
-border-bottom: 2px solid  #cccccc;
-}
-
-/* FORM TYPOGRAPHY*/
-.input-wrapper {
-  position: relative;
-  margin-bottom: 20px; /* Espacement entre chaque champ */
-}
-
-.input-wrapper label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none; /* Empêche le clic sur l'étiquette */
-  transition: all 0.3s ease;
-  color: #888; /* Couleur de l'étiquette */
-}
-
-.input-wrapper input {
-  width: 100%; /* Remplit la largeur du conteneur */
-  padding-top: 20px; /* Espace pour l'étiquette */
-}
-
-.input-wrapper input:focus + label,
-.input-wrapper input:not(:placeholder-shown) + label {
-  top: -20px; /* Déplace l'étiquette vers le haut */
-  font-size: 18.5px; /* Réduit la taille de police de l'étiquette */
-  color: #333; /* Couleur de l'étiquette lorsque le champ est en focus ou rempli */
-}
-
-input[type=button], input[type=submit], input[type=reset], input[type=file]  {
-background-color: #FFB276;
-border: none;
-color: black;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-text-transform: uppercase;
-font-size: 18.5px;
-font-weight: 700;
--webkit-box-shadow: 0 10px 30px 0 #a4846f;
-box-shadow: 0 10px 30px 0 #a4846f;
--webkit-border-radius: 5px 5px 5px 5px;
-border-radius: 5px 5px 5px 5px;
-margin: 5px 20px 40px 20px;
--webkit-transition: all 0.3s ease-in-out;
--moz-transition: all 0.3s ease-in-out;
--ms-transition: all 0.3s ease-in-out;
--o-transition: all 0.3s ease-in-out;
-transition: all 0.3s ease-in-out;
-}
-
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=file]:hover   {
-background-color: #FFB276;
-}
-
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active, input[type=file]:active  {
--moz-transform: scale(0.95);
--webkit-transform: scale(0.95);
--o-transform: scale(0.95);
--ms-transform: scale(0.95);
-transform: scale(0.95);
-}
-
-input[type=text], input[type=password], input[type=email] {
-  background-color: #f6f6f6;
-  border: none;
-  color: #0d0d0d;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18.5px;
-  margin: 5px;
-  width: 200px;
-  border: 2px solid #f6f6f6;
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -ms-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
-input[type=text]:focus, [type=password]:focus, [type=email]:focus {
-background-color: #fff;
-border-bottom: 2px solid #a4846f;
-}
-
-input[type="text"][value]
-input[type="email"][value],
-input[type="password"][value] {
-    background-color: #FFB276;
-    color: black;
 }
 
 
@@ -492,148 +187,39 @@ input[type="password"][value] {
 input:hover + .help-text {
   display: block;
 }
-/* ANIMATIONS */
-
-/* Simple CSS3 Fade-in-down Animation */
-.fadeInDown {
--webkit-animation-name: fadeInDown;
-animation-name: fadeInDown;
--webkit-animation-duration: 1s;
-animation-duration: 1s;
--webkit-animation-fill-mode: both;
-animation-fill-mode: both;
-}
-
-@-webkit-keyframes fadeInDown {
-0% {
-  opacity: 0;
-  -webkit-transform: translate3d(0, -100%, 0);
-  transform: translate3d(0, -100%, 0);
-}
-100% {
-  opacity: 1;
-  -webkit-transform: none;
-  transform: none;
-}
-}
-
-@keyframes fadeInDown {
-0% {
-  opacity: 0;
-  -webkit-transform: translate3d(0, -100%, 0);
-  transform: translate3d(0, -100%, 0);
-}
-100% {
-  opacity: 1;
-  -webkit-transform: none;
-  transform: none;
-}
-}
-
-/* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-
-.fadeIn {
-opacity:0;
--webkit-animation:fadeIn ease-in 1;
--moz-animation:fadeIn ease-in 1;
-animation:fadeIn ease-in 1;
-
--webkit-animation-fill-mode:forwards;
--moz-animation-fill-mode:forwards;
-animation-fill-mode:forwards;
-
--webkit-animation-duration:1s;
--moz-animation-duration:1s;
-animation-duration:1s;
-}
-
-.fadeIn.first {
--webkit-animation-delay: 0.4s;
--moz-animation-delay: 0.4s;
-animation-delay: 0.4s;
-}
-
-.fadeIn.second {
--webkit-animation-delay: 0.6s;
--moz-animation-delay: 0.6s;
-animation-delay: 0.6s;
-}
-
-.fadeIn.third {
--webkit-animation-delay: 0.8s;
--moz-animation-delay: 0.8s;
-animation-delay: 0.8s;
-}
-
-.fadeIn.fourth {
--webkit-animation-delay: 1s;
--moz-animation-delay: 1s;
-animation-delay: 1s;
-}
-
-/* Simple CSS3 Fade-in Animation */
-.underlineHover:after {
-display: block;
-left: 0;
-bottom: -10px;
-width: 0;
-height: 2px;
-background-color: #a4846f;
-content: "";
-transition: width 0.2s;
-}
-
-.underlineHover:hover {
-color: #0d0d0d;
-}
-
-.underlineHover:hover:after{
-width: 100%;
-}
-
-/* OTHERS */
-*:focus {
-  outline: none;
-} 
-
-#logo {
-margin:10px;
-width:35px;
-height:40px ;
-}
-
-
-.btn-back {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #ccc;
-  color: #fff;
-  text-decoration: none;
-  border: none;
-  border-radius: 5px;
-}
-
-.btn-back:hover {
-  background-color: #999;
-}
 
 
 /* Stylez la grille de critiques */
+
 .critique-grid {
+  margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-template-rows: 150px 70px auto;
-  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Deux colonnes */
+  grid-template-rows: auto 200px auto; /* Trois lignes */
+  gap: 70px;
 }
 
-/* Stylez les colonnes de la grille */
-.critique-column {
-  background-color: #fbf2e9;
-  padding: 20px;
+
+
+.image-posts {
+	max-width: 150px;
+	height: auto;
 }
+
+.critique-column {
+  border-radius: 10px;
+  background: #fbf2e9;
+  width: 300px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: var(--shadow-elevation-medium);
+  text-align: center;
+  font-size: 18.5px;
+  flex: 1;
+  height: auto; /* Ajustement automatique de la hauteur en fonction du contenu */
+}
+
 
 .critique-empty-column {
   padding: 20px;
@@ -643,15 +229,20 @@ height:40px ;
   text-align: center;
 }
 
+.critique-column ul {
+  padding-left: 0;
+}
+
+.critique-column ul li {
+  margin-bottom: 10px;
+  text-align: center;
+}
 .critique-form {
   text-align: center;
 }
 
 /* Stylez les critiques suivies */
-.review-column {
-  background-color: #fbf2e9;
-  padding: 20px;
-}
+
 
 .review-column h2 {
   text-align: center;
@@ -663,7 +254,15 @@ height:40px ;
 
 .review-column ul li {
   margin-bottom: 10px;
+  text-align: center;
 }
+
+.line {
+  border-bottom: 1px solid #ccc; /* Définir le style de la ligne */
+  margin-bottom: 20px; /* Espacement entre chaque élément */
+  padding-bottom: 20px; /* Espacement entre le texte et la ligne */
+}
+
 
 /* Bouton de suppression */
 .delete-ticket-button,
@@ -681,4 +280,3 @@ height:40px ;
 .delete-review-button:hover {
   background-color: #ff9176 /* Rouge plus foncé au survol */
 }
-

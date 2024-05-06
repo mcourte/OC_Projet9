@@ -1,0 +1,120 @@
+
+.line {
+  margin-bottom: 20px; /* Espace entre chaque ligne */
+}
+
+.ticket {
+  border: 1px solid #ccc; /* Bordure pour les tickets */
+  padding: 10px; /* Espacement interne */
+  background-color: #f9f9f9; /* Couleur de fond */
+}
+
+.review {
+  border: 1px solid #ccc; /* Bordure pour les critiques */
+  padding: 10px; /* Espacement interne */
+  background-color: #f9f9f9; /* Couleur de fond */
+}
+
+
+.empty-column {
+  padding: 20px;
+}
+
+
+.critique-empty-column, .critique-column {
+  flex: 1; /* Chaque colonne prend autant d'espace que possible */
+}
+
+/* BASIC */
+
+
+#formContent {
+  border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
+  background: #fbf2e9;
+  width: 300px;
+  max-width: 700px;
+  margin: 0 auto; /* Centrer l'élément */
+  padding: 20px;
+  box-shadow:
+      var(--shadow-elevation-medium); /* Utilisation de la variable --shadow-elevation-medium pour l'ombrage */
+  text-align: center;
+  font-size: 18.5px;
+}
+
+.help-text {
+  display: none;  /* Hide the help text by default */
+  color: black;    /* Adjust color as needed */
+  font-size: 18.5px; /* Adjust font size as needed */
+  margin-top: 5px; /* Adjust margin as needed */
+  
+}
+
+.ticket_posts, .review_posts {
+  border-bottom: 1.5px solid grey; /* Ajoute une bordure en bas de chaque ticket */
+  padding-bottom: 10px; /* Ajoute un espace en bas du ticket */
+}
+
+.ticket_posts:last-child, .review_posts:last-child {
+  border-bottom: none; /* Supprime la bordure du dernier ticket */
+  padding-bottom: 0; /* Supprime l'espace en bas du dernier ticket */
+}
+
+/* CSS to show the help text when the input field is hovered over */
+input:hover + .help-text {
+  display: block;
+}
+
+
+/* Stylez la grille de critiques */
+
+.critique-grid {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Deux colonnes */
+  gap: 70px;
+}
+
+
+
+.image-posts {
+	max-width: 150px;
+	height: auto;
+}
+
+
+.critique-column input[type="file"]
+{
+  margin: 0 auto; /* Centrer le bouton "Se connecter" horizontalement */
+  margin-top: 25px;
+}
+
+
+.critique-empty-column {
+  padding: 20px;
+}
+
+.critique-column h2 {
+  text-align: center;
+}
+
+.critique-column ul {
+  padding-left: 0;
+}
+
+.critique-column ul li {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.critique-form {
+  text-align: center;
+}
+
+/* Stylez les critiques suivies */
+
+
+.line {
+  border-bottom: 1px solid #ccc; /* Définir le style de la ligne */
+  margin-bottom: 20px; /* Espacement entre chaque élément */
+  padding-bottom: 20px; /* Espacement entre le texte et la ligne */
+}
+
