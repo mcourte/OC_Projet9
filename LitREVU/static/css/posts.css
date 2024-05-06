@@ -1,69 +1,4 @@
 
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.form-header {
-  /* Stylez votre ligne au-dessus */
-  border-bottom: 1px solid #ccc; /* Ligne horizontale */
-  margin-bottom: 20px; /* Marge inférieure */
-  width: 100%; /* Pleine largeur */
-  text-align: center; /* Centrer le contenu horizontalement */
-}
-
-.form-header h2 {
-  margin-top: 0; /* Supprimer la marge supérieure par défaut du titre */
-}
-
-ol {
-  list-style: none; /* Supprimer la numérotation par défaut */
-  counter-reset: my-counter; /* Réinitialiser le compteur */
-  padding-left: 0; /* Supprimer le décalage par défaut */
-  font-size: 18,5px;
-  text-align: left;
-}
-
-ol li {
-  position: relative; /* Position relative pour pouvoir positionner le point */
-  counter-increment: my-counter; /* Incrémenter le compteur */
-  padding-left: 2em; /* Ajouter un décalage au texte des éléments de liste */
-  text-align: left;
-}
-
-ol li::before {
-  content: counter(my-counter) ". "; /* Ajouter le numéro avec un point */
-  position: absolute; /* Position absolue pour placer le point */
-  left: 0; /* Aligner le point avec le bord gauche */
-}
-
-ul {
-  list-style: none; /* Supprimer les puces par défaut */
-  padding-left: 0; /* Supprimer le décalage par défaut */
-  font-size: 18.5px;
-  text-align: left;
-}
-
-ul li {
-  position: relative; /* Position relative pour permettre le positionnement */
-  padding-left: 1em; /* Ajouter un décalage au texte des éléments de liste */
-  text-align: left;
-}
-
-ul li::before {
-  content: ""; /* Ne rien afficher avant chaque élément de liste */
-  position: absolute; /* Position absolue pour permettre le positionnement */
-  left: 0; /* Aligner le début du texte avec le bord gauche */
-}
-
-.form-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* 3 colonnes avec une colonne vide au milieu */
-  gap: 20px; /* Espace entre les colonnes */
-}
-
 .line {
   margin-bottom: 20px; /* Espace entre chaque ligne */
 }
@@ -87,9 +22,7 @@ ul li::before {
   flex: 1; /* Les colonnes vont prendre autant d'espace que possible */
 }
 
-.login-column input[type="submit"],
-.review-column input[type="file"]
-.register-column input[type="submit"] {
+.review-column input[type="file"] {
   margin: 0 auto; /* Centrer le bouton "Se connecter" horizontalement */
   margin-top: 25px;
 }
@@ -141,28 +74,7 @@ ul li::before {
 /* BASIC */
 
 
-#formContent {
-  border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
-  background: #fbf2e9;
-  width: 300px;
-  max-width: 700px;
-  margin: 0 auto; /* Centrer l'élément */
-  padding: 20px;
-  box-shadow:
-      var(--shadow-elevation-medium); /* Utilisation de la variable --shadow-elevation-medium pour l'ombrage */
-  text-align: center;
-  font-size: 18.5px;
-}
 
-
-#formFooter {
-background-color: #fbf2e9;
-border-top: 1px solid #fbf2e9;
-padding: 25px;
-text-align: center;
--webkit-border-radius: 0 0 10px 10px;
-border-radius: 0 0 10px 10px;
-}
 
 
 .help-text {
