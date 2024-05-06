@@ -579,26 +579,3 @@ height:50px ;
 }
 
 
-.prev-page {
-  float: left; /* Aligner à gauche */
-  margin-right: 10px; /* Ajouter une marge à droite pour l'espacement */
-}
-
-.next-page {
-  float: right; /* Aligner à droite */
-}
-
-.arrow-button {
-  background-color: transparent; /* Fond transparent */
-  border: none; /* Supprimer la bordure */
-  font-size: 18px; /* Taille de police */
-  cursor: pointer; /* Curseur pointeur */
-}
-
-.prev-page::before {
-  content: '\2190'; /* Code Unicode de la flèche gauche */
-}
-
-.next-page::after {
-  content: '\2192'; /* Code Unicode de la flèche droite */
-}
