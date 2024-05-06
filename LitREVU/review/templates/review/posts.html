@@ -1,44 +1,47 @@
 {% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
+<link href="{% static 'css/posts.css' %}" rel="stylesheet">
+<script src="{% static 'script-js.js' %}"></script>
 <main class="main-content">
     <div class="container">
         <div class="form-body">
             <!-- 3 colonnes -->
-            <div class="register-column">
+            <div class="review-column">
                 <div id="formContent">
                     <div class="fadeIn first">
                         <h2 class="active"> Mes tickets </h2>
                         <div class="ticket_posts">
                             {% for ticket in tickets %}
-                            <h3 class="active" enctype="multipart/form-data"> Ticket  - ID : {{ ticket.id }} </h3>
-                            <ul>
-                                <li>Titre : {{ ticket.title }}</li>
-                                <li>Description : {{ ticket.description }}</li>
-                                {% if ticket.image %}
-                                <li>Image :</li>
-                                <li><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
+                            <div class="line ticket"> <!-- Ajout de la classe "line ticket" ici -->
+                                <h3 class="active" enctype="multipart/form-data"><strong> Ticket  - ID : {{ ticket.id }} </strong></h3>
+                                <ul>
+                                    <li>Titre : {{ ticket.title }}</li>
+                                    <li>Description : {{ ticket.description }}</li>
+                                    {% if ticket.image %}
+                                    <li><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
+                                    {% endif %}
+                                    <li>Date de création : {{ ticket.time_created }}</li>
+                                </ul>
+                                <!-- Ajouter un bouton pour créer une critique -->
+                                {% if not ticket.has_review %}
+                                <!-- Ajouter un bouton pour créer une critique seulement si le ticket n'a pas de critique -->
+                                <form method="get" action="{% url 'create_review' ticket.id %}">
+                                    {% csrf_token %}
+                                    <input type="submit" class="fadeIn fourth" value="Ajouter une critique">
+                                </form>
                                 {% endif %}
-                                <li>Date de création : {{ ticket.time_created }}</li>
-                            </ul>
-                            <!-- Ajouter un bouton pour créer une critique -->
-                            {% if not ticket.has_review %}
-                            <!-- Ajouter un bouton pour créer une critique seulement si le ticket n'a pas de critique -->
-                            <form method="get" action="{% url 'create_review' ticket.id %}">
-                                {% csrf_token %}
-                                <input type="submit" class="fadeIn fourth" value="Ajouter une critique">
-                            </form>
-                            {% endif %}
-                            <!-- Ajouter des boutons pour modifier et supprimer un ticket -->
-                            <form method="get" action="{% url 'edit_ticket' ticket.id %}">
-                                {% csrf_token %}
-                                <input type="submit" class="fadeIn fourth" value="Modifier le ticket">
-                            </form>
-                            <form method="post" action="{% url 'edit_delete_ticket' ticket.id %}">
-                                {% csrf_token %}
-                                {{ delete_form.as_p }}
-                                <input type="submit" class="fadeIn fourth" value="Supprimer le ticket">
-                            </form>
+                                <!-- Ajouter des boutons pour modifier et supprimer un ticket -->
+                                <form method="get" action="{% url 'edit_ticket' ticket.id %}">
+                                    {% csrf_token %}
+                                    <input type="submit" class="fadeIn fourth" value="Modifier le ticket">
+                                </form>
+                                <form method="post" action="{% url 'edit_delete_ticket' ticket.id %}">
+                                    {% csrf_token %}
+                                    {{ delete_form.as_p }}
+                                    <input type="submit" class="fadeIn fourth" value="Supprimer le ticket">
+                                </form>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -47,44 +50,66 @@
             <div class="empty-column">
                 <!-- Colonne vide -->
             </div>
-            <div class="register-column">
+            <div class="review-column">
                 <div id="formContent">
                     <div class="fadeIn first">
                         <h2 class="active"> Mes critiques </h2>
                         <div class="review_posts">
                             {% for review in reviews %}
-                            <h3 class="active"> Critique pour le ticket "{{ review.ticket.title }}"  - ID: {{ review.ticket.id }} </h3>
-                            <ul>
-                                <li>Titre : {{ review.ticket.title }}</li>
-                                <li>Description : {{ review.ticket.description }}</li>
-                                <li>Date de création : {{ review.ticket.time_created }}</li>
-                                <form method="post" action="{% url 'edit_delete_ticket' review.ticket.id %}">
+                            <div class="line review"> <!-- Ajout de la classe "line review" ici -->
+                                <h3 class="active"><strong> Critique pour le ticket "{{ review.ticket.title }}"</strong>  - ID: {{ review.ticket.id }} </h3>
+                                <ul>
+                                    <li><strong>Ticket</strong></li>
+                                    <li>Titre : {{ review.ticket.title }}</li>
+                                    <li>Demander par : {{ review.ticket.user }}</li>
+                                    <li>Description : {{ review.ticket.description }}</li>
+                                    {% if review.ticket.image %}
+                                    <li><img src="{{ review.ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
+                                    {% endif %}
+                                    <li>Date de création : {{ review.ticket.time_created }}</li>
+                                    {% if review.ticket.user == request.user %}  
+                                    <form method="post" action="{% url 'edit_delete_ticket' review.ticket.id %}">
+                                        {% csrf_token %}
+                                        <input type="submit" class="fadeIn fourth" value="Supprimer le ticket">
+                                    </form>
+                                    {% endif %}
+                                </ul>
+                                <ul>
+                                    <li class="title"><strong>Critique</strong></li>
+                                    <li>Titre : {{ review.headline }}</li>
+                                    <li>Note :
+                                    <div class="rating">
+                                        {% for _ in review.get_rating_range %}
+                                            <span class="star">&#9733;</span>
+                                        {% endfor %}
+                                        {% for _ in review.get_complement_range %}
+                                            <span class="star">&#9734;</span>
+                                        {% endfor %}
+                                    </div></li>
+                                    <li>Description :{{ review.body }}</li>
+                                    <li>Date de création : {{ review.time_created }}</li>
+                                </ul>
+                                <!-- Ajouter des boutons pour modifier et supprimer une critique -->
+                                <form method="get" action="{% url 'update_review' review.id %}">
                                     {% csrf_token %}
-                                    <input type="submit" class="fadeIn fourth" value="Supprimer le ticket">
+                                    <input type="submit" class="fadeIn fourth" value="Modifier la critique">
                                 </form>
-                            </ul>
-                            <ul>
-                                <li>Titre : {{ review.headline }}</li>
-                                <li>Note : {{ review.rating }} /5 </li>
-                                <li>Description :{{ review.body }}</li>
-                                <li>Date de création : {{ review.time_created }}</li>
-                            </ul>
-                            <!-- Ajouter des boutons pour modifier et supprimer une critique -->
-                            <form method="get" action="{% url 'update_review' review.id %}">
-                                {% csrf_token %}
-                                <input type="submit" class="fadeIn fourth" value="Modifier la critique">
-                            </form>
-                            <form method="post" action="{% url 'edit_delete_review' review.id %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="review_id" value="{{ review.id }}">
-                                <input type="submit" class="fadeIn fourth" value="Supprimer la critique">
-                            </form>
+                                <form method="post" action="{% url 'edit_delete_review' review.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="review_id" value="{{ review.id }}">
+                                    <input type="submit" class="fadeIn fourth" value="Supprimer la critique">
+                                </form>
+                            </div>
                             {% endfor %}
-                        </div>
+                        </div>    
                     </div>
-                </div>    
-            </div>    
-        </div>  
-    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pagination">
+            <button id="prevPage" class="pagination-button prev-page">Précédent</button>
+            <button id="nextPage" class="pagination-button next-page">Suivant</button>
+        </div>
+    </div>    
 </main>
 {% endblock content %}
