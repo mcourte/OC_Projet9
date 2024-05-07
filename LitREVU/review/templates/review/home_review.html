@@ -23,71 +23,65 @@
                 </div>
             </div>
             <div class="critique-column" style="grid-column: span 2;">
-                <div id="formContent">
-                    <h2 class="active">Tickets et Critiques des utilisateurs suivis</h2>
-                    {% for ticket in following_tickets %}
-                    {% if ticket.user != request.user %}
-                    {% if not ticket.has_review %}
-                    <div class="line ticket">
-                        <h3 class="active"><strong>Ticket posté par : {{ ticket.user.username }}</strong></h3>
-                        <ul>
-                            <li><strong>Titre : </strong>{{ ticket.title }}</li>
-                            <li><strong>Description : </strong>{{ ticket.description }}</li>
-                            <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
-                            {% if ticket.image %}
-                                <li><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
-                            {% endif %}
-                            
-                        </ul>
-                        <form method="post" action="{% url 'create_review' ticket.id %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
-                            <input type="submit" class="fadeIn second" value="Créer une critique">
-                        </form>
-                    </div>
-                    {% endif %}
-                    <ul class="ticket_reviews">
-                        {% for review in following_reviews %}
-                        {% if review.ticket == ticket %}
-                        <li class="line review">
-                            <h3 class="active"><strong> Critique écrite par {% if review.user == request.user %} Vous {% else %} {{ review.user.username }} {% endif %}</strong></h3>
+            <div id="formContent">
+                <h2 class="active">Tickets et Critiques des utilisateurs suivis</h2>
+                {% for item in combined_list %}
+                    {% if item.type == 'ticket' %}
+                        <div class="line ticket">
+                            <h3 class="active"><strong>Ticket posté par : {{ item.user.username }}</strong></h3>
                             <ul>
-                                <li class="text-mini">En réponse au Ticket {{ review.ticket.title }} posté par <strong>{% if review.ticket.user == request.user %} Vous {% else %} {{ review.ticket.user.username }} {% endif %}</strong></li>
-                                <li><strong>Titre : </strong>{{ review.ticket.title }}</li>
-                                <li><strong>Description : </strong>{{ review.ticket.description }}</li>
-                                <li><strong>Date de création : </strong>{{ review.ticket.time_created }}</li>
-                                {% if review.ticket.image %}
-                                    <li><img src="{{ review.ticket.image.url }}" alt="{{ review.ticket.title }}" class="image-posts"></li>
+                                <li><strong>Titre : </strong>{{ item.title }}</li>
+                                <li><strong>Description : </strong>{{ item.description }}</li>
+                                <li><strong>Date de création :</strong> {% if item.time_created %}{{ item.time_created }}{% else %}{{ item.ticket.time_created }}{% endif %}</li>
+                                {% if item.image %}
+                                    <li><img src="{{ item.image.url }}" alt="{{ item.title }}" class="image-posts"></li>
+                                {% endif %}
+                            </ul>
+                            {% if item.type == 'ticket' %}
+                                <form method="post" action="{% url 'create_review' item.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="ticket_id" value="{{ item.id }}">
+                                    <input type="submit" class="fadeIn second" value="Créer une critique">
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% elif item.type == 'review' %}
+                        <div class="line review">
+                            <h3 class="active"><strong> Critique écrite par {% if item.user == request.user %} Vous {% else %} {{ item.user.username }} {% endif %}</strong></h3>
+                            <ul>
+                                <li class="text-mini">En réponse au Ticket {{ item.ticket.title }} posté par <strong>{% if item.ticket.user == request.user %} Vous {% else %} {{ item.ticket.user.username }} {% endif %}</strong></li>
+                                <li><strong>Titre : </strong>{{ item.ticket.title }}</li>
+                                <li><strong>Description : </strong>{{ item.ticket.description }}</li>
+                                <li><strong>Date de création : </strong>{{ item.ticket.time_created }}</li>
+                                {% if item.ticket.image %}
+                                    <li><img src="{{ item.ticket.image.url }}" alt="{{ item.ticket.title }}" class="image-posts"></li>
                                 {% endif %}
                             </ul>
                             <ul>
                                 <li><strong>Critique</strong></li>
-                                <li><strong>Titre : </strong> {{ review.headline }}</li>
+                                <li><strong>Titre : </strong> {{ item.headline }}</li>
                                 <li><strong>Note : </strong>
-                                <div class="rating">
-                                    {% for _ in review.get_rating_range %}
-                                        <span class="star">&#9733;</span>
-                                    {% endfor %}
-                                    {% for _ in review.get_complement_range %}
-                                        <span class="star">&#9734;</span>
-                                    {% endfor %}
-                                </div></li>
-                                <li><strong>Description : </strong> {{ review.body }}</li>
-                                <li><strong>Date de création : </strong> {{ review.time_created }}</li>
+                                    <div class="rating">
+                                        {% for _ in item.get_rating_range %}
+                                            <span class="star">&#9733;</span>
+                                        {% endfor %}
+                                        {% for _ in item.get_complement_range %}
+                                            <span class="star">&#9734;</span>
+                                        {% endfor %}
+                                    </div>
+                                </li>
+                                <li><strong>Description : </strong> {{ item.body }}</li>
+                                <li><strong>Date de création : </strong> {{ item.time_created }}</li>
                             </ul>
-                        </li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
+                        </div>
                     {% endif %}
-                    {% endfor %}
-                </div>    
-                <div class="pagination">
-                    <button id="prevPage" class="pagination-button prev-page">Précédent</button>
-                    <button id="nextPage" class="pagination-button next-page">Suivant</button>
-                </div>
+                {% endfor %}
             </div>
-        </div>    
+            <div class="pagination">
+                <button id="prevPage" class="pagination-button prev-page">Précédent</button>
+                <button id="nextPage" class="pagination-button next-page">Suivant</button>
+            </div>
+        </div>
     </div>
 </main>
 {% endblock %}
