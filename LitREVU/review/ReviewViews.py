@@ -42,8 +42,10 @@ class HomeReviewView(LoginRequiredMixin, View):
             key=lambda x: x.time_created if hasattr(x, 'time_created') else x.ticket.time_created,
             reverse=True
         )
-
-        return render(request, 'review/home_review.html', {'combined_list': combined_list})
+        context = {
+            'combined_list': combined_list
+        }
+        return render(request, 'review/home_review.html', context=context)
 
 
 class PostsView(LoginRequiredMixin, View):
@@ -54,13 +56,18 @@ class PostsView(LoginRequiredMixin, View):
         tickets = Ticket.objects.filter(user=request.user).order_by('-time_created')
         # Tri des critiques par date de création décroissante
         reviews = Review.objects.filter(user=request.user).order_by('-time_created')
-        return render(request, 'review/posts.html', {'tickets': tickets, 'reviews': reviews})
+        context = {
+            'tickets': tickets,
+            'reviews': reviews
+        }
+        return render(request, 'review/posts.html', context=context)
 
 
 class TicketView(LoginRequiredMixin, View):
     """Cette vue gère l'affichage des tickets, leur création, leur modification et leur suppression."""
     def get(self, request):
         """Affiche les tickets de l'utilisateur et leur état."""
+        # Récupérer les utilisateurs que vous suivez
         user = request.user
         following_users = UserFollows.objects.filter(user=user).values_list('followed_user', flat=True)
 
@@ -70,6 +77,7 @@ class TicketView(LoginRequiredMixin, View):
         # Récupérer les critiques des utilisateurs suivis
         following_reviews = Review.objects.filter(ticket__user__in=following_users)
 
+        # Combiner les tickets et les critiques dans une liste
         combined_list = list(chain(following_tickets, following_reviews))
 
         for ticket in combined_list:
@@ -79,8 +87,11 @@ class TicketView(LoginRequiredMixin, View):
             ticket.user_has_review = ticket.reviews.filter(user=user).exists()
 
         combined_list = sorted(combined_list, key=attrgetter('time_created'), reverse=True)
+        context = {
+            'combined_list': combined_list
+        }
 
-        return render(request, 'ticket_review.html', {'combined_list': combined_list})
+        return render(request, 'ticket_review.html', context=context)
 
     def post(self, request):
         """Méthode pour créer un nouveau ticket en utilisant un formulaire."""
@@ -93,7 +104,10 @@ class TicketView(LoginRequiredMixin, View):
                 return redirect('home_review')
         else:
             form = TicketForm()
-        return render(request, 'review/create_ticket.html', {'form': form})
+        context = {
+            'form': form,
+        }
+        return render(request, 'review/create_ticket.html', context=context)
 
     def edit_delete_ticket(request, ticket_id):
         """Affiche le formulaire de confirmation de suppression d'un ticket."""
@@ -118,7 +132,11 @@ class TicketView(LoginRequiredMixin, View):
         """Affiche le formulaire de modification d'un ticket."""
         ticket = get_object_or_404(Ticket, id=ticket_id)
         form = TicketForm(instance=ticket)
-        return render(request, 'review/edit_ticket.html', {'form': form, 'ticket': ticket})
+        context = {
+            'form': form,
+            'ticket': ticket,
+        }
+        return render(request, 'review/edit_ticket.html', context=context)
 
     def update_ticket(request, ticket_id):
         """Met à jour les informations d'un ticket."""
@@ -130,7 +148,13 @@ class TicketView(LoginRequiredMixin, View):
                 return redirect('posts')
         else:
             form = TicketForm(instance=ticket)
-        return render(request, 'review/edit_ticket.html', {'form': form, 'ticket': ticket})
+
+        context = {
+            'form': form,
+            'ticket': ticket,
+        }
+
+        return render(request, 'review/edit_ticket.html', context=context)
 
 
 class ReviewView(LoginRequiredMixin, View):
@@ -141,8 +165,13 @@ class ReviewView(LoginRequiredMixin, View):
         form = ReviewForm()
         # Vérifie si l'utilisateur à déjà créer une critique sur un ticket
         user_already_reviewed = Review.objects.filter(user=request.user, ticket=ticket).exists()
-        return render(request, 'review/create_review.html', {'form': form, 'ticket': ticket,
-                                                             'user_already_reviewed': user_already_reviewed})
+        context = {
+            'form': form,
+            'ticket': ticket,
+            'user_already_reviewed': user_already_reviewed
+        }
+
+        return render(request, 'review/create_review.html', context=context)
 
     def post(self, request, ticket_id):
         """Crée une critique en réponse à un ticket."""
@@ -162,7 +191,13 @@ class ReviewView(LoginRequiredMixin, View):
                     messages.error(request, "Vous avez déjà poster une critique en réponse à ce ticket.")
         else:
             form = ReviewForm()
-        return render(request, 'review/create_review.html', {'form': form, 'ticket': ticket})
+
+        context = {
+            'form': form,
+            'ticket': ticket
+        }
+
+        return render(request, 'review/create_review.html', context=context)
 
     def edit_delete_review(request, review_id):
         """Affiche le formulaire de confirmation de suppression d'un ticket."""
@@ -193,7 +228,11 @@ class ReviewView(LoginRequiredMixin, View):
                 return redirect('home_review')
         else:
             form = ReviewForm(instance=review)
-        return render(request, 'review/edit_review.html', {'form': form, 'review': review})
+        context = {
+            'form': form,
+            'review': review
+        }
+        return render(request, 'review/edit_review.html', context=context)
 
 
 class TicketReviewView(View):
@@ -203,7 +242,10 @@ class TicketReviewView(View):
         """Affiche le formulaire pour publier un ticket et une critique associée."""
         # Utilisez le formulaire combiné
         ticket_review_form = TicketReviewForm()
-        return render(request, 'review/create_ticket_review.html', {'ticket_review_form': ticket_review_form})
+        context = {
+            'ticket_review_form': ticket_review_form
+        }
+        return render(request, 'review/create_ticket_review.html', context=context)
 
     def post(self, request):
         """Traite le formulaire soumis pour publier un ticket et une critique associée."""
@@ -225,9 +267,6 @@ class TicketReviewView(View):
             )
             TicketReview.objects.create(ticket=ticket, review=review)
             return redirect(reverse_lazy('posts'))  # Rediriger vers la page des posts après publication
-        else:
-            print(ticket_review_form.errors)  # Affichez les erreurs dans la console pour déboguer
-            return render(request, 'review/create_ticket_review.html', {'ticket_review_form': ticket_review_form})
 
     def delete_review(request, review_id):
         """Supprime une critique."""
@@ -257,7 +296,12 @@ class TicketReviewView(View):
                 return redirect('posts')
         else:
             form = ReviewForm(instance=review)
-        return render(request, 'review/edit_review.html', {'form': form, 'review': review})
+
+        context = {
+            'form': form,
+            'review': review
+        }
+        return render(request, 'review/edit_review.html', context=context)
 
     def delete_ticket(request, ticket_id):
         """Supprime un ticket et les critiques associées."""
@@ -266,7 +310,10 @@ class TicketReviewView(View):
             ticket.delete()
             messages.success(request, "Le ticket et ses critiques associées ont été supprimés avec succès.")
             return redirect('posts')
-        return render(request, 'review/edit_delete_ticket.html', {'ticket': ticket})
+        context = {
+            'ticket': ticket
+        }
+        return render(request, 'review/edit_delete_ticket.html', context=context)
 
 
 class FollowingView(LoginRequiredMixin, View):
@@ -280,6 +327,7 @@ class FollowingView(LoginRequiredMixin, View):
         users_following = UserFollows.objects.filter(followed_user=request.user)
 
         form = FollowUsersForm()
+
         context = {
             "form": form,
             "followed_users": followed_users,
