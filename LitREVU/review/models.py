@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 
 
 class Ticket(models.Model):
@@ -28,10 +29,7 @@ class Ticket(models.Model):
 
 class Review(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="reviews")
-    rating = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(5)],
-        verbose_name="Notation",
-    )
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name="Notation")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     headline = models.CharField(max_length=128, verbose_name="Titre")
     body = models.CharField(max_length=8192, blank=True, verbose_name="Commentaires")
@@ -40,6 +38,18 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review for {self.ticket.title}"
+
+    def get_rating_range(self):
+        return range(self.rating)
+
+    def get_complement_range(self):
+        return range(5 - self.rating)
+
+    def has_user_already_reviewed(self):
+        """
+        Check if the user has already reviewed the ticket.
+        """
+        return Review.objects.filter(Q(user=self.user) & Q(ticket=self.ticket)).exists()
 
 
 class TicketReview(models.Model):

@@ -121,12 +121,14 @@ class TicketView(LoginRequiredMixin, View):
 
 class ReviewView(LoginRequiredMixin, View):
     """Cette vue gère l'affichage des critiques, leur création, leur modification et leur suppression."""
-
     def get(self, request, ticket_id):
         """Affiche le formulaire pour créer une critique en réponse à un ticket."""
         ticket = get_object_or_404(Ticket, id=ticket_id)
         form = ReviewForm()
-        return render(request, 'review/create_review.html', {'form': form, 'ticket': ticket})
+        # Vérifie si l'utilisateur à déjà créer une critique sur un ticket
+        user_already_reviewed = Review.objects.filter(user=request.user, ticket=ticket).exists()
+        return render(request, 'review/create_review.html', {'form': form, 'ticket': ticket,
+                                                             'user_already_reviewed': user_already_reviewed})
 
     def post(self, request, ticket_id):
         """Crée une critique en réponse à un ticket."""
@@ -135,11 +137,15 @@ class ReviewView(LoginRequiredMixin, View):
         if request.method == 'POST':
             form = ReviewForm(request.POST, request.FILES)
             if form.is_valid():
-                review = form.save(commit=False)
-                review.user = request.user
-                review.ticket = ticket
-                review.save()
-                return redirect('posts')
+                # Vérifie si l'utilisateur à déjà créer une critique sur un ticket
+                if not Review.objects.filter(user=request.user, ticket=ticket).exists():
+                    review = form.save(commit=False)
+                    review.user = request.user
+                    review.ticket = ticket
+                    review.save()
+                    return redirect('posts')
+                else:
+                    messages.error(request, "Vous avez déjà poster une critique en réponse à ce ticket.")
         else:
             form = ReviewForm()
         return render(request, 'review/create_review.html', {'form': form, 'ticket': ticket})
@@ -181,7 +187,8 @@ class TicketReviewView(View):
 
     def get(self, request):
         """Affiche le formulaire pour publier un ticket et une critique associée."""
-        ticket_review_form = TicketReviewForm()  # Utilisez le formulaire combiné
+        # Utilisez le formulaire combiné
+        ticket_review_form = TicketReviewForm()
         return render(request, 'review/create_ticket_review.html', {'ticket_review_form': ticket_review_form})
 
     def post(self, request):
@@ -274,7 +281,7 @@ class FollowingView(LoginRequiredMixin, View):
         context = {
             "form": form,
             "followed_users": followed_users,
-            "users_following_current_user": users_following,
+            "users_following": users_following,
             "combined_list": combined_list
         }
         return render(request, "review/following.html", context=context)

@@ -1,0 +1,154 @@
+.ticket-column, .review-column {
+  border-radius: 10px;
+  background: #fbf2e9;
+  width: 700px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: var(--shadow-elevation-medium);
+  text-align: center;
+  font-size: 18.5px;
+  flex: 1;
+  height: auto; /* Ajustement automatique de la hauteur en fonction du contenu */
+  display: flex; /* Affiche les éléments en ligne */
+  flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
+  justify-content: center; /* Centre les éléments horizontalement */
+}
+
+
+
+.line {
+  margin-bottom: 20px; /* Espace entre chaque ligne */
+}
+
+.ticket {
+  border: 1px solid #ccc; /* Bordure pour les tickets */
+  padding: 10px; /* Espacement interne */
+  background-color: #f9f9f9; /* Couleur de fond */
+}
+
+.review {
+  border: 1px solid #ccc; /* Bordure pour les critiques */
+  padding: 10px; /* Espacement interne */
+  background-color: #f9f9f9; /* Couleur de fond */
+}
+
+h3 {
+  text-align: left;
+  font-size: 18.5px;
+  font-weight: 300;
+  display:inline-block;
+  margin: 10px  10px 10px 10px; 
+  color: black;
+  }
+
+li .text-mini {
+  font-size: 16px;
+}
+
+.empty-column {
+  padding: 20px;
+}
+
+
+/* BASIC */
+
+
+#formTRContent {
+  border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
+  background: #fbf2e9;
+  width: auto;
+  max-width: 700px;
+  margin: 0 auto; /* Centrer l'élément */
+  padding: 0px;
+  box-shadow:
+      var(--shadow-elevation-medium); /* Utilisation de la variable --shadow-elevation-medium pour l'ombrage */
+  text-align: center;
+  font-size: 18.5px;
+}
+
+.help-text {
+  display: none;  /* Hide the help text by default */
+  color: black;    /* Adjust color as needed */
+  font-size: 18.5px; /* Adjust font size as needed */
+  margin-top: 5px; /* Adjust margin as needed */
+  
+}
+
+.image-posts {
+	max-width: 150px;
+	height: auto;
+}
+
+
+/* Stylez les critiques suivies */
+
+
+.line {
+  border-bottom: 1px solid #ccc; /* Définir le style de la ligne */
+  margin-bottom: 20px; /* Espacement entre chaque élément */
+  padding-bottom: 20px; /* Espacement entre le texte et la ligne */
+}
+
+.prev-page {
+  float: left; /* Aligner à gauche */
+  margin-right: 10px; /* Ajouter une marge à droite pour l'espacement */
+}
+
+.next-page {
+  float: right; /* Aligner à droite */
+}
+
+.arrow-button {
+  background-color: transparent; /* Fond transparent */
+  border: none; /* Supprimer la bordure */
+  font-size: 18px; /* Taille de police */
+  cursor: pointer; /* Curseur pointeur */
+}
+
+.prev-page::before {
+  content: '\2190'; /* Code Unicode de la flèche gauche */
+}
+
+.next-page::after {
+  content: '\2192'; /* Code Unicode de la flèche droite */
+}
+
+/* Style pour les champs de formulaire */
+.form-field {
+  margin-bottom: 20px; /* Espacement entre chaque champ */
+}
+
+/* Style pour les étiquettes de champ */
+.form-label {
+  display: block; /* Afficher les étiquettes sur une ligne différente */
+  font-weight: bold; /* Mise en gras des étiquettes */
+  margin-bottom: 5px; /* Espacement entre l'étiquette et le champ */
+}
+
+/* Style pour les champs de saisie */
+.form-input {
+  width: 100%; /* Largeur maximale du champ */
+  padding: 10px; /* Espacement interne */
+  font-size: 16px; /* Taille de police */
+  border: 1px solid #ccc; /* Bordure */
+  border-radius: 5px; /* Coins arrondis */
+}
+
+/* Style pour le bouton de soumission */
+.form-submit {
+  display: block; /* Afficher le bouton sur une ligne différente */
+  width: auto; /* Largeur automatique */
+  padding: 10px 20px; /* Espacement interne */
+  font-size: 16px; /* Taille de police */
+  background-color: #FFB276; /* Couleur de fond */
+  color: #000000; /* Couleur du texte */
+  border: none; /* Supprimer la bordure */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur pointeur */
+}
+
+/* Style pour le bouton de soumission au survol */
+.form-submit:hover {
+  background-color: #FFB276; /* Couleur de fond au survol */
+}

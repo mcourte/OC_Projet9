@@ -1,65 +1,65 @@
+ul li {
+  padding-bottom: 5px;
+}
+
+.follow-grid {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 70px;
+  }
+
 .follow-column {
   border-radius: 10px;
   background: #fbf2e9;
-  width: 400px;
+  width: 300px;
   max-width: 700px;
   margin: 0 auto;
   padding: 20px;
   box-shadow: var(--shadow-elevation-medium);
   text-align: center;
   font-size: 18.5px;
-  flex: 1;
-  height: auto; /* Ajustement automatique de la hauteur en fonction du contenu */
-  display: flex; /* Affiche les éléments en ligne */
-  flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
-  justify-content: center; /* Centre les éléments horizontalement */
+  display: block;
+  height: 250px;
 }
 
 .follower-column {
   border-radius: 10px;
   background: #fbf2e9;
-  width: 400px;
+  width: 300px;
   max-width: 700px;
   margin: 0 auto;
   padding: 20px;
   box-shadow: var(--shadow-elevation-medium);
   text-align: center;
   font-size: 18.5px;
-  flex: 1;
-  height: auto; /* Ajustement automatique de la hauteur en fonction du contenu */
-  display: flex; /* Affiche les éléments en ligne */
-  flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
-  justify-content: center; /* Centre les éléments horizontalement */
+  display: block;
+  height: auto;
 }
 
 .follower-item {
-  display: flex; /* Affiche les éléments en ligne */
-  align-items: center; /* Centre les éléments verticalement */
-  justify-content: space-between; /* Aligner les éléments sur les bords horizontalement */
-  margin: 0 50px 50px 0; /* Espace entre les éléments */
-  width: 100%; /* Occupera toute la largeur de la colonne */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 50px 50px 0;
+  width: 100%;
 }
 
 .follower-item span {
-  text-align: left; /* Aligner le texte à gauche */
+  text-align: left;
 }
 
 .follower-item input[type="submit"] {
-  height: 40px; /* Hauteur du bouton */
-  font-size: 18.5px; /* Taille de la police du bouton */
-  margin-left: auto; /* Aligner le bouton à droite */
-  margin-top: auto; /* Centre verticalement par rapport au texte */
-  margin-bottom: auto; /* Centre verticalement par rapport au texte */
+  height: 40px;
+  font-size: 18.5px;
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .follow-column input[type="submit"] {
-  margin: 0 auto; /* Centrer le bouton "Se connecter" horizontalement */
+  margin: 0 auto;
   margin-top: 25px;
   margin-bottom: 25px;
-}
-
-
-.empty-column {
-  padding: 20px;
 }
 

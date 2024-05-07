@@ -1,6 +1,7 @@
 {% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
+<link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
 <main class="main-content">
     <div class="container">
         <div class="form-header">
@@ -9,7 +10,7 @@
                 <form method="post" enctype="multipart/form-data" action="{% url 'update_review' review.id %}">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <input type="submit" class="fadeIn fourth" value="Enregistrer les modifications">
+                    <input type="submit" class="fadeIn second" value="Enregistrer les modifications">
                 </form>
             </div>
         </div>

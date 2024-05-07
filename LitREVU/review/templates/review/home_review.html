@@ -29,11 +29,11 @@
                     {% if ticket.user != request.user %}
                     {% if not ticket.has_review %}
                     <div class="line ticket">
-                        <h3 class="active">Ticket posté par {{ ticket.user.username }}</h3>
+                        <h3 class="active"><strong>Ticket posté par : {{ ticket.user.username }}</strong></h3>
                         <ul>
-                            <li>Titre :{{ ticket.title }}</li>
-                            <li>Description :{{ ticket.description }}</li>
-                            <li>Date de création :{{ ticket.time_created }}</li>
+                            <li><strong>Titre : </strong>{{ ticket.title }}</li>
+                            <li><strong>Description : </strong>{{ ticket.description }}</li>
+                            <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
                             {% if ticket.image %}
                                 <li><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
                             {% endif %}
@@ -50,22 +50,30 @@
                         {% for review in following_reviews %}
                         {% if review.ticket == ticket %}
                         <li class="line review">
-                            <h3 class="active">Critique écrite par {% if review.user == request.user %} Vous {% else %} {{ review.user.username }} {% endif %}</h3>
+                            <h3 class="active"><strong> Critique écrite par {% if review.user == request.user %} Vous {% else %} {{ review.user.username }} {% endif %}</strong></h3>
                             <ul>
-                                <li><strong>En réponse au Ticket {{ review.ticket.title }} posté par {% if review.ticket.user == request.user %} Vous {% else %} {{ review.ticket.user.username }} {% endif %}</strong></li>
-                                <li>Titre :{{ review.ticket.title }}</li>
-                                <li>Description :{{ review.ticket.description }}</li>
-                                <li>Date de création :{{ review.ticket.time_created }}</li>
+                                <li class="text-mini">En réponse au Ticket {{ review.ticket.title }} posté par <strong>{% if review.ticket.user == request.user %} Vous {% else %} {{ review.ticket.user.username }} {% endif %}</strong></li>
+                                <li><strong>Titre : </strong>{{ review.ticket.title }}</li>
+                                <li><strong>Description : </strong>{{ review.ticket.description }}</li>
+                                <li><strong>Date de création : </strong>{{ review.ticket.time_created }}</li>
                                 {% if review.ticket.image %}
                                     <li><img src="{{ review.ticket.image.url }}" alt="{{ review.ticket.title }}" class="image-posts"></li>
                                 {% endif %}
                             </ul>
                             <ul>
                                 <li><strong>Critique</strong></li>
-                                <li>Titre : {{ review.headline }}</li>
-                                <li>Note : {{ review.rating }}</li>
-                                <li>Description : {{ review.body }}</li>
-                                <li>Date de création : {{ review.time_created }}</li>
+                                <li><strong>Titre : </strong> {{ review.headline }}</li>
+                                <li><strong>Note : </strong>
+                                <div class="rating">
+                                    {% for _ in review.get_rating_range %}
+                                        <span class="star">&#9733;</span>
+                                    {% endfor %}
+                                    {% for _ in review.get_complement_range %}
+                                        <span class="star">&#9734;</span>
+                                    {% endfor %}
+                                </div></li>
+                                <li><strong>Description : </strong> {{ review.body }}</li>
+                                <li><strong>Date de création : </strong> {{ review.time_created }}</li>
                             </ul>
                         </li>
                         {% endif %}

@@ -1,29 +1,32 @@
 {% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
+<link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
 <main class="main-content">
     <div class="container">
-        <div id="formReviewContent">
-            <div class="fadeIn first">
-                <div>
-                    <h1 class="active">Publier une Critique, concernant le ticket : {{ ticket.title }}</h1>
-                    <form method="post" action="{% url 'create_review' ticket.id %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <label for="headline">Titre:</label>
-                        <input type="text" name="headline" id="headline">
-                        <label for="rating">Note:</label>
-                        <div id="rating-stars">
-                            <span class="star" data-rating="1">&#9733;</span>
-                            <span class="star" data-rating="2">&#9733;</span>
-                            <span class="star" data-rating="3">&#9733;</span>
-                            <span class="star" data-rating="4">&#9733;</span>
-                            <span class="star" data-rating="5">&#9733;</span>
-                        </div>
-                        <input type="hidden" name="rating" id="rating"> 
-                        <label for="body">Description:</label>
-                        <input type="text" name="body" id="body">
-                        <input type="submit" class="fadeIn second" value="Poster une critique">
-                    </form>
+        <div id="formTRContent">
+            <div class="review-column">
+                <div class="fadeIn first">
+                    <div>
+                        <h1 class="active">Publier une Critique</h1>
+                        <h1>en réponse au ticket : {{ ticket.title }} </h1>
+                        <form method="post" action="{% url 'create_review' ticket.id %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                    
+                            <!-- Étoiles de notation -->
+                            <h3 class="active">Notation</h3>
+                            <div id="rating-stars">
+                                <span class="star" data-rating="1">&#9733;</span>
+                                <span class="star" data-rating="2">&#9733;</span>
+                                <span class="star" data-rating="3">&#9733;</span>
+                                <span class="star" data-rating="4">&#9733;</span>
+                                <span class="star" data-rating="5">&#9733;</span>
+                            </div>
+                            <input type="hidden" name="rating" id="rating">
+                            <input type="submit" class="fadeIn second" value="Poster une critique">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>                

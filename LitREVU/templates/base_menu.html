@@ -14,9 +14,9 @@
     <header class = "header" role="banner">
         <div class="navbar">
             <img src="{% static 'images/logoWBG.png' %}" alt="Logo de LITRevu." class="logo">
-            <div>
+            <div class ="username">
             {% if user.is_authenticated %}
-                <span> {{ user.username }}</span>
+                <a href="{% url 'update_profile' %}">{{ user.username }}</a>
             {% endif %}
             </div>
             <nav>

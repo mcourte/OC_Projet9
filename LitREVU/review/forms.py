@@ -42,20 +42,18 @@ class TicketReviewForm(forms.ModelForm):
     image = forms.FileField(label="Image", widget=forms.FileInput)
 
     # Champs pour la critique
+    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput(attrs={'id': 'headline'}))
     rating = forms.IntegerField(
-        label="Notation", widget=forms.HiddenInput(), required=True
+        label="Notation",
+        widget=forms.HiddenInput(attrs={'id': 'rating'}),
+        required=True,
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    body = forms.CharField(label="Commentaire", widget=forms.Textarea)
-    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput)
+    body = forms.CharField(label="Commentaire", widget=forms.Textarea(attrs={'id': 'body'}))
 
     class Meta:
         model = TicketReview
         fields = ['title', 'description', 'image',  'headline', 'rating', 'body']
-        widgets = {
-            'rating': forms.HiddenInput(),
-            'headline': forms.TextInput(attrs={'placeholder': 'Titre de la critique'}),
-            'body': forms.Textarea(attrs={'placeholder': 'Commentaire'}),
-        }
 
 
 class FollowUsersForm(forms.ModelForm):

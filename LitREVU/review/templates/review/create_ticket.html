@@ -1,28 +1,23 @@
 {% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
+<link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
 <main class="main-content">
     <div class="container">
-                <div id="formReviewContent">
-                    <div class="fadeIn first">
+        <div id="formTRContent">
+            <div class="ticket-column">
+                <div class="fadeIn first">
+                    <h1 class="active">Publier un Ticket</h1>
+                    <form method="post" enctype="multipart/form-data">
                         <div>
-                            <h1 class="active">Publier un Ticket</h1>
-                            <form method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <h3 class="active">Ticket</h3>
-                                <label for="title">Titre:</label>
-                                <input type="text" name="title" id="title">
-                                <label for="description">Description:</label>
-                                <input type="text" name="description" id="description">
-                                <label for="image">Image:</label>
-                                <input type="file" name="image" accept="image/*">
-                                {% if ticket.image %}
-                                <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}">
-                                {% endif %}
-                                <input type="submit" class="fadeIn second" value="Publier un ticket">
+                        {% csrf_token %}
+                        {{ form.as_p }}
                         </div>
-                    </div>
-                </div>        
+                        <input type="submit" class="fadeIn second" value="Publier un ticket">
+                    </form>    
+                </div>
+            </div>
+        </div>     
     </div>
 </main>
 

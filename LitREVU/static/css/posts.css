@@ -1,5 +1,6 @@
 
 .line {
+  border-bottom: 1px solid #ccc; /* Ajouter un trait en bas */
   margin-bottom: 20px; /* Espace entre chaque ligne */
 }
 
@@ -72,9 +73,6 @@
 
 
 /* BASIC */
-
-
-
 
 
 .help-text {

@@ -15,6 +15,9 @@
   background-color: #f9f9f9; /* Couleur de fond */
 }
 
+li .text-mini {
+  font-size: 16px;
+}
 
 .empty-column {
   padding: 20px;

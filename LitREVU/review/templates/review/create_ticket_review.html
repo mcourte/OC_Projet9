@@ -1,16 +1,16 @@
 {% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
+<link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
 <main class="main-content">
     <div class="container">
-        <div id="formReviewContent">
-            <div class="fadeIn first">
-                <div>
+        <div id="formTRContent">
+            <div class="ticket-column">
+                <div class="fadeIn first">
+                    <div>
                     <h1 class="active">Publier un Ticket et sa Critique</h1>
                     <form method="post" action="{% url 'create_ticket_review' %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <!-- Champs pour le ticket -->
-                        <h3 class="active">Ticket & Critique</h3>
                         {{ ticket_review_form.as_p }}
                     
                         <!-- Étoiles de notation -->
@@ -27,6 +27,7 @@
                         <!-- Bouton de soumission -->
                         <input type="submit" class="fadeIn second" value="Publier un ticket et une critique">
                     </form>
+                    </div>
                 </div>
             </div>
         </div>

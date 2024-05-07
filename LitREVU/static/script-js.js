@@ -1,38 +1,42 @@
-
+// Fonction pour ajouter un effet au survol des champs d'entrée
 function addInputHoverEffect() {
-    // Obtenir tous les champs d'entrée
-    var inputs = document.querySelectorAll('input');
+  // Obtenir tous les champs d'entrée
+  var inputs = document.querySelectorAll('input');
 
-    // Parcourir chaque champ d'entrée
-    inputs.forEach(function(input) {
-        // Ajouter des écouteurs d'événements pour la souris entrante et sortante
-        input.addEventListener('mouseenter', function() {
-            // Ajouter une classe pour mettre en surbrillance le champ d'entrée au survol
-            this.classList.add('input-hover');
-        });
-        input.addEventListener('mouseleave', function() {
-            // Supprimer la classe lorsque la souris quitte le champ d'entrée
-            this.classList.remove('input-hover');
-        });
-    });
+  // Parcourir chaque champ d'entrée
+  inputs.forEach(function(input) {
+      // Ajouter des écouteurs d'événements pour la souris entrante et sortante
+      input.addEventListener('mouseenter', function() {
+          // Ajouter une classe pour mettre en surbrillance le champ d'entrée au survol
+          this.classList.add('input-hover');
+      });
+      input.addEventListener('mouseleave', function() {
+          // Supprimer la classe lorsque la souris quitte le champ d'entrée
+          this.classList.remove('input-hover');
+      });
+  });
 }
 
-  // JavaScript pour la sélection de la note en cliquant sur les étoiles
+// JavaScript pour la sélection de la note en cliquant sur les étoiles
+document.addEventListener("DOMContentLoaded", function() {
   const stars = document.querySelectorAll(".star");
   const ratingInput = document.getElementById('rating');
 
   stars.forEach(function(star) {
-    star.addEventListener("click", function() {
-      const rating = parseInt(star.getAttribute("data-rating"));
-      ratingInput.value = rating;
+      star.addEventListener("click", function() {
+          const rating = parseInt(star.getAttribute("data-rating"));
+          ratingInput.value = rating;
 
-      // Mettre à jour la couleur des étoiles en fonction de la note sélectionnée
-      stars.forEach(function(s) {
-        const sRating = parseInt(s.getAttribute("data-rating"));
-        s.style.color = sRating <= rating ? "gold" : "black";
+          // Mettre à jour la couleur des étoiles en fonction de la note sélectionnée
+          stars.forEach(function(s) {
+              const sRating = parseInt(s.getAttribute("data-rating"));
+              s.style.color = sRating <= rating ? "gold" : "black";
+          });
       });
-    });
   });
+
+  // Appeler la fonction pour ajouter l'effet au survol des champs d'entrée
+  addInputHoverEffect();
 
   // Fonction pour gérer le clic sur le bouton de suppression de ticket
   document.querySelectorAll('.delete-ticket-button').forEach(button => {
@@ -92,82 +96,77 @@ function addInputHoverEffect() {
       }
       return cookieValue;
   }
-;
 
-// Fonction pour gérer la sélection de la note en cliquant sur les étoiles
-document.addEventListener("DOMContentLoaded", function() {
-    const stars = document.querySelectorAll(".rating .star");
+  // Fonction pour gérer la sélection de la note en cliquant sur les étoiles dans le formulaire de critique
+  const ratingStars = document.querySelectorAll(".rating .star");
 
-    stars.forEach(function(star) {
-        star.addEventListener("click", function() {
-            const rating = this.getAttribute("data-rating");
-            // Mettez à jour la valeur du champ de notation caché
-            document.getElementById("rating").value = rating;
-            // Mettre en surbrillance les étoiles sélectionnées et changer leur couleur
-            stars.forEach(function(s) {
-                if (s.getAttribute("data-rating") <= rating) {
-                    s.classList.add("selected");
-                    s.style.color = "gold"; // Changez la couleur des étoiles sélectionnées ici
-                } else {
-                    s.classList.remove("selected");
-                    s.style.color = "black"; // Changez la couleur des étoiles non sélectionnées ici
-                }
-            });
-        });
-    });
-});
+  ratingStars.forEach(function(star) {
+      star.addEventListener("click", function() {
+          const rating = this.getAttribute("data-rating");
+          // Mettez à jour la valeur du champ de notation caché
+          document.getElementById("rating").value = rating;
+          // Mettre en surbrillance les étoiles sélectionnées et changer leur couleur
+          ratingStars.forEach(function(s) {
+              if (s.getAttribute("data-rating") <= rating) {
+                  s.classList.add("selected");
+                  s.style.color = "gold"; // Changez la couleur des étoiles sélectionnées ici
+              } else {
+                  s.classList.remove("selected");
+                  s.style.color = "black"; // Changez la couleur des étoiles non sélectionnées ici
+              }
+          });
+      });
+  });
 
+  // Fonction pour afficher une page de tickets et de critiques
+  const tickets = document.querySelectorAll('.ticket');
+  const reviews = document.querySelectorAll('.review');
+  const itemsPerPage = 2;
+  let currentPage = 1;
 
-// Fonction pour afficher une page de tickets et de critiques
-document.addEventListener("DOMContentLoaded", function() {
-    const tickets = document.querySelectorAll('.ticket');
-    const reviews = document.querySelectorAll('.review');
-    const itemsPerPage = 2;
-    let currentPage = 1;
-  
-    function showPage(page) {
+  function showPage(page) {
       const startIndex = (page - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-  
+
       tickets.forEach((ticket, index) => {
-        ticket.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+          ticket.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
       });
-  
+
       reviews.forEach((review, index) => {
-        review.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+          review.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
       });
-  
+
       const totalPages = Math.ceil(Math.max(tickets.length, reviews.length) / itemsPerPage);
       const prevButton = document.getElementById('prevPage');
       const nextButton = document.getElementById('nextPage');
-  
+
       if (currentPage === 1) {
-        prevButton.style.display = 'none';
+          prevButton.style.display = 'none';
       } else {
-        prevButton.style.display = 'block';
+          prevButton.style.display = 'block';
       }
-  
+
       if (currentPage === totalPages) {
-        nextButton.style.display = 'none';
+          nextButton.style.display = 'none';
       } else {
-        nextButton.style.display = 'block';
+          nextButton.style.display = 'block';
       }
-    }
-  
-    document.getElementById('prevPage').addEventListener('click', function() {
+  }
+
+  document.getElementById('prevPage').addEventListener('click', function() {
       if (currentPage > 1) {
-        currentPage--;
-        showPage(currentPage);
+          currentPage--;
+          showPage(currentPage);
       }
-    });
-  
-    document.getElementById('nextPage').addEventListener('click', function() {
+  });
+
+  document.getElementById('nextPage').addEventListener('click', function() {
       const totalPages = Math.ceil(Math.max(tickets.length, reviews.length) / itemsPerPage);
       if (currentPage < totalPages) {
-        currentPage++;
-        showPage(currentPage);
+          currentPage++;
+          showPage(currentPage);
       }
-    });
-  
-    showPage(currentPage);
   });
+
+  showPage(currentPage);
+});

@@ -2,7 +2,6 @@
 {% block content %}
 {% load static %}
 <link href="{% static 'css/posts.css' %}" rel="stylesheet">
-<script src="{% static 'script-js.js' %}"></script>
 <main class="main-content">
     <div class="container">
         <div class="form-body">
@@ -28,18 +27,18 @@
                                 <!-- Ajouter un bouton pour créer une critique seulement si le ticket n'a pas de critique -->
                                 <form method="get" action="{% url 'create_review' ticket.id %}">
                                     {% csrf_token %}
-                                    <input type="submit" class="fadeIn fourth" value="Ajouter une critique">
+                                    <input type="submit" class="fadeIn second" value="Ajouter une critique">
                                 </form>
                                 {% endif %}
                                 <!-- Ajouter des boutons pour modifier et supprimer un ticket -->
                                 <form method="get" action="{% url 'edit_ticket' ticket.id %}">
                                     {% csrf_token %}
-                                    <input type="submit" class="fadeIn fourth" value="Modifier le ticket">
+                                    <input type="submit" class="fadeIn second" value="Modifier le ticket">
                                 </form>
                                 <form method="post" action="{% url 'edit_delete_ticket' ticket.id %}">
                                     {% csrf_token %}
                                     {{ delete_form.as_p }}
-                                    <input type="submit" class="fadeIn fourth" value="Supprimer le ticket">
+                                    <input type="submit" class="fadeIn second" value="Supprimer le ticket">
                                 </form>
                             </div>
                             {% endfor %}

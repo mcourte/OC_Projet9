@@ -1,17 +1,20 @@
 {% extends 'base_menu.html' %}
 {% block content %}
 {% load static %}
+<link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
 <main class="main-content">
     <div class="container">
-        <div class="form-header">
-            <h1 class="active">Ticket</h1>
-            <div class="formContent">
-                <h3 class="active">Titre : {{ ticket.title }}</h3>
-                <form method="post" action="{% url 'update_ticket' ticket.id %}">
-                    {% csrf_token %}
-                    {{ edit_form.as_p }}
-                    <input type="submit" class="fadeIn fourth" value="Modifier le ticket">
-                </form>
+        <div id="formContent">
+            <div class="ticket-column">
+                <div class="fadeIn first">
+                    <h1 class="active">Ticket</h1>
+                    <h3 class="active">Titre : {{ ticket.title }}</h3>
+                    <form method="post" action="{% url 'update_ticket' ticket.id %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" class="fadeIn second" value="Modifier le ticket">
+                    </form>
+                </div>
             </div>
         </div>
     </div>

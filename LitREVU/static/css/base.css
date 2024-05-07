@@ -139,21 +139,21 @@ ul {
 }
 
 ul li {
-  position: relative; /* Position relative pour permettre le positionnement */
-  padding-left: 1em; /* Ajouter un décalage au texte des éléments de liste */
+  position: relative;
+  padding-left: 1em;
   text-align: left;
 }
 
 ul li::before {
-  content: ""; /* Ne rien afficher avant chaque élément de liste */
-  position: absolute; /* Position absolue pour permettre le positionnement */
-  left: 0; /* Aligner le début du texte avec le bord gauche */
+  content: "";
+  position: absolute;
+  left: 0; 
 }
 
 .form-body {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* 3 colonnes avec une colonne vide au milieu */
-  gap: 20px; /* Espace entre les colonnes */
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
 }
 
 
@@ -168,18 +168,18 @@ ul li::before {
 
 
 .main-content-container {
-  position: relative; /* Utilisez position: relative */
+  position: relative;
   width: 100%;
-  padding-bottom: calc(100vh - 70px); /* Ajustez la marge inférieure en fonction de la hauteur de la fenêtre - hauteur du header */
+  padding-bottom: calc(100vh - 70px);
 }
 
 .main-content {
-  position: absolute; /* Utilisez position: absolute */
-  top: 70px; /* Ajustez en fonction de la hauteur du header */
+  position: absolute;
+  top: 70px;
   left: 0;
   width: 100%;
   padding-top: 30px;
-  overflow-y: auto; /* Ajoutez un défilement vertical si nécessaire */
+  overflow-y: auto;
 }
 
 /* BASIC */
@@ -243,14 +243,14 @@ padding: 20px;
 }
 
 #formContent {
-  border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
+  border-radius: 10px;
   background: #fbf2e9;
   width: 300px;
   max-width: 700px;
-  margin: 0 auto; /* Centrer l'élément */
+  margin: 0 auto;
   padding: 20px;
   box-shadow:
-      var(--shadow-elevation-medium); /* Utilisation de la variable --shadow-elevation-medium pour l'ombrage */
+      var(--shadow-elevation-medium);
   text-align: center;
   font-size: 18.5px;
 }
@@ -271,8 +271,8 @@ border-radius: 0 0 10px 10px;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100%; /* Faites en sorte que chaque conteneur de formulaire prenne la largeur totale de sa colonne */
-  text-align: center; /* Centrer le contenu des formulaires */
+  width: 100%;
+  text-align: center;
 }
 
 .form-group {
@@ -286,16 +286,15 @@ label {
   font-weight: 600;
 }
 
-input[type="text"],
+input[type=text],
 input[type=button],
 button,
-input[type="file"], 
-input[type="email"]
-input[type="password"],
-input[type="submit"] {
+input[type=file], 
+input[type=email]
+input[type=password],
+input[type=submit] {
   width: auto;
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
 }
@@ -314,28 +313,28 @@ border-bottom: 2px solid  #cccccc;
 /* FORM TYPOGRAPHY*/
 .input-wrapper {
   position: relative;
-  margin-bottom: 20px; /* Espacement entre chaque champ */
+  margin-bottom: 20px;
 }
 
 .input-wrapper label {
   position: absolute;
   top: 0;
   left: 0;
-  pointer-events: none; /* Empêche le clic sur l'étiquette */
+  pointer-events: none;
   transition: all 0.3s ease;
-  color: #888; /* Couleur de l'étiquette */
+  color: #888;
 }
 
 .input-wrapper input {
-  width: 100%; /* Remplit la largeur du conteneur */
-  padding-top: 20px; /* Espace pour l'étiquette */
+  width: 100%;
+  padding-top: 20px;
 }
 
 .input-wrapper input:focus + label,
 .input-wrapper input:not(:placeholder-shown) + label {
-  top: -20px; /* Déplace l'étiquette vers le haut */
-  font-size: 18.5px; /* Réduit la taille de police de l'étiquette */
-  color: #333; /* Couleur de l'étiquette lorsque le champ est en focus ou rempli */
+  top: -20px;
+  font-size: 18.5px;
+  color: #333;
 }
 
 input[type=button], input[type=submit], input[type=reset], input[type=file], button  {
@@ -359,6 +358,40 @@ margin: 5px 20px 40px 20px;
 -o-transition: all 0.3s ease-in-out;
 transition: all 0.3s ease-in-out;
 }
+
+input[type=text] {
+  background-color: #FFB276;
+  border: none;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18.5px;
+  font-weight: 500;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  }
+
+textarea {
+  background-color: #f6f6f6;
+  border: none;
+  color: black;
+  text-decoration: none;
+  width: auto;
+  height: 150px;
+  padding: 10px;
+  font-size: 18.5px;
+  font-weight: 400;
+  border-radius: 5px 5px 5px 5px;
+  resize: vertical; /* Autoriser le redimensionnement vertical */
+}
+
+
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=file]:hover   {
 background-color: #FFB276;
@@ -406,22 +439,23 @@ input[type="password"][value] {
 
 
 .help-text {
-  display: none;  /* Hide the help text by default */
-  color: black;    /* Adjust color as needed */
-  font-size: 18.5px; /* Adjust font size as needed */
-  margin-top: 5px; /* Adjust margin as needed */
+  display: none;
+  color: black;
+  font-size: 18.5px;
+  margin-top: 5px;
   
 }
 
 .ticket_posts, .review_posts {
-  border-bottom: 1.5px solid grey; /* Ajoute une bordure en bas de chaque ticket */
-  padding-bottom: 10px; /* Ajoute un espace en bas du ticket */
+  border-bottom: 1.5px solid grey;
+  padding-bottom: 10px;
 }
 
 .ticket_posts:last-child, .review_posts:last-child {
-  border-bottom: none; /* Supprime la bordure du dernier ticket */
-  padding-bottom: 0; /* Supprime l'espace en bas du dernier ticket */
+  border-bottom: none;
+  padding-bottom: 0;
 }
+
 
 /* CSS to show the help text when the input field is hovered over */
 input:hover + .help-text {
@@ -577,5 +611,3 @@ height:50px ;
     -2.3px 29.2px 33px -2.1px hsl(var(--shadow-color) / 0.34),
     -3.4px 43px 48.5px -2.5px hsl(var(--shadow-color) / 0.34);
 }
-
-
