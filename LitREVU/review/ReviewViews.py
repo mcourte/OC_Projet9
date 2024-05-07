@@ -7,29 +7,43 @@ from .forms import TicketForm, FollowUsersForm, ReviewForm, TicketReviewForm
 from django.urls import reverse_lazy
 from authentication.models import User
 from operator import attrgetter
-from django.db.models import Q
 from itertools import chain
 
 
 class HomeReviewView(LoginRequiredMixin, View):
 
     def get(self, request):
-        # Récupérer tous les utilisateurs suivis par l'utilisateur actuel
-        following_users = UserFollows.objects.filter(user=request.user).values_list('followed_user', flat=True)
+        """Affiche les utilisateurs suivis par l'utilisateur actuel."""
+        # Récupérer les utilisateurs que vous suivez
+        followed_users = UserFollows.objects.filter(user=request.user)
 
-        # Récupérer tous les utilisateurs que l'utilisateur suit et ceux qui le suivent
-        users_related = Q(user__in=following_users) | Q(user=request.user)
+        # Récupérer les ID des utilisateurs suivis
+        followed_user_ids = followed_users.values_list('followed_user', flat=True)
 
-        # Récupérer tous les tickets et critiques associés aux utilisateurs suivis par l'utilisateur actuel
-        following_tickets = Ticket.objects.filter(users_related)
-        following_reviews = Review.objects.filter(ticket__user__in=following_users)
+        # Récupérer les tickets des utilisateurs suivis
+        following_tickets = Ticket.objects.filter(user__in=followed_user_ids)
+
+        # Récupérer les critiques associées à ces tickets
+        following_reviews = Review.objects.filter(ticket__in=following_tickets)
 
         # Trier les tickets et les critiques par date de création de la plus récente à la plus ancienne
         following_tickets = following_tickets.order_by('-time_created')
         following_reviews = following_reviews.order_by('-time_created')
 
-        return render(request, 'review/home_review.html', {'following_tickets': following_tickets,
-                                                           'following_reviews': following_reviews})
+        # Ajouter une propriété 'type' à chaque élément pour distinguer les tickets des critiques
+        for ticket in following_tickets:
+            ticket.type = 'ticket'
+        for review in following_reviews:
+            review.type = 'review'
+
+        # Combiner les tickets et les critiques dans une liste
+        combined_list = sorted(
+            chain(following_tickets, following_reviews),
+            key=lambda x: x.time_created if hasattr(x, 'time_created') else x.ticket.time_created,
+            reverse=True
+        )
+
+        return render(request, 'review/home_review.html', {'combined_list': combined_list})
 
 
 class PostsView(LoginRequiredMixin, View):
@@ -265,24 +279,11 @@ class FollowingView(LoginRequiredMixin, View):
         # Récupérer les utilisateurs qui vous suivent
         users_following = UserFollows.objects.filter(followed_user=request.user)
 
-        # Récupérer les ID des utilisateurs suivis
-        followed_user_ids = followed_users.values_list('followed_user', flat=True)
-
-        # Récupérer les tickets des utilisateurs suivis
-        following_tickets = Ticket.objects.filter(user__in=followed_user_ids)
-
-        # Récupérer les critiques associées à ces tickets
-        following_reviews = Review.objects.filter(ticket__in=following_tickets)
-
-        # Combiner les tickets et les critiques dans une liste
-        combined_list = list(chain(following_tickets, following_reviews))
-
         form = FollowUsersForm()
         context = {
             "form": form,
             "followed_users": followed_users,
             "users_following": users_following,
-            "combined_list": combined_list
         }
         return render(request, "review/following.html", context=context)
 
