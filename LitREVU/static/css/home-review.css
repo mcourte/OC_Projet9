@@ -7,13 +7,25 @@
   border: 1px solid #ccc; /* Bordure pour les tickets */
   padding: 10px; /* Espacement interne */
   background-color: #f9f9f9; /* Couleur de fond */
+  width: 90%;
+  margin: 0 auto;
 }
 
 .review {
   border: 1px solid #ccc; /* Bordure pour les critiques */
   padding: 10px; /* Espacement interne */
   background-color: #f9f9f9; /* Couleur de fond */
+  width: 90%;
+  margin: 0 auto;
 }
+
+.review-ticket {
+  background-color: #ffe0c9; /* Couleur de fond */
+  width: 50%;
+  margin: 0 auto;
+}
+
+
 
 li .text-mini {
   font-size: 16px;
@@ -31,11 +43,10 @@ li .text-mini {
 /* BASIC */
 
 
-#formContent {
+#formContent-critique {
   border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
   background: #fbf2e9;
-  width: 300px;
-  max-width: 700px;
+  width: 75%;
   margin: 0 auto; /* Centrer l'élément */
   padding: 20px;
   box-shadow:

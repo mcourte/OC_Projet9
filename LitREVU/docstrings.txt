@@ -4,19 +4,27 @@ Docstring: Run administrative tasks.
 
 File: ReviewViews.py
 Function: get
-Docstring:  Affiche les tickets des utilisateurs suivis.
+Docstring: Affiche les utilisateurs suivis par l'utilisateur actuel.
+
+File: ReviewViews.py
+Function: get
+Docstring: Affiche les tickets et les critiques de l'utilisateur actuel.
+
+File: ReviewViews.py
+Function: get
+Docstring: Affiche les tickets de l'utilisateur et leur état.
 
 File: ReviewViews.py
 Function: post
-Docstring: Crée un nouveau ticket.
-
-File: ReviewViews.py
-Function: create_ticket
 Docstring: Méthode pour créer un nouveau ticket en utilisant un formulaire.
 
 File: ReviewViews.py
 Function: edit_delete_ticket
-Docstring: Affiche le formulaire de modification et de suppression d'un ticket.
+Docstring: Affiche le formulaire de confirmation de suppression d'un ticket.
+
+File: ReviewViews.py
+Function: edit_ticket
+Docstring: Affiche le formulaire de modification d'un ticket.
 
 File: ReviewViews.py
 Function: update_ticket
@@ -24,19 +32,39 @@ Docstring: Met à jour les informations d'un ticket.
 
 File: ReviewViews.py
 Function: get
-Docstring: Affiche les critiques de l'utilisateur actuel.
+Docstring: Affiche le formulaire pour créer une critique en réponse à un ticket.
 
 File: ReviewViews.py
 Function: post
-Docstring: Crée une nouvelle critique.
-
-File: ReviewViews.py
-Function: create_ticket_review
-Docstring: Crée à la fois un ticket et une critique associée.
+Docstring: Crée une critique en réponse à un ticket.
 
 File: ReviewViews.py
 Function: edit_delete_review
-Docstring: Affiche le formulaire de modification et de suppression d'une critique.
+Docstring: Affiche le formulaire de confirmation de suppression d'un ticket.
+
+File: ReviewViews.py
+Function: update_review
+Docstring: Met à jour les informations d'une critique.
+
+File: ReviewViews.py
+Function: get
+Docstring: Affiche le formulaire pour publier un ticket et une critique associée.
+
+File: ReviewViews.py
+Function: post
+Docstring: Traite le formulaire soumis pour publier un ticket et une critique associée.
+
+File: ReviewViews.py
+Function: delete_review
+Docstring: Supprime une critique.
+
+File: ReviewViews.py
+Function: update_review
+Docstring: Met à jour les informations d'une critique.
+
+File: ReviewViews.py
+Function: delete_ticket
+Docstring: Supprime un ticket et les critiques associées.
 
 File: ReviewViews.py
 Function: get
@@ -50,20 +78,12 @@ File: ReviewViews.py
 Function: post
 Docstring:  Traite la demande de ne plus suivre un utilisateur. 
 
-File: ReviewViews.py
-Function: get
-Docstring:  Affiche les critiques et les tickets associés aux utilisateurs suivis.
-
-File: ReviewViews.py
-Function: posts_view
-Docstring:  Affiche les critiques et les tickets associés aux utilisateurs suivis (vue alternative).
-
-File: ReviewViews.py
-Function: get
-Docstring:  Affiche les tickets et les critiques de l'utilisateur actuel.
-
 File: models.py
 Function: has_review
+Docstring: No docstring
+
+File: models.py
+Function: user_has_review
 Docstring: No docstring
 
 File: models.py
@@ -79,6 +99,20 @@ Function: __str__
 Docstring: No docstring
 
 File: models.py
+Function: get_rating_range
+Docstring: No docstring
+
+File: models.py
+Function: get_complement_range
+Docstring: No docstring
+
+File: models.py
+Function: has_user_already_reviewed
+Docstring: 
+        Check if the user has already reviewed the ticket.
+        
+
+File: models.py
 Function: count_followers
 Docstring: Compte le nombre d'abonnés d'un utilisateur.
 
@@ -89,10 +123,6 @@ Docstring: Compte le nombre d'utilisateurs suivis par un utilisateur.
 File: models.py
 Function: unfollow
 Docstring: Met fin à la relation de suivi entre les utilisateurs.
-
-File: models.py
-Function: block
-Docstring: Bloque la relation de suivi entre les utilisateurs.
 
 File: models.py
 Function: is_following
@@ -107,6 +137,18 @@ Docstring: Fonction qui incrémente le numéro de ticket de l'utilisateur chaque
         instance: L'instance du modèle qui a déclenché le signal.
         created: Un drapeau indiquant si l'instance a été créée pour la première fois.
         **kwargs: Arguments supplémentaires.
+
+File: forms.py
+Function: __init__
+Docstring: No docstring
+
+File: forms.py
+Function: __init__
+Docstring: No docstring
+
+File: forms.py
+Function: __init__
+Docstring: No docstring
 
 File: forms.py
 Function: clean_follows

@@ -1,6 +1,5 @@
 
 .line {
-  border-bottom: 1px solid #ccc; /* Ajouter un trait en bas */
   margin-bottom: 20px; /* Espace entre chaque ligne */
 }
 
@@ -14,6 +13,13 @@
   border: 1px solid #ccc; /* Bordure pour les critiques */
   padding: 10px; /* Espacement interne */
   background-color: #f9f9f9; /* Couleur de fond */
+}
+
+.review-ticket {
+  background-color: #ffe0c9; /* Couleur de fond */
+  width: 75%;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .register-column, .login-column {
@@ -32,25 +38,6 @@
   padding: 20px;
 }
 
-
-.form-body-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.publish-row, .review-row {
-  width: auto; /* Ajustez la largeur au contenu */
-}
-
-.publish-row, .critique-empty-row, .review-row {
-  display: flex; /* Utilisez la disposition flexbox */
-  flex-direction: row; /* Disposez les éléments en ligne */
-  justify-content: center; /* Centrez les éléments horizontalement */
-  align-items: flex-start; /* Alignez les éléments en haut */
-}
 
 .publish-column, .critique-empty-column, .review-column, .critique-column {
   flex: 1; /* Chaque colonne prend autant d'espace que possible */
@@ -73,6 +60,18 @@
 
 
 /* BASIC */
+
+#formContent-posts {
+  border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
+  background: #fbf2e9;
+  width: 75%;
+  margin: 0 auto; /* Centrer l'élément */
+  padding: 20px;
+  box-shadow:
+      var(--shadow-elevation-medium); /* Utilisation de la variable --shadow-elevation-medium pour l'ombrage */
+  text-align: center;
+  font-size: 18.5px;
+}
 
 
 .help-text {
@@ -167,11 +166,6 @@ input:hover + .help-text {
   text-align: center;
 }
 
-.line {
-  border-bottom: 1px solid #ccc; /* Définir le style de la ligne */
-  margin-bottom: 20px; /* Espacement entre chaque élément */
-  padding-bottom: 20px; /* Espacement entre le texte et la ligne */
-}
 
 
 /* Bouton de suppression */

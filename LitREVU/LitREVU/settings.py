@@ -24,9 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xuz+(708p!!v1l(&yq3l3dlm2m(1wfra@nws+a0_-@bb9#lxp7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# Définir DEBUG sur False pour désactiver le mode de débogage
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Définir ALLOWED_HOSTS avec la liste des noms de domaine ou adresses IP
+# qui sont autorisés à accéder à l'application lorsque DEBUG est False.
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

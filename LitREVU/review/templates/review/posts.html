@@ -4,10 +4,9 @@
 <link href="{% static 'css/posts.css' %}" rel="stylesheet">
 <main class="main-content">
     <div class="container">
-        <div class="form-body">
-            <!-- 3 colonnes -->
+        <div class="critique-grid">
             <div class="review-column">
-                <div id="formContent">
+                <div id="formContent-posts">
                     <div class="fadeIn first">
                         <h2 class="active"> Mes tickets </h2>
                         <div class="ticket_posts">
@@ -46,16 +45,29 @@
                     </div>
                 </div>
             </div>        
-            <div class="empty-column">
-                <!-- Colonne vide -->
-            </div>
             <div class="review-column">
-                <div id="formContent">
+                <div id="formContent-posts">
                     <div class="fadeIn first">
                         <h2 class="active"> Mes critiques </h2>
                         <div class="review_posts">
                             {% for review in reviews %}
                             <div class="line review"> <!-- Ajout de la classe "line review" ici -->
+                                <ul>
+                                    <li class="title"><strong>Critique</strong></li>
+                                    <li>Titre : {{ review.headline }}</li>
+                                    <li>Note :
+                                    <div class="rating">
+                                        {% for _ in review.get_rating_range %}
+                                            <span class="star">&#9733;</span>
+                                        {% endfor %}
+                                        {% for _ in review.get_complement_range %}
+                                            <span class="star">&#9734;</span>
+                                        {% endfor %}
+                                    </div></li>
+                                    <li>Description :{{ review.body }}</li>
+                                    <li>Date de création : {{ review.time_created }}</li>
+                                </ul>
+                                <div class="line review review-ticket">
                                 <h3 class="active"><strong> Critique pour le ticket "{{ review.ticket.title }}"</strong>  - ID: {{ review.ticket.id }} </h3>
                                 <ul>
                                     <li><strong>Ticket</strong></li>
@@ -73,21 +85,7 @@
                                     </form>
                                     {% endif %}
                                 </ul>
-                                <ul>
-                                    <li class="title"><strong>Critique</strong></li>
-                                    <li>Titre : {{ review.headline }}</li>
-                                    <li>Note :
-                                    <div class="rating">
-                                        {% for _ in review.get_rating_range %}
-                                            <span class="star">&#9733;</span>
-                                        {% endfor %}
-                                        {% for _ in review.get_complement_range %}
-                                            <span class="star">&#9734;</span>
-                                        {% endfor %}
-                                    </div></li>
-                                    <li>Description :{{ review.body }}</li>
-                                    <li>Date de création : {{ review.time_created }}</li>
-                                </ul>
+                                </div>
                                 <!-- Ajouter des boutons pour modifier et supprimer une critique -->
                                 <form method="get" action="{% url 'update_review' review.id %}">
                                     {% csrf_token %}

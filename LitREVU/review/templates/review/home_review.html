@@ -23,63 +23,66 @@
                 </div>
             </div>
             <div class="critique-column" style="grid-column: span 2;">
-            <div id="formContent">
-                <h2 class="active">Tickets et Critiques des utilisateurs suivis</h2>
-                {% for item in combined_list %}
-                    {% if item.type == 'ticket' %}
-                        <div class="line ticket">
-                            <h3 class="active"><strong>Ticket posté par : {{ item.user.username }}</strong></h3>
-                            <ul>
-                                <li><strong>Titre : </strong>{{ item.title }}</li>
-                                <li><strong>Description : </strong>{{ item.description }}</li>
-                                <li><strong>Date de création :</strong> {% if item.time_created %}{{ item.time_created }}{% else %}{{ item.ticket.time_created }}{% endif %}</li>
-                                {% if item.image %}
-                                    <li><img src="{{ item.image.url }}" alt="{{ item.title }}" class="image-posts"></li>
-                                {% endif %}
-                            </ul>
-                                <form method="post" action="{% url 'create_review' item.id %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="ticket_id" value="{{ item.id }}">
-                                    <input type="submit" class="fadeIn second" value="Créer une critique">
-                                </form>
-                        </div>
-                    {% elif item.type == 'review' %}
-                        <div class="line review">
-                            <h3 class="active"><strong> Critique écrite par {% if item.user == request.user %} Vous {% else %} {{ item.user.username }} {% endif %}</strong></h3>
-                            <ul>
-                                <li class="text-mini">En réponse au Ticket {{ item.ticket.title }} posté par <strong>{% if item.ticket.user == request.user %} Vous {% else %} {{ item.ticket.user.username }} {% endif %}</strong></li>
-                                <li><strong>Titre : </strong>{{ item.ticket.title }}</li>
-                                <li><strong>Description : </strong>{{ item.ticket.description }}</li>
-                                <li><strong>Date de création : </strong>{{ item.ticket.time_created }}</li>
-                                {% if item.ticket.image %}
-                                    <li><img src="{{ item.ticket.image.url }}" alt="{{ item.ticket.title }}" class="image-posts"></li>
-                                {% endif %}
-                            </ul>
-                            <ul>
-                                <li><strong>Critique</strong></li>
-                                <li><strong>Titre : </strong> {{ item.headline }}</li>
-                                <li><strong>Note : </strong>
-                                    <div class="rating">
-                                        {% for _ in item.get_rating_range %}
-                                            <span class="star">&#9733;</span>
-                                        {% endfor %}
-                                        {% for _ in item.get_complement_range %}
-                                            <span class="star">&#9734;</span>
-                                        {% endfor %}
-                                    </div>
-                                </li>
-                                <li><strong>Description : </strong> {{ item.body }}</li>
-                                <li><strong>Date de création : </strong> {{ item.time_created }}</li>
-                            </ul>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                <div id="formContent-critique">
+                    <h2 class="active">Tickets et Critiques des utilisateurs suivis</h2>
+                    {% for item in combined_list %}
+                        {% if item.type == 'ticket' %}
+                            <div class="line ticket">
+                                <h3 class="active"><strong>Ticket posté par : {{ item.user.username }}</strong></h3>
+                                <ul>
+                                    <li><strong>Titre : </strong>{{ item.title }}</li>
+                                    <li><strong>Description : </strong>{{ item.description }}</li>
+                                    <li><strong>Date de création :</strong> {% if item.time_created %}{{ item.time_created }}{% else %}{{ item.ticket.time_created }}{% endif %}</li>
+                                    {% if item.image %}
+                                        <li><img src="{{ item.image.url }}" alt="{{ item.title }}" class="image-posts"></li>
+                                    {% endif %}
+                                </ul>
+                                    <form method="post" action="{% url 'create_review' item.id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="ticket_id" value="{{ item.id }}">
+                                        <input type="submit" class="fadeIn second" value="Créer une critique">
+                                    </form>
+                            </div>
+                        {% elif item.type == 'review' %}
+                            <div class="line review">
+                                <h3 class="active"><strong> Critique écrite par {% if item.user == request.user %} Vous {% else %} {{ item.user.username }} {% endif %}</strong></h3>
+                                <ul>
+                                    <li><strong>Critique</strong></li>
+                                    <li><strong>Titre : </strong> {{ item.headline }}</li>
+                                    <li><strong>Note : </strong>
+                                        <div class="rating">
+                                            {% for _ in item.get_rating_range %}
+                                                <span class="star">&#9733;</span>
+                                            {% endfor %}
+                                            {% for _ in item.get_complement_range %}
+                                                <span class="star">&#9734;</span>
+                                            {% endfor %}
+                                        </div>
+                                    </li>
+                                    <li><strong>Description : </strong> {{ item.body }}</li>
+                                    <li><strong>Date de création : </strong> {{ item.time_created }}</li>
+                                </ul>
+                                <div class="line review review-ticket">
+                                <ul>
+                                    <li><strong>Ticket {{ item.ticket.title }} </strong></li>
+                                    <li><strong>Posté par : </strong>{% if item.ticket.user == request.user %} Vous {% else %} {{ item.ticket.user.username }} {% endif %}{{ item.ticket.title }}</li>
+                                    <li><strong>Titre : </strong>{{ item.ticket.title }}</li>
+                                    <li><strong>Description : </strong>{{ item.ticket.description }}</li>
+                                    <li><strong>Date de création : </strong>{{ item.ticket.time_created }}</li>
+                                    {% if item.ticket.image %}
+                                        <li><img src="{{ item.ticket.image.url }}" alt="{{ item.ticket.title }}" class="image-posts"></li>
+                                    {% endif %}
+                                </ul>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
             <div class="pagination">
                 <button id="prevPage" class="pagination-button prev-page">Précédent</button>
                 <button id="nextPage" class="pagination-button next-page">Suivant</button>
             </div>
-        </div>
     </div>
 </main>
 {% endblock %}

@@ -9,73 +9,53 @@ User = get_user_model()
 
 class TicketForm(forms.ModelForm):
     """ Formulaire pour la création et la modification d'un ticket."""
-    title = forms.CharField(label="Titre", widget=forms.TextInput)
-    description = forms.CharField(label="Description", widget=forms.Textarea)
-    image = forms.FileField(label="Image", widget=forms.FileInput)
+    title = forms.CharField(label="Titre", widget=forms.TextInput, required=True)
+    description = forms.CharField(label="Description", widget=forms.Textarea, required=True)
+    image = forms.FileField(label="Image", widget=forms.FileInput, required=True)
 
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'image']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Ajoutez des messages d'erreur personnalisés pour chaque champ requis
-        self.fields['title'].error_messages['required'] = 'Ce champ est obligatoire.'
-        self.fields['description'].error_messages['required'] = 'Ce champ est obligatoire.'
-
 
 class ReviewForm(forms.ModelForm):
     """Formulaire pour la création et la modification d'une critique."""
-    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput(attrs={'id': 'headline'}))
+    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput(attrs={'id': 'headline'}),
+                               required=True)
     rating = forms.IntegerField(
         label="Notation",
         widget=forms.HiddenInput(attrs={'id': 'rating'}),
         required=True,
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    body = forms.CharField(label="Commentaire", widget=forms.Textarea(attrs={'id': 'body'}))
+    body = forms.CharField(label="Commentaire", widget=forms.Textarea(attrs={'id': 'body'}), required=True)
 
     class Meta:
         model = Review
         fields = ["headline", "rating", "body"]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Ajoutez des messages d'erreur personnalisés pour chaque champ requis
-        self.fields['headline'].error_messages['required'] = 'Ce champ est obligatoire.'
-        self.fields['rating'].error_messages['required'] = 'Ce champ est obligatoire.'
-        self.fields['body'].error_messages['required'] = 'Ce champ est obligatoire.'
-
 
 class TicketReviewForm(forms.ModelForm):
     """Formulaire combiné pour la création d'un ticket et d'une critique associée."""
     # Champs pour le ticket
-    title = forms.CharField(label="Titre", widget=forms.TextInput)
-    description = forms.CharField(label="Description", widget=forms.Textarea)
-    image = forms.FileField(label="Image", widget=forms.FileInput)
+    title = forms.CharField(label="Titre", widget=forms.TextInput, required=True)
+    description = forms.CharField(label="Description", widget=forms.Textarea, required=True)
+    image = forms.FileField(label="Image", widget=forms.FileInput, required=True)
 
     # Champs pour la critique
-    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput(attrs={'id': 'headline'}))
+    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput(attrs={'id': 'headline'}),
+                               required=True)
     rating = forms.IntegerField(
         label="Notation",
         widget=forms.HiddenInput(attrs={'id': 'rating'}),
         required=True,
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    body = forms.CharField(label="Commentaire", widget=forms.Textarea(attrs={'id': 'body'}))
+    body = forms.CharField(label="Commentaire", widget=forms.Textarea(attrs={'id': 'body'}), required=True)
 
     class Meta:
         model = TicketReview
         fields = ['title', 'description', 'image',  'headline', 'rating', 'body']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Ajoutez des messages d'erreur personnalisés pour chaque champ requis
-        self.fields['title'].error_messages['required'] = 'Ce champ est obligatoire.'
-        self.fields['description'].error_messages['required'] = 'Ce champ est obligatoire.'
-        self.fields['headline'].error_messages['required'] = 'Ce champ est obligatoire.'
-        self.fields['rating'].error_messages['required'] = 'Ce champ est obligatoire.'
-        self.fields['body'].error_messages['required'] = 'Ce champ est obligatoire.'
 
 
 class FollowUsersForm(forms.ModelForm):
