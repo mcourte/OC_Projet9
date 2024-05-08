@@ -46,6 +46,12 @@ li .text-mini {
   font-size: 16px;
 }
 
+.image-posts {
+	max-width: 150px;
+	height: auto;
+  align-items: center;
+}
+
 .empty-column {
   padding: 20px;
 }
