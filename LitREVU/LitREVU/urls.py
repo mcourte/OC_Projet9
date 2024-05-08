@@ -48,8 +48,6 @@ urlpatterns = [
     path('review/edit_delete_review/<int:review_id>/', ReviewView.edit_delete_review, name='edit_delete_review'),
     path('review/edit_delete_ticket/<int:ticket_id>/', TicketView.edit_delete_ticket, name='edit_delete_ticket'),
     path('review/edit_ticket/<int:ticket_id>/', TicketView.edit_ticket, name='edit_ticket'),
-    path('review/update_ticket/<int:ticket_id>/', TicketView.update_ticket, name='update_ticket'),
-    path('review/update_review/<int:review_id>/', ReviewView.update_review, name='update_review'),
 ]
 
 if settings.DEBUG:
