@@ -9,7 +9,7 @@
                 <div class="fadeIn first">
                     <div>
                     <h1 class="active">Publier un Ticket et sa Critique</h1>
-                    <form method="post" action="{% url 'create_ticket_review' %}" enctype="multipart/form-data">
+                    <form id="ticket-review-form" method="post" action="{% url 'create_ticket_review' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ ticket_review_form.as_p }}
                     
@@ -26,6 +26,7 @@
                     
                         <!-- Bouton de soumission -->
                         <input type="submit" class="fadeIn second" value="Publier un ticket et une critique">
+                        <div id="error-messages"></div>
                     </form>
                     </div>
                 </div>

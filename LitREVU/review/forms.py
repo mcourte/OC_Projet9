@@ -17,6 +17,12 @@ class TicketForm(forms.ModelForm):
         model = Ticket
         fields = ['title', 'description', 'image']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ajoutez des messages d'erreur personnalisés pour chaque champ requis
+        self.fields['title'].error_messages['required'] = 'Ce champ est obligatoire.'
+        self.fields['description'].error_messages['required'] = 'Ce champ est obligatoire.'
+
 
 class ReviewForm(forms.ModelForm):
     """Formulaire pour la création et la modification d'une critique."""
@@ -32,6 +38,13 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ["headline", "rating", "body"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ajoutez des messages d'erreur personnalisés pour chaque champ requis
+        self.fields['headline'].error_messages['required'] = 'Ce champ est obligatoire.'
+        self.fields['rating'].error_messages['required'] = 'Ce champ est obligatoire.'
+        self.fields['body'].error_messages['required'] = 'Ce champ est obligatoire.'
 
 
 class TicketReviewForm(forms.ModelForm):
@@ -54,6 +67,15 @@ class TicketReviewForm(forms.ModelForm):
     class Meta:
         model = TicketReview
         fields = ['title', 'description', 'image',  'headline', 'rating', 'body']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ajoutez des messages d'erreur personnalisés pour chaque champ requis
+        self.fields['title'].error_messages['required'] = 'Ce champ est obligatoire.'
+        self.fields['description'].error_messages['required'] = 'Ce champ est obligatoire.'
+        self.fields['headline'].error_messages['required'] = 'Ce champ est obligatoire.'
+        self.fields['rating'].error_messages['required'] = 'Ce champ est obligatoire.'
+        self.fields['body'].error_messages['required'] = 'Ce champ est obligatoire.'
 
 
 class FollowUsersForm(forms.ModelForm):

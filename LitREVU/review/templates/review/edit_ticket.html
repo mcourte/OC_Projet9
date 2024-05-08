@@ -11,6 +11,7 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     <input type="submit" class="fadeIn second" value="Enregistrer les modifications">
+                    <div id="error-messages"></div>
                 </form>
             </div>
         </div>

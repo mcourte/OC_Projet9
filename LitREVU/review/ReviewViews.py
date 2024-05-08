@@ -39,7 +39,7 @@ class HomeReviewView(LoginRequiredMixin, View):
         # Combiner les tickets et les critiques dans une liste
         combined_list = sorted(
             chain(following_tickets, following_reviews),
-            key=lambda x: x.time_created if hasattr(x, 'time_created') else x.ticket.time_created,
+            key=lambda x: x.time_created if isinstance(x, Review) else x.time_created,
             reverse=True
         )
         context = {
