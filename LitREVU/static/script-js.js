@@ -170,30 +170,3 @@ document.addEventListener("DOMContentLoaded", function() {
 
   showPage(currentPage);
 });
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    var form = document.getElementById("ticket-review-form");
-    form.addEventListener("submit", function(event) {
-        var requiredFields = ["title", "description", "headline", "rating", "body"];
-        var errors = [];
-        
-        requiredFields.forEach(function(field) {
-            var fieldValue = document.getElementById(field).value;
-            if (!fieldValue) {
-                errors.push("Le champ '" + field + "' est obligatoire.");
-            }
-        });
-        
-        if (errors.length > 0) {
-            event.preventDefault();
-            var errorMessageContainer = document.getElementById("error-messages");
-            errorMessageContainer.innerHTML = "";
-            errors.forEach(function(error) {
-                var p = document.createElement("p");
-                p.textContent = error;
-                errorMessageContainer.appendChild(p);
-            });
-        }
-    });
-});

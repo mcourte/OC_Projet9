@@ -10,6 +10,15 @@
                 <form method="post" enctype="multipart/form-data" action="{% url 'update_review' review.id %}">
                     {% csrf_token %}
                     {{ form.as_p }}
+                        <!-- Étoiles de notation -->
+                            <h3 class="active">Notation</h3>
+                            <div id="rating-stars">
+                                <span class="star" data-rating="1">&#9733;</span>
+                                <span class="star" data-rating="2">&#9733;</span>
+                                <span class="star" data-rating="3">&#9733;</span>
+                                <span class="star" data-rating="4">&#9733;</span>
+                                <span class="star" data-rating="5">&#9733;</span>
+                            </div>
                     <input type="submit" class="fadeIn second" value="Enregistrer les modifications">
                     <div id="error-messages"></div>
                 </form>

@@ -176,7 +176,6 @@ class ReviewView(LoginRequiredMixin, View):
     def post(self, request, ticket_id):
         """Crée une critique en réponse à un ticket."""
         ticket = get_object_or_404(Ticket, id=ticket_id)
-
         if request.method == 'POST':
             form = ReviewForm(request.POST, request.FILES)
             if form.is_valid():
@@ -191,13 +190,7 @@ class ReviewView(LoginRequiredMixin, View):
                     messages.error(request, "Vous avez déjà poster une critique en réponse à ce ticket.")
         else:
             form = ReviewForm()
-
-        context = {
-            'form': form,
-            'ticket': ticket
-        }
-
-        return render(request, 'review/create_review.html', context=context)
+        return render(request, 'review/create_review.html', {'form': form, 'ticket': ticket})
 
     def edit_delete_review(request, review_id):
         """Affiche le formulaire de confirmation de suppression d'un ticket."""

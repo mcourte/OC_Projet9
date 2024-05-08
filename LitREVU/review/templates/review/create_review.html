@@ -21,10 +21,9 @@
                         </ul>
                         <form method="post" action="{% url 'create_review' ticket.id %}" enctype="multipart/form-data">
                             {% csrf_token %}
-                            {{ form.as_p }}
-                    
-                            <!-- Étoiles de notation -->
-                            <h3 class="active">Notation</h3>
+                            <label for="headline">Titre:</label>
+                            <input type="text" name="headline" id="headline">
+                            <label for="rating">Note:</label>
                             <div id="rating-stars">
                                 <span class="star" data-rating="1">&#9733;</span>
                                 <span class="star" data-rating="2">&#9733;</span>
@@ -32,9 +31,10 @@
                                 <span class="star" data-rating="4">&#9733;</span>
                                 <span class="star" data-rating="5">&#9733;</span>
                             </div>
-                            <input type="hidden" name="rating" id="rating">
+                            <input type="hidden" name="rating" id="rating"> 
+                            <label for="body">Description:</label>
+                            <input type="text" name="body" id="body">
                             <input type="submit" class="fadeIn second" value="Poster une critique">
-                            <div id="error-messages"></div>
                         </form>
                     </div>
                 </div>
