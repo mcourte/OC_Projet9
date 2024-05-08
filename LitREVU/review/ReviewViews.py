@@ -240,7 +240,6 @@ class TicketReviewView(View):
 
     def get(self, request):
         """Affiche le formulaire pour publier un ticket et une critique associée."""
-        # Utilisez le formulaire combiné
         ticket_review_form = TicketReviewForm()
         context = {
             'ticket_review_form': ticket_review_form
@@ -251,7 +250,6 @@ class TicketReviewView(View):
         """Traite le formulaire soumis pour publier un ticket et une critique associée."""
         ticket_review_form = TicketReviewForm(request.POST, request.FILES)
         if ticket_review_form.is_valid():
-            # Enregistrer le ticket et la critique associée
             ticket = Ticket.objects.create(
                 title=request.POST['title'],
                 description=request.POST['description'],
@@ -263,10 +261,16 @@ class TicketReviewView(View):
                 headline=request.POST['headline'],
                 body=request.POST['body'],
                 user=request.user,
-                ticket=ticket  # Associate the review with the created ticket
+                ticket=ticket
             )
             TicketReview.objects.create(ticket=ticket, review=review)
-            return redirect(reverse_lazy('posts'))  # Rediriger vers la page des posts après publication
+            return redirect(reverse_lazy('posts'))
+        else:
+            # If the form is not valid, return the form with errors
+            context = {
+                'ticket_review_form': ticket_review_form
+            }
+            return render(request, 'review/create_ticket_review.html', context=context)
 
     def delete_review(request, review_id):
         """Supprime une critique."""
