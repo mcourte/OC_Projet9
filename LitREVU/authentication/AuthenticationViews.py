@@ -82,7 +82,10 @@ class ContactView(View):
     def get(self, request):
         """Méthode pour afficher le formulaire de contact."""
         form = ContactUsForm()
-        return render(request, 'authentication/contact-us.html', {'form': form})
+        context = {
+            'form': form
+        }
+        return render(request, 'authentication/contact-us.html', context=context)
 
     def post(self, request):
         """Méthode pour traiter le formulaire de contact soumis."""
@@ -96,5 +99,7 @@ class ContactView(View):
                 recipient_list=['courte.magali@gmail.com'],
             )
             return redirect('email-sent')  # Ajouter cette instruction de redirection
-
-        return render(request, 'authentication/contact-us.html', {'form': form})
+        context = {
+            'form': form
+        }
+        return render(request, 'authentication/contact-us.html', context=context)
