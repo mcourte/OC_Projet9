@@ -9,7 +9,16 @@
                 <div class="fadeIn first">
                     <div>
                         <h1 class="active">Publier une Critique</h1>
-                        <h1>en réponse au ticket : {{ ticket.title }} </h1>
+                        <h3><strong>Vous postez une réponse au ticket : {{ ticket.title }} </strong></h1>
+                        <ul>
+                            <li><strong>Posté par : </strong>{{ ticket.username }}</li>
+                            <li><strong>Titre : </strong>{{ ticket.title }}</li>
+                            <li><strong>Description : </strong>{{ ticket.description }}</li>
+                            <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
+                            {% if ticket.image %}
+                                <li><img src="{{ ticket.image.url }}" alt="{{ ticket.image.url }}" class="image-posts"></li>
+                            {% endif %}
+                        </ul>
                         <form method="post" action="{% url 'create_review' ticket.id %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form.as_p }}
