@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from authentication.AuthenticationViews import SignUpView, LogoutView, LoginView, HomeView
-from authentication.AuthenticationViews import custom_csrf_failure, ContactView
 from review.ReviewViews import HomeReviewView, TicketView, ReviewView, FollowingView, UnfollowUserView
 from review.ReviewViews import PostsView, TicketReviewView
 from django.conf import settings
@@ -35,12 +34,9 @@ urlpatterns = [
     path('signup/', SignUpView.as_view(template_name='authentication/signup.html'), name="signup"),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('', HomeView.as_view(), name="home"),
-    path('failure/', custom_csrf_failure, name="failure"),
     path('accounts/review/home_review/', HomeReviewView.as_view(), name='home_review'),
     path('accounts/review/posts/', PostsView.as_view(), name='posts'),
     path('review/following/', FollowingView.as_view(), name='following'),
-    path('authentication/contact_us/', ContactView.as_view(), name='contact'),
-    path('authentication/update_profile/', ContactView.as_view(), name='update_profile'),
     path('unfollow/', UnfollowUserView.as_view(), name='unfollow_user'),
     path('review/create_ticket_review/', TicketReviewView.as_view(), name='create_ticket_review'),
     path('review/create_ticket/', TicketView.as_view(), name='create_ticket'),
