@@ -13,7 +13,36 @@ Cliquer sur le bouton vert "<> Code" puis sur Download ZIP.
 Extraire l'ensemble des éléments dans le dossier dans lequel vous voulez stockez les datas qui seront téléchargées.
 
 
-## Etape 2 :  Mise en route du serveur
+## Etape 2 : Création de l'environnement virtuel
+
+Se placer dans le dossier où l'on a extrait l'ensemble des documents grâce à la commande ``cd``  
+Exemple :
+```
+cd home/magali/OpenClassrooms/Formation/Projet_9
+```
+
+
+Dans le terminal de commande, executer la commande suivante :
+```
+python3 -m venv env
+```
+
+
+Activez l'environnement virtuel
+```
+source env/bin/activate
+```
+> Pour les utilisateurs de Windows, la commande est la suivante : 
+> ``` env\Scripts\activate.bat ```
+
+## Etape 5 : Télécharger les packages nécessaires au bon fonctionnement du programme
+
+Dans le terminal, taper la commande suivante :
+```
+pip install -r requierements.txt
+```
+
+## Etape 6 :  Mise en route du serveur
  
 
 Pour lancer le serveur, ouvrez le terminal de commande :   
@@ -42,7 +71,7 @@ Quit the server with CONTROL-C.
 Vous avez alors deux possibilités : cliquez directement sur le lien dans le terminal,  
 ou tapez [http://127.0.0.1:8000/](http://127.0.0.1:8000/) dans votre navigateur
 
-## Etape 3 :  Utilisation du site
+## Etape 7 :  Utilisation du site
 
 Créez-vous un compte ou connectez-vous avec les identifiants d'un utilisateur existant :  
 username : florineg  
