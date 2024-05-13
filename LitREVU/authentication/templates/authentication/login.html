@@ -36,12 +36,16 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <div class="fadeIn third">
-                                    <label for="username">Nom d'utilisateur :</label>
-                                    <input type="text" id="username" name="username" autocomplete="off" required>
-                                    <p class="help-text">Ce champ est obligatoire.</p>
-                                    <label for="password">Mot de passe :</label>
-                                    <input type="password" id="password" name="password" autocomplete="off" required>
-                                    <p class="help-text">Ce champ est obligatoire.</p>
+                                    {{ form.username.label_tag }}
+                                    {{ form.username }}
+                                    {% for error in form.username.errors %}
+                                        <p class="help-text">{{ error }}</p>
+                                    {% endfor %}
+                                    {{ form.password.label_tag }}
+                                    {{ form.password }}
+                                    {% for error in form.password.errors %}
+                                        <p class="help-text">{{ error }}</p>
+                                    {% endfor %}
                                 </div>
                                 <input type="submit" class="fadeIn fourth" value="Se connecter">
                             </div>

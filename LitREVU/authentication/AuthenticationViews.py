@@ -6,8 +6,6 @@ from .forms import CustomUserCreationForm
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, TemplateView
 from django.views import View
-from authentication.forms import ContactUsForm
-from django.core.mail import send_mail
 
 
 @requires_csrf_token
@@ -75,31 +73,3 @@ class LogoutView(TemplateView):
         """Méthode pour gérer les requêtes GET de déconnexion."""
         logout(request)
         return redirect('home')
-
-
-class ContactView(View):
-    """Vue pour gérer le formulaire de contact."""
-    def get(self, request):
-        """Méthode pour afficher le formulaire de contact."""
-        form = ContactUsForm()
-        context = {
-            'form': form
-        }
-        return render(request, 'authentication/contact-us.html', context=context)
-
-    def post(self, request):
-        """Méthode pour traiter le formulaire de contact soumis."""
-        form = ContactUsForm(request.POST)
-
-        if form.is_valid():
-            send_mail(
-                subject=f'Message from {form.cleaned_data["name"]}',
-                message=form.cleaned_data['message'],
-                from_email=form.cleaned_data['email'],
-                recipient_list=['courte.magali@gmail.com'],
-            )
-            return redirect('email-sent')  # Ajouter cette instruction de redirection
-        context = {
-            'form': form
-        }
-        return render(request, 'authentication/contact-us.html', context=context)

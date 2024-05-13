@@ -37,11 +37,14 @@
                                         <li><img src="{{ item.image.url }}" alt="{{ item.title }}" class="image-posts"></li>
                                     {% endif %}
                                 </ul>
-                                    <form method="post" action="{% url 'create_review' item.id %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="ticket_id" value="{{ item.id }}">
-                                        <input type="submit" class="fadeIn second" value="Créer une critique">
-                                    </form>
+                                {% if not item.has_review %}
+                                <!-- Si l'utilisateur n'a pas encore posté de critique, afficher le bouton pour créer une critique -->
+                                <form method="post" action="{% url 'create_review' item.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="ticket_id" value="{{ item.id }}">
+                                    <input type="submit" class="fadeIn second" value="Créer une critique">
+                                </form>
+                                {% endif %}
                             </div>
                         {% elif item.type == 'review' %}
                             <div class="line review">

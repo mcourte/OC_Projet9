@@ -4,28 +4,35 @@
 <link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
 <main class="main-content">
     <div class="container">
-        <div id="formContent">
-            <div class="review-column">
+        <div id="formContent-posts" class="review-column">
                 <div class="fadeIn first">
-                    <h1 class="active">Critique</h1>
-                    <h3 class="active">Critique : {{ review.title }}</h3>
-                    <form method="post" action="{% url 'update_review' review.id %}">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                            <!-- Étoiles de notation -->
-                            <h3 class="active">Notation</h3>
-                            <div id="rating-stars">
-                                <span class="star" data-rating="1">&#9733;</span>
-                                <span class="star" data-rating="2">&#9733;</span>
-                                <span class="star" data-rating="3">&#9733;</span>
-                                <span class="star" data-rating="4">&#9733;</span>
-                                <span class="star" data-rating="5">&#9733;</span>
-                            </div>
-                            <input type="hidden" name="rating" id="rating">
-                        <input type="submit" class="fadeIn second" value="Modifier la critique">
-                    </form>
+                        <h1 class="active">Vous modifiez votre réponse au ticket suivant : </h1>
+                        <div class="line review review-ticket">
+                            <ul>
+                                <li><strong>Titre : </strong>{{ review.ticket.title }}</li>
+                                <li><strong>Posté par : </strong>{{ review.ticket.user }}</li>
+                                <li><strong>Description : </strong>{{ review.ticket.description }}</li>
+                                <li><strong>Date de création :</strong> {{ review.ticket.time_created }}</li>
+                                {% if review.ticket.image %}
+                                    <li><img src="{{ review.ticket.image.url }}" alt="{{ review.ticket.image.url }}" class="image-posts"></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                            <form method="post" enctype="multipart/form-data" action="{% url 'update_review' review.id %}">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                    <!-- Étoiles de notation -->
+                                        <h3 class="active">Note</h3>
+                                        <div id="rating-stars">
+                                            <span class="star" data-rating="1">&#9733;</span>
+                                            <span class="star" data-rating="2">&#9733;</span>
+                                            <span class="star" data-rating="3">&#9733;</span>
+                                            <span class="star" data-rating="4">&#9733;</span>
+                                            <span class="star" data-rating="5">&#9733;</span>
+                                        </div>
+                                <input type="submit" class="fadeIn second" value="Enregistrer les modifications">
+                            </form>
                 </div>
-            </div>
         </div>
     </div>
 </main>

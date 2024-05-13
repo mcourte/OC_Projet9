@@ -4,17 +4,42 @@
 <link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
 <main class="main-content">
     <div class="container">
-        <div id="formTRContent">
-            <div class="ticket-column">
+        <div id="formTRContent" class="review-column">
                 <div class="fadeIn first">
-                    <div>
                     <h1 class="active">Publier un Ticket et sa Critique</h1>
                     <form id="ticket-review-form" method="post" action="{% url 'create_ticket_review' %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ ticket_review_form.as_p }}
-                    
+                        <div class="line ticket">
+                            <h2>Ticket</h2>
+                            <div class="form-group">
+                                <label for="{{ ticket_review_form.title.id_for_label }}">Titre:</label>
+                                {{ ticket_review_form.title }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ ticket_review_form.description.id_for_label }}">Description:</label>
+                                {{ ticket_review_form.description }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ ticket_review_form.image.id_for_label }}">Image:</label>
+                                {{ ticket_review_form.image }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ ticket_review_form.image_description.id_for_label }}">Description de l'image:</label>
+                                {{ ticket_review_form.image_description }}
+                            </div>
+                        </div>
+                        <div class="line review">
+                            <h2>Critique</h2>
+                            <div class="form-group">
+                                <label for="{{ ticket_review_form.headline.id_for_label }}">Titre de la critique:</label>
+                                {{ ticket_review_form.headline }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ ticket_review_form.body.id_for_label }}">Commentaire:</label>
+                                {{ ticket_review_form.body }}
+                            </div>
                         <!-- Étoiles de notation -->
-                        <h3 class="active">Notation</h3>
+                        <h3 class="active">Note</h3>
                         <div id="rating-stars">
                             <span class="star" data-rating="1">&#9733;</span>
                             <span class="star" data-rating="2">&#9733;</span>
@@ -23,12 +48,10 @@
                             <span class="star" data-rating="5">&#9733;</span>
                         </div>
                         <input type="hidden" name="rating" id="rating">
-                    
+                        </div>
                         <!-- Bouton de soumission -->
                         <input type="submit" class="fadeIn second" value="Publier un ticket et une critique">
                     </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,210 @@
+
+.line {
+  margin-bottom: 20px; /* Espace entre chaque ligne */
+}
+
+.ticket {
+  border: 1px solid #ccc; /* Bordure pour les tickets */
+  padding: 10px; /* Espacement interne */
+  background-color: #f9f9f9; /* Couleur de fond */
+}
+
+.review {
+  border: 1px solid #ccc; /* Bordure pour les critiques */
+  padding: 10px; /* Espacement interne */
+  background-color: #f9f9f9; /* Couleur de fond */
+}
+
+.review-ticket {
+  background-color: #ffe0c9; /* Couleur de fond */
+  width: 75%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.register-column, .login-column {
+  text-align: center;
+  background-color: #fbf2e9;
+  padding: 0px;
+  flex: 1; /* Les colonnes vont prendre autant d'espace que possible */
+}
+
+.review-column input[type="file"] {
+  margin: 0 auto; /* Centrer le bouton "Se connecter" horizontalement */
+  margin-top: 25px;
+}
+
+.empty-column {
+  padding: 20px;
+}
+
+
+.publish-column, .critique-empty-column, .review-column, .critique-column {
+  flex: 1; /* Chaque colonne prend autant d'espace que possible */
+}
+
+.main-content-container {
+  position: relative; /* Utilisez position: relative */
+  width: 100%;
+  padding-bottom: calc(100vh - 70px); /* Ajustez la marge inférieure en fonction de la hauteur de la fenêtre - hauteur du header */
+}
+
+.main-content {
+  position: absolute; /* Utilisez position: absolute */
+  top: 70px; /* Ajustez en fonction de la hauteur du header */
+  left: 0;
+  width: 100%;
+  padding-top: 30px;
+  overflow-y: auto; /* Ajoutez un défilement vertical si nécessaire */
+}
+
+
+/* BASIC */
+
+#formContent-posts {
+  border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
+  background: #fbf2e9;
+  width: 75%;
+  margin: 0 auto; /* Centrer l'élément */
+  padding: 20px;
+  box-shadow:
+      var(--shadow-elevation-medium); /* Utilisation de la variable --shadow-elevation-medium pour l'ombrage */
+  text-align: center;
+  font-size: 18.5px;
+}
+
+
+.help-text {
+  display: none;  /* Hide the help text by default */
+  color: black;    /* Adjust color as needed */
+  font-size: 18.5px; /* Adjust font size as needed */
+  margin-top: 5px; /* Adjust margin as needed */
+  
+}
+
+.ticket_posts, .review_posts {
+  border-bottom: 1.5px solid grey; /* Ajoute une bordure en bas de chaque ticket */
+  padding-bottom: 10px; /* Ajoute un espace en bas du ticket */
+}
+
+.ticket_posts:last-child, .review_posts:last-child {
+  border-bottom: none; /* Supprime la bordure du dernier ticket */
+  padding-bottom: 0; /* Supprime l'espace en bas du dernier ticket */
+}
+
+/* CSS to show the help text when the input field is hovered over */
+input:hover + .help-text {
+  display: block;
+}
+
+
+/* Stylez la grille de critiques */
+
+.critique-grid {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Deux colonnes */
+  grid-template-rows: auto 200px auto; /* Trois lignes */
+  gap: 70px;
+}
+
+
+
+.image-posts {
+	max-width: 150px;
+	height: auto;
+}
+
+.critique-column {
+  border-radius: 10px;
+  background: #fbf2e9;
+  width: 300px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: var(--shadow-elevation-medium);
+  text-align: center;
+  font-size: 18.5px;
+  flex: 1;
+  height: auto; /* Ajustement automatique de la hauteur en fonction du contenu */
+}
+
+
+.critique-empty-column {
+  padding: 20px;
+}
+
+.critique-column h2 {
+  text-align: center;
+}
+
+.critique-column ul {
+  padding-left: 0;
+}
+
+.critique-column ul li {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.critique-form {
+  text-align: center;
+}
+
+/* Stylez les critiques suivies */
+
+
+.review-column h2 {
+  text-align: center;
+}
+
+.review-column ul {
+  padding-left: 0;
+}
+
+.review-column ul li {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+
+
+/* Bouton de suppression */
+.delete-ticket-button,
+.delete-review-button {
+  background-color: #a4846f; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.delete-ticket-button:hover,
+.delete-review-button:hover {
+  background-color: #ff9176 /* Rouge plus foncé au survol */
+}
+
+.prev-page {
+  float: left; /* Aligner à gauche */
+  margin-right: 10px; /* Ajouter une marge à droite pour l'espacement */
+}
+
+.next-page {
+  float: right; /* Aligner à droite */
+}
+
+.arrow-button {
+  background-color: transparent; /* Fond transparent */
+  border: none; /* Supprimer la bordure */
+  font-size: 18px; /* Taille de police */
+  cursor: pointer; /* Curseur pointeur */
+}
+
+.prev-page::before {
+  content: '\2190'; /* Code Unicode de la flèche gauche */
+}
+
+.next-page::after {
+  content: '\2192'; /* Code Unicode de la flèche droite */
+}

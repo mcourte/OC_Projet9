@@ -1,0 +1,55 @@
+
+.form-header-home {
+  margin-bottom: 20px; /* Marge inférieure */
+  width: 100%; /* Pleine largeur */
+  text-align: center; /* Centrer le contenu horizontalement */
+}
+
+.form-header h2 {
+  margin-top: 0; /* Supprimer la marge supérieure par défaut du titre */
+}
+
+.main-content {
+  padding-top: 150px;
+}
+
+.home-column {
+  border-radius: 10px;
+  background: #fbf2e9;
+  width: 700px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: var(--shadow-elevation-medium);
+  text-align: center;
+  font-size: 18.5px;
+  flex: 1;
+  height: auto; /* Ajustement automatique de la hauteur en fonction du contenu */
+  display: flex; /* Affiche les éléments en ligne */
+  flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
+  justify-content: center; /* Centre les éléments horizontalement */
+}
+
+p {
+  font-size: 18.5px;
+  color: black;
+  }
+
+ol {
+    list-style: none; /* Supprimer la numérotation par défaut */
+    counter-reset: my-counter; /* Réinitialiser le compteur */
+    padding-left: 0; /* Supprimer le décalage par défaut */
+    font-size: 18.5px; /* Correction de la virgule en point dans la taille de police */
+    text-align: center;
+}
+
+ol li {
+    counter-increment: my-counter; /* Incrémenter le compteur */
+    text-align: center;
+}
+
+ol li::before {
+    content: counter(my-counter) ". "; /* Ajouter le numéro avec un point */
+    position: relative; /* Position relative pour le contenu */
+    left: -0.5em; /* Décalage vers la gauche pour placer le chiffre juste devant le texte */
+}

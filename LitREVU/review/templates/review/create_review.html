@@ -2,16 +2,17 @@
 {% block content %}
 {% load static %}
 <link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
+
 <main class="main-content">
     <div class="container">
-        <div id="formTRContent">
-            <div class="ticket-column">
+        <div id="formContent-posts">
+            <div class="review-column">
                 <div class="fadeIn first">
-                    <div>
                         <h1 class="active">Publier une Critique</h1>
-                        <h3><strong>Vous postez une réponse au ticket : {{ ticket.title }} </strong></h1>
+                        <div class="line review review-ticket">
+                        <h3><strong>Vous postez une réponse au ticket : {{ ticket.title }} </strong></h3>
                         <ul>
-                            <li><strong>Posté par : </strong>{{ ticket.username }}</li>
+                            <li><strong>Posté par : </strong>{{ ticket.user }}</li>
                             <li><strong>Titre : </strong>{{ ticket.title }}</li>
                             <li><strong>Description : </strong>{{ ticket.description }}</li>
                             <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
@@ -19,11 +20,19 @@
                                 <li><img src="{{ ticket.image.url }}" alt="{{ ticket.image.url }}" class="image-posts"></li>
                             {% endif %}
                         </ul>
-                        <form method="post" action="{% url 'create_review' ticket.id %}" enctype="multipart/form-data">
+                        </div>
+                        <form id="review-form" method="post" action="{% url 'create_review' ticket.id %}" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <label for="headline">Titre:</label>
-                            <input type="text" name="headline" id="headline">
-                            <label for="rating">Note:</label>
+                            <div class="form-group">
+                                <label for="{{ form.headline.id_for_label }}">Titre de la critique:</label>
+                                {{ form.headline }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.body.id_for_label }}">Commentaire:</label>
+                                {{ form.body }}
+                            </div>
+                            <!-- Étoiles de notation -->
+                            <h3 class="active">Note</h3>
                             <div id="rating-stars">
                                 <span class="star" data-rating="1">&#9733;</span>
                                 <span class="star" data-rating="2">&#9733;</span>
@@ -31,10 +40,10 @@
                                 <span class="star" data-rating="4">&#9733;</span>
                                 <span class="star" data-rating="5">&#9733;</span>
                             </div>
-                            <input type="hidden" name="rating" id="rating"> 
-                            <label for="body">Description:</label>
-                            <input type="text" name="body" id="body">
-                            <input type="submit" class="fadeIn second" value="Poster une critique">
+                            <input type="hidden" name="rating" id="rating">
+                        
+                            <!-- Bouton de soumission -->
+                            <input type="submit" class="fadeIn second" value="Publier une critique">
                         </form>
                     </div>
                 </div>

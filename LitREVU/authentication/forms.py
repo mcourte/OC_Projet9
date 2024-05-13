@@ -5,8 +5,8 @@ from .models import User
 class CustomUserCreationForm(forms.ModelForm):
     """Formulaire personnalisé pour la création d'un nouvel utilisateur.
     Ce formulaire hérite du modèle User pour la création d'un nouvel utilisateur avec nom d'utilisateur et email."""
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    password1 = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirmation du mot de passe', widget=forms.PasswordInput)
 
     class Meta:
         model = User
@@ -81,11 +81,3 @@ class SignupForm(CustomUserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
-
-
-class ContactUsForm(forms.Form):
-    """Formulaire de contact pour les utilisateurs du système.
-    Ce formulaire permet aux utilisateurs de saisir leur nom, email et un message pour contacter l'administrateur."""
-    name = forms.CharField(required=True)
-    email = forms.EmailField()
-    message = forms.CharField(max_length=1000)

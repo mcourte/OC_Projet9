@@ -14,12 +14,12 @@
                             <div class="line ticket"> <!-- Ajout de la classe "line ticket" ici -->
                                 <h3 class="active" enctype="multipart/form-data"><strong> Ticket  - ID : {{ ticket.id }} </strong></h3>
                                 <ul>
-                                    <li>Titre : {{ ticket.title }}</li>
-                                    <li>Description : {{ ticket.description }}</li>
+                                    <li><strong>Titre : </strong>{{ ticket.title }}</li>
+                                    <li><strong>Description :</strong> {{ ticket.description }}</li>
                                     {% if ticket.image %}
                                     <li><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
                                     {% endif %}
-                                    <li>Date de création : {{ ticket.time_created }}</li>
+                                    <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
                                 </ul>
                                 <!-- Ajouter un bouton pour créer une critique -->
                                 {% if not ticket.has_review %}
@@ -54,8 +54,8 @@
                             <div class="line review"> <!-- Ajout de la classe "line review" ici -->
                                 <ul>
                                     <li class="title"><strong>Critique</strong></li>
-                                    <li>Titre : {{ review.headline }}</li>
-                                    <li>Note :
+                                    <li><strong>Titre :</strong> {{ review.headline }}</li>
+                                    <li><strong>Note :</strong>
                                     <div class="rating">
                                         {% for _ in review.get_rating_range %}
                                             <span class="star">&#9733;</span>
@@ -64,20 +64,21 @@
                                             <span class="star">&#9734;</span>
                                         {% endfor %}
                                     </div></li>
-                                    <li>Description :{{ review.body }}</li>
-                                    <li>Date de création : {{ review.time_created }}</li>
+                                    <li><strong>Description :</strong>{{ review.body }}</li>
+                                    <li><strong>Date de création :</strong> {{ review.time_created }}</li>
                                 </ul>
                                 <div class="line review review-ticket">
-                                <h3 class="active"><strong> Critique pour le ticket "{{ review.ticket.title }}"</strong>  - ID: {{ review.ticket.id }} </h3>
                                 <ul>
-                                    <li><strong>Ticket</strong></li>
-                                    <li>Titre : {{ review.ticket.title }}</li>
-                                    <li>Demander par : {{ review.ticket.user }}</li>
-                                    <li>Description : {{ review.ticket.description }}</li>
+                                    <li><strong> Critique pour le ticket "{{ review.ticket.title }}"</strong>  - ID: {{ review.ticket.id }} </li>
+                                </ul>
+                                <ul>
+                                    <li><strong>Titre :</strong> {{ review.ticket.title }}</li>
+                                    <li><strong>Demandé par :</strong> {{ review.ticket.user }}</li>
+                                    <li><strong>Description :</strong> {{ review.ticket.description }}</li>
                                     {% if review.ticket.image %}
                                     <li><img src="{{ review.ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
                                     {% endif %}
-                                    <li>Date de création : {{ review.ticket.time_created }}</li>
+                                    <li><strong>Date de création :</strong> {{ review.ticket.time_created }}</li>
                                     {% if review.ticket.user == request.user %}  
                                     <form method="post" action="{% url 'edit_delete_ticket' review.ticket.id %}">
                                         {% csrf_token %}

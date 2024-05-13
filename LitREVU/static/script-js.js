@@ -170,3 +170,13 @@ function addInputHoverEffect() {
   
     showPage(currentPage);
   });
+
+// Verifie si l'utilisateur utilise un lecteur d'écran
+function isScreenReaderActive() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+if (isScreenReaderActive()) {
+    // Ajoutez une classe CSS pour afficher le champ de description de l'image
+    document.querySelector('.image-description').classList.remove('sr-only');
+}

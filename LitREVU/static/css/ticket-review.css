@@ -1,8 +1,7 @@
 .ticket-column, .review-column {
   border-radius: 10px;
   background: #fbf2e9;
-  width: 700px;
-  max-width: 1000px;
+  width: 75%;
   margin: 0 auto;
   padding: 20px;
   box-shadow: var(--shadow-elevation-medium);
@@ -15,6 +14,11 @@
   justify-content: center; /* Centre les éléments horizontalement */
 }
 
+
+.ticket-column, .review-column ul li {
+  margin-bottom: 10px;
+  text-align: center;
+}
 
 
 .line {
@@ -30,7 +34,7 @@
 .review {
   border: 1px solid #ccc; /* Bordure pour les critiques */
   padding: 10px; /* Espacement interne */
-  background-color: #f9f9f9; /* Couleur de fond */
+  background-color: #ffe7d5; /* Couleur de fond */
 }
 
 h3 {
@@ -60,11 +64,10 @@ li .text-mini {
 /* BASIC */
 
 
-#formTRContent {
+#formContent {
   border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
   background: #fbf2e9;
-  width: auto;
-  max-width: 700px;
+  width: 75%;
   margin: 0 auto; /* Centrer l'élément */
   padding: 0px;
   box-shadow:
@@ -79,11 +82,6 @@ li .text-mini {
   font-size: 18.5px; /* Adjust font size as needed */
   margin-top: 5px; /* Adjust margin as needed */
   
-}
-
-.image-posts {
-	max-width: 150px;
-	height: auto;
 }
 
 

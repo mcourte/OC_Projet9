@@ -1,7 +1,6 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
-from django.db.models import Q
 
 
 class Ticket(models.Model):
@@ -29,7 +28,7 @@ class Ticket(models.Model):
 
 class Review(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="reviews")
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name="Notation")
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name="Note")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     headline = models.CharField(max_length=128, verbose_name="Titre")
     body = models.CharField(max_length=8192, blank=True, verbose_name="Commentaires")
@@ -45,11 +44,11 @@ class Review(models.Model):
     def get_complement_range(self):
         return range(5 - self.rating)
 
-    def has_user_already_reviewed(self):
+    def has_user_already_reviewed(self, user):
         """
-        Check if the user has already reviewed the ticket.
+        Vérifie si l'utilisateur a déjà posté une critique pour ce ticket.
         """
-        return Review.objects.filter(Q(user=self.user) & Q(ticket=self.ticket)).exists()
+        return Review.objects.filter(user=self.user, ticket=self.ticket).exists()
 
 
 class TicketReview(models.Model):
@@ -65,14 +64,6 @@ class UserFollows(models.Model):
 
     class Meta:
         unique_together = ("user", "followed_user")
-
-    def count_followers(self):
-        """Compte le nombre d'abonnés d'un utilisateur."""
-        return UserFollows.objects.filter(followed_user=self.user).count()
-
-    def count_following(self):
-        """Compte le nombre d'utilisateurs suivis par un utilisateur."""
-        return UserFollows.objects.filter(user=self.user).count()
 
     def unfollow(self):
         """Met fin à la relation de suivi entre les utilisateurs."""
