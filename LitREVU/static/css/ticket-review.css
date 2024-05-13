@@ -76,6 +76,19 @@ li .text-mini {
   font-size: 18.5px;
 }
 
+
+#formContent-review {
+  border-radius: 10px; /* Utilisation de la variable --shadow-elevation-medium pour le rayon de bordure */
+  background: #fbf2e9;
+  width: 100%;
+  margin: 0 auto; /* Centrer l'élément */
+  padding: 0px;
+  box-shadow:
+      var(--shadow-elevation-medium); /* Utilisation de la variable --shadow-elevation-medium pour l'ombrage */
+  text-align: center;
+  font-size: 18.5px;
+}
+
 .help-text {
   display: none;  /* Hide the help text by default */
   color: black;    /* Adjust color as needed */
