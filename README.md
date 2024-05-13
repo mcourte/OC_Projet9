@@ -44,6 +44,8 @@ ou tapez [http://127.0.0.1:8000/](http://127.0.0.1:8000/) dans votre navigateur
 
 ## Etape 3 :  Utilisation du site
 
-Créez-vous un compte ou connectez-vous avec les identifiants d'un  
-des utilisateurs existant ( username : florineg / password : S3cret! )
+Créez-vous un compte ou connectez-vous avec les identifiants d'un utilisateur existant :  
+username : florineg  
+password : S3cret!  
+  
 Bonne navigation ! 
