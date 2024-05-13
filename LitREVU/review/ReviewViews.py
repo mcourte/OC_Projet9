@@ -11,7 +11,6 @@ from itertools import chain
 
 
 class HomeReviewView(LoginRequiredMixin, View):
-
     def get(self, request):
         """Affiche les utilisateurs suivis par l'utilisateur actuel."""
         # Récupérer les utilisateurs que vous suivez
@@ -33,8 +32,10 @@ class HomeReviewView(LoginRequiredMixin, View):
         # Ajouter une propriété 'type' à chaque élément pour distinguer les tickets des critiques
         for ticket in following_tickets:
             ticket.type = 'ticket'
+            ticket.user_has_review = ticket.user_has_review(request.user)
         for review in following_reviews:
             review.type = 'review'
+            review.user_has_review = True  # Vous pouvez ajuster cela si nécessaire
 
         # Combiner les tickets et les critiques dans une liste
         combined_list = sorted(

@@ -37,13 +37,15 @@
                                         <li><img src="{{ item.image.url }}" alt="{{ item.title }}" class="image-posts"></li>
                                     {% endif %}
                                 </ul>
-                                {% if not item.has_review %}
-                                <!-- Si l'utilisateur n'a pas encore posté de critique, afficher le bouton pour créer une critique -->
-                                <form method="post" action="{% url 'create_review' item.id %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="ticket_id" value="{{ item.id }}">
-                                    <input type="submit" class="fadeIn second" value="Créer une critique">
-                                </form>
+                                {% if item.user != request.user %}
+                                    {% if not item.user_has_review %}
+                                        <!-- Si l'utilisateur n'a pas encore posté de critique, afficher le bouton pour créer une critique -->
+                                        <form method="post" action="{% url 'create_review' item.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="ticket_id" value="{{ item.id }}">
+                                            <input type="submit" class="fadeIn second" value="Créer une critique">
+                                        </form>
+                                    {% endif %}
                                 {% endif %}
                             </div>
                         {% elif item.type == 'review' %}
@@ -82,10 +84,11 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="pagination">
-                <button id="prevPage" class="pagination-button prev-page">Précédent</button>
-                <button id="nextPage" class="pagination-button next-page">Suivant</button>
-            </div>
+
+    </div>
+    <div class="pagination">
+        <button id="prevPage" class="pagination-button prev-page">Précédent</button>
+        <button id="nextPage" class="pagination-button next-page">Suivant</button>
     </div>
 </main>
 {% endblock %}
