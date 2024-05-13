@@ -120,9 +120,9 @@ class TicketView(LoginRequiredMixin, View):
                 # Suppression du ticket
                 ticket.delete()
                 messages.success(request, "Le ticket a été supprimé avec succès.")
-                return redirect('posts')  # Rediriger vers la page des posts après suppression
+                return redirect('posts')
             else:
-                return redirect('edit_delete_ticket', ticket_id=ticket_id)  # Rediriger vers la page de confirmation
+                return redirect('edit_delete_ticket', ticket_id=ticket_id)
 
         context = {
             'ticket': ticket,
@@ -203,9 +203,9 @@ class ReviewView(LoginRequiredMixin, View):
                 # Suppression du ticket
                 review.delete()
                 messages.success(request, "La critique a été supprimé avec succès.")
-                return redirect('posts')  # Rediriger vers la page des posts après suppression
+                return redirect('posts')
             else:
-                return redirect('edit_delete_review', review_id=review_id)  # Rediriger vers la page de confirmation
+                return redirect('edit_delete_review', review_id=review_id)
 
         context = {
             'review': review,
@@ -260,7 +260,6 @@ class TicketReviewView(View):
             TicketReview.objects.create(ticket=ticket, review=review)
             return redirect(reverse_lazy('posts'))
         else:
-            # If the form is not valid, return the form with errors
             context = {
                 'ticket_review_form': ticket_review_form
             }
@@ -275,9 +274,9 @@ class TicketReviewView(View):
                 # Suppression du ticket
                 review.delete()
                 messages.success(request, "La critique a été supprimé avec succès.")
-                return redirect('posts')  # Rediriger vers la page des posts après suppression
+                return redirect('posts')
             else:
-                return redirect('edit_delete_review', review_id=review_id)  # Rediriger vers la page de confirmation
+                return redirect('edit_delete_review', review_id=review_id)
 
         context = {
             'review': review,

@@ -1,0 +1,214 @@
+File: manage.py
+Function: main
+Docstring: Run administrative tasks.
+
+File: list_DS.py
+Function: extract_functions_with_docstrings
+Docstring: No docstring
+
+File: list_DS.py
+Function: write_functions_to_file
+Docstring: No docstring
+
+File: ReviewViews.py
+Function: get
+Docstring: Affiche les utilisateurs suivis par l'utilisateur actuel.
+
+File: ReviewViews.py
+Function: get
+Docstring: Affiche les tickets et les critiques de l'utilisateur actuel.
+
+File: ReviewViews.py
+Function: get
+Docstring: Affiche les tickets de l'utilisateur et leur état.
+
+File: ReviewViews.py
+Function: post
+Docstring: Méthode pour créer un nouveau ticket en utilisant un formulaire.
+
+File: ReviewViews.py
+Function: edit_delete_ticket
+Docstring: Affiche le formulaire de confirmation de suppression d'un ticket.
+
+File: ReviewViews.py
+Function: edit_ticket
+Docstring: Affiche le formulaire de modification d'un ticket.
+
+File: ReviewViews.py
+Function: update_ticket
+Docstring: Met à jour les informations d'un ticket.
+
+File: ReviewViews.py
+Function: get
+Docstring: Affiche le formulaire pour créer une critique en réponse à un ticket.
+
+File: ReviewViews.py
+Function: post
+Docstring: Crée une critique en réponse à un ticket.
+
+File: ReviewViews.py
+Function: edit_delete_review
+Docstring: Affiche le formulaire de confirmation de suppression d'un ticket.
+
+File: ReviewViews.py
+Function: update_review
+Docstring: Met à jour les informations d'une critique.
+
+File: ReviewViews.py
+Function: get
+Docstring: Affiche le formulaire pour publier un ticket et une critique associée.
+
+File: ReviewViews.py
+Function: post
+Docstring: Traite le formulaire soumis pour publier un ticket et une critique associée.
+
+File: ReviewViews.py
+Function: delete_review
+Docstring: Supprime une critique.
+
+File: ReviewViews.py
+Function: update_review
+Docstring: Met à jour les informations d'une critique.
+
+File: ReviewViews.py
+Function: delete_ticket
+Docstring: Supprime un ticket et les critiques associées.
+
+File: ReviewViews.py
+Function: get
+Docstring: Affiche les utilisateurs suivis par l'utilisateur actuel.
+
+File: ReviewViews.py
+Function: post
+Docstring:  Traite le formulaire pour suivre de nouveaux utilisateurs.
+
+File: ReviewViews.py
+Function: post
+Docstring:  Traite la demande de ne plus suivre un utilisateur. 
+
+File: models.py
+Function: has_review
+Docstring: Verifie si le ticket à déjà une critique associée
+
+File: models.py
+Function: user_has_review
+Docstring: Vérifie si le ticket à déjà une critique écrite pas l'user
+
+File: models.py
+Function: __str__
+Docstring: No docstring
+
+File: models.py
+Function: get_ticket_id
+Docstring: Permet d'accèder à l'ID du ticket
+
+File: models.py
+Function: __str__
+Docstring: No docstring
+
+File: models.py
+Function: get_rating_range
+Docstring: Renvoie la note associée à la critique
+
+File: models.py
+Function: get_complement_range
+Docstring: No docstring
+
+File: models.py
+Function: has_user_already_reviewed
+Docstring: 
+        Vérifie si l'utilisateur a déjà posté une critique pour ce ticket.
+        
+
+File: models.py
+Function: unfollow
+Docstring: Met fin à la relation de suivi entre les utilisateurs.
+
+File: models.py
+Function: is_following
+Docstring: Vérifie si un utilisateur suit un autre utilisateur.
+
+File: signals.py
+Function: increment_user_ticket_number
+Docstring: Fonction qui incrémente le numéro de ticket de l'utilisateur chaque fois qu'un nouveau ticket est créé.
+
+    Args:
+        sender: Le modèle qui envoie le signal (Ticket).
+        instance: L'instance du modèle qui a déclenché le signal.
+        created: Un drapeau indiquant si l'instance a été créée pour la première fois.
+        **kwargs: Arguments supplémentaires.
+
+File: forms.py
+Function: __init__
+Docstring: No docstring
+
+File: forms.py
+Function: __init__
+Docstring: No docstring
+
+File: forms.py
+Function: __init__
+Docstring: No docstring
+
+File: forms.py
+Function: clean_follows
+Docstring: Vérifie si l'utilisateur à suivre existe dans la base de données.
+
+File: AuthenticationViews.py
+Function: custom_csrf_failure
+Docstring: Vue de gestion des échecs CSRF personnalisée.
+    Cette fonction rend un modèle HTML personnalisé en cas d'échec CSRF.
+
+File: AuthenticationViews.py
+Function: get
+Docstring: Méthode pour gérer les requêtes GET.
+
+File: AuthenticationViews.py
+Function: get_context_data
+Docstring: Récupère les données de contexte pour la vue de connexion.
+
+File: AuthenticationViews.py
+Function: form_valid
+Docstring: Méthode pour traiter un formulaire valide de connexion.
+
+File: AuthenticationViews.py
+Function: form_valid
+Docstring: Méthode pour traiter un formulaire valide d'inscription.
+
+File: AuthenticationViews.py
+Function: get_success_url
+Docstring: Renvoie l'URL de redirection après une inscription réussie.
+
+File: AuthenticationViews.py
+Function: get
+Docstring: Méthode pour gérer les requêtes GET de déconnexion.
+
+File: forms.py
+Function: clean_password2
+Docstring: Valide la confirmation du mot de passe.
+        Cette méthode vérifie si les champs password1 et password2 contiennent les mêmes valeurs.
+        Si les valeurs sont différentes, une exception ValidationError est levée.
+
+File: forms.py
+Function: save
+Docstring: Enregistre un nouvel utilisateur.
+        Cette méthode sauvegarde un nouvel utilisateur avec le mot de passe crypté.
+        Si commit est True, l'utilisateur est enregistré dans la base de données.
+
+File: forms.py
+Function: clean
+Docstring: Valide les champs username et password.Si l'un des champs est vide,
+        une exception ValidationError est levée.
+
+File: forms.py
+Function: __init__
+Docstring: No docstring
+
+File: list_DS.py
+Function: extract_functions_with_docstrings
+Docstring: No docstring
+
+File: list_DS.py
+Function: write_functions_to_file
+Docstring: No docstring
+

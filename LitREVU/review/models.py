@@ -13,16 +13,18 @@ class Ticket(models.Model):
 
     @property
     def has_review(self):
+        """Verifie si le ticket à déjà une critique associée"""
         return self.reviews.exists()
 
     def user_has_review(self, user):
+        """Vérifie si le ticket à déjà une critique écrite pas l'user"""
         return self.reviews.filter(user=user).exists()
 
     def __str__(self):
         return self.title
 
-    # Pour accéder à l'ID de l'instance de ticket
     def get_ticket_id(self):
+        """Permet d'accèder à l'ID du ticket"""
         return self.id
 
 
@@ -33,15 +35,17 @@ class Review(models.Model):
     headline = models.CharField(max_length=128, verbose_name="Titre")
     body = models.CharField(max_length=8192, blank=True, verbose_name="Commentaires")
     time_created = models.DateTimeField(auto_now_add=True)
-    responded = models.BooleanField(default=False)  # Champ indiquant si une réponse a été postée
+    responded = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Review for {self.ticket.title}"
 
     def get_rating_range(self):
+        """Renvoie la note associée à la critique"""
         return range(self.rating)
 
     def get_complement_range(self):
+        """Renvoie le delta de la note associée à la critique par rapport à 5"""
         return range(5 - self.rating)
 
     def has_user_already_reviewed(self, user):
