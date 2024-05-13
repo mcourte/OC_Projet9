@@ -146,7 +146,7 @@ class TicketView(LoginRequiredMixin, View):
             form = TicketForm(request.POST, request.FILES, instance=ticket)
             if form.is_valid():
                 form.save()
-                return redirect('posts')
+                return redirect('home_review')
         else:
             form = TicketForm(instance=ticket)
 
