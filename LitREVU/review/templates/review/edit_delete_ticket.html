@@ -7,7 +7,7 @@
         <div class="form-header">
             <h1 class="active">Confirmation de suppression du ticket</h1>
             <div class="formContent">
-                <h3 class="active">Êtes-vous sûr de vouloir supprimer le ticket "{{ ticket.title }}" ?</h3>
+                <h2 class="active">Êtes-vous sûr de vouloir supprimer le ticket "{{ ticket.title }}" ?</h2>
                 <form method="post">
                     {% csrf_token %}
                     <input type="submit" name="confirm_delete" class="fadeIn second" value="Confirmer la suppression">

@@ -8,11 +8,11 @@
             <div class="review-column">
                 <div id="formContent-posts">
                     <div class="fadeIn first">
-                        <h2 class="active"> Mes tickets </h2>
+                        <h1 class="active"> Mes tickets </h1>
                         <div class="ticket_posts">
                             {% for ticket in tickets %}
                             <div class="line ticket"> <!-- Ajout de la classe "line ticket" ici -->
-                                <h3 class="active" enctype="multipart/form-data"><strong> Ticket  - ID : {{ ticket.id }} </strong></h3>
+                                <h2 class="active" enctype="multipart/form-data"><strong> Ticket  - ID : {{ ticket.id }} </strong></h2>
                                 <ul>
                                     <li><strong>Titre : </strong>{{ ticket.title }}</li>
                                     <li><strong>Description :</strong> {{ ticket.description }}</li>
@@ -48,7 +48,7 @@
             <div class="review-column">
                 <div id="formContent-posts">
                     <div class="fadeIn first">
-                        <h2 class="active"> Mes critiques </h2>
+                        <h1 class="active"> Mes critiques </h1>
                         <div class="review_posts">
                             {% for review in reviews %}
                             <div class="line review"> <!-- Ajout de la classe "line review" ici -->

@@ -6,7 +6,7 @@
     <div class="critique-grid">
             <div class="critique-column">
                 <div id="formContent">
-                    <h2 class="active">Publier une critique</h2>
+                    <h1 class="active">Publier une critique</h1>
                     <form method="post" action="{% url 'create_ticket_review' %}" class="critique-form">
                         {% csrf_token %}
                         <input type="submit" class="fadeIn second" value="Publier une critique">
@@ -15,7 +15,7 @@
             </div>    
             <div class="critique-column">
                 <div id="formContent">
-                    <h2 class="active">Demander une critique</h2>
+                    <h1 class="active">Demander une critique</h1>
                     <form method="post" action="{% url 'create_ticket' %}" class="critique-form">
                         {% csrf_token %}
                         <input type="submit" class="fadeIn second" value="Demander une critique">
@@ -24,11 +24,11 @@
             </div>
             <div class="critique-column" style="grid-column: span 2;">
                 <div id="formContent-critique">
-                    <h2 class="active">Tickets et Critiques des utilisateurs suivis</h2>
+                    <h1 class="active">Tickets et Critiques des utilisateurs suivis</h1>
                     {% for item in combined_list %}
                         {% if item.type == 'ticket' %}
                             <div class="line ticket">
-                                <h3 class="active"><strong>Ticket posté par : {{ item.user.username }}</strong></h3>
+                                <h2 class="active"><strong>Ticket posté par : {{ item.user.username }}</strong></h2>
                                 <ul>
                                     <li><strong>Titre : </strong>{{ item.title }}</li>
                                     <li><strong>Description : </strong>{{ item.description }}</li>
@@ -50,7 +50,7 @@
                             </div>
                         {% elif item.type == 'review' %}
                             <div class="line review">
-                                <h3 class="active"><strong> Critique écrite par {% if item.user == request.user %} Vous {% else %} {{ item.user.username }} {% endif %}</strong></h3>
+                                <h2 class="active"><strong> Critique écrite par {% if item.user == request.user %} Vous {% else %} {{ item.user.username }} {% endif %}</strong></h2>
                                 <ul>
                                     <li><strong>Critique</strong></li>
                                     <li><strong>Titre : </strong> {{ item.headline }}</li>

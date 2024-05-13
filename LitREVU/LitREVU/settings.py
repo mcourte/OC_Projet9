@@ -145,14 +145,3 @@ LOGIN_REDIRECT_URL = '/accounts/review/home_review/'
 LOGIN_URL = '/login/'
 
 APPEND_SLASH = True
-
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
-    'INTERCEPT_REDIRECTS': False,
-    'ENABLE_STACKTRACES': True,
-    'RENDER_PANELS': True,
-    'SHOW_TEMPLATE_CONTEXT': True,
-    'SHOW_COLLAPSED': True,
-    'HIDE_DJANGO_SQL': False,
-    'INTERNAL_IPS': ['127.0.0.1'],  # Adresse IP locale par défaut
-}

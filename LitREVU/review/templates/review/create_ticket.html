@@ -20,10 +20,11 @@
                                 <label for="{{ form.description.id_for_label }}">Description:</label>
                                 {{ form.description }}
                             </div>
-                            <div class="form-group">
-                                <label for="{{ form.image.id_for_label }}">Image:</label>
-                                {{ form.image }}
-                            </div>
+                            <label for="{{ form.image.id_for_label }}">Image:</label>
+                            {{ form.image }}
+                            {% if form.image.help_text %}
+                            <p id="image-help-text" class="sr-only">{{ form.image.help_text }}</p>
+                            {% endif %}
                             <div class="form-group">
                                 <label for="{{ form.image_description.id_for_label }}">Description de l'image:</label>
                                 {{ form.image_description }}

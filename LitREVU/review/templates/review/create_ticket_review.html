@@ -20,8 +20,13 @@
                                 {{ ticket_review_form.description }}
                             </div>
                             <div class="form-group">
-                                <label for="{{ ticket_review_form.image.id_for_label }}">Image:</label>
-                                {{ ticket_review_form.image }}
+                                <div class="form-group">
+                                    <label for="{{ ticket_review_form.image.id_for_label }}">Image:</label>
+                                    {{ ticket_review_form.image }}
+                                    {% if ticket_review_form.image.help_text %}
+                                        <p id="image-help-text" class="sr-only">{{ ticket_review_form.image.help_text }}</p>
+                                    {% endif %}
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="{{ ticket_review_form.image_description.id_for_label }}">Description de l'image:</label>
@@ -39,7 +44,7 @@
                                 {{ ticket_review_form.body }}
                             </div>
                         <!-- Étoiles de notation -->
-                        <h3 class="active">Note</h3>
+                        <h2 class="active">Note</h2>
                         <div id="rating-stars">
                             <span class="star" data-rating="1">&#9733;</span>
                             <span class="star" data-rating="2">&#9733;</span>
