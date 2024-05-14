@@ -12,8 +12,9 @@ from itertools import chain
 
 class HomeReviewView(LoginRequiredMixin, View):
     def get(self, request):
-        """Affiche les utilisateurs suivis par l'utilisateur actuel."""
-        # Récupérer les utilisateurs que vous suivez
+        """Affiche les tickets et les critiques des utilisateurs suivis par
+        l'utilisateur actuel ainsi que les tickets et les critiques de l'utilisateur actuel."""
+        # Récupérer les utilisateurs suivis par l'utilisateur actuel
         followed_users = UserFollows.objects.filter(user=request.user)
 
         # Récupérer les ID des utilisateurs suivis
@@ -25,24 +26,43 @@ class HomeReviewView(LoginRequiredMixin, View):
         # Récupérer les critiques associées à ces tickets
         following_reviews = Review.objects.filter(ticket__in=following_tickets)
 
-        # Trier les tickets et les critiques par date de création de la plus récente à la plus ancienne
-        following_tickets = following_tickets.order_by('-time_created')
-        following_reviews = following_reviews.order_by('-time_created')
+        # Récupérer les tickets de l'utilisateur connecté
+        user_tickets = Ticket.objects.filter(user=request.user)
 
-        # Ajouter une propriété 'type' à chaque élément pour distinguer les tickets des critiques
+        # Récupérer les critiques de l'utilisateur connecté
+        user_reviews = Review.objects.filter(user=request.user)
+
+        # Récupérer les critiques des autres utilisateurs
+        other_users_reviews = Review.objects.exclude(user=request.user)
+
+        # Ajouter une propriété 'type' à chaque ticket et critique suivis
         for ticket in following_tickets:
             ticket.type = 'ticket'
             ticket.user_has_review = ticket.user_has_review(request.user)
         for review in following_reviews:
             review.type = 'review'
-            review.user_has_review = True  # Vous pouvez ajuster cela si nécessaire
+            review.user_has_review = True
 
-        # Combiner les tickets et les critiques dans une liste
+        # Ajouter une propriété 'type' à chaque ticket et critique de l'utilisateur connecté
+        for ticket in user_tickets:
+            ticket.type = 'ticket'
+            ticket.user_has_review = ticket.user_has_review(request.user)
+        for review in user_reviews:
+            review.type = 'review'
+            review.user_has_review = True
+
+        # Ajouter une propriété 'type' à chaque critique des autres utilisateurs
+        for review in other_users_reviews:
+            review.type = 'review'
+            review.user_has_review = False
+
+        # Combiner tous les tickets et critiques dans une liste
         combined_list = sorted(
-            chain(following_tickets, following_reviews),
+            chain(following_tickets, following_reviews, user_tickets, user_reviews, other_users_reviews),
             key=lambda x: x.time_created if isinstance(x, Review) else x.time_created,
             reverse=True
         )
+
         context = {
             'combined_list': combined_list
         }
