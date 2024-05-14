@@ -17,15 +17,11 @@ class Ticket(models.Model):
         return self.reviews.exists()
 
     def user_has_review(self, user):
-        """Vérifie si le ticket à déjà une critique écrite pas l'user"""
+        """Vérifie si le ticket à déjà une critique écrite pas l'utilisateur"""
         return self.reviews.filter(user=user).exists()
 
     def __str__(self):
         return self.title
-
-    def get_ticket_id(self):
-        """Permet d'accèder à l'ID du ticket"""
-        return self.id
 
 
 class Review(models.Model):

@@ -33,7 +33,7 @@ class HomeReviewView(LoginRequiredMixin, View):
         user_reviews = Review.objects.filter(user=request.user)
 
         # Récupérer les critiques des autres utilisateurs
-        other_users_reviews = Review.objects.exclude(user=request.user)
+        other_users_reviews = Review.objects.exclude(user=request.user).exclude(ticket__user=request.user)
 
         # Ajouter une propriété 'type' à chaque ticket et critique suivis
         for ticket in following_tickets:

@@ -79,12 +79,6 @@
                                     <li><img src="{{ review.ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
                                     {% endif %}
                                     <li><strong>Date de création :</strong> {{ review.ticket.time_created }}</li>
-                                    {% if review.ticket.user == request.user %}  
-                                    <form method="post" action="{% url 'edit_delete_ticket' review.ticket.id %}">
-                                        {% csrf_token %}
-                                        <input type="submit" class="fadeIn fourth" value="Supprimer le ticket">
-                                    </form>
-                                    {% endif %}
                                 </ul>
                                 </div>
                                 <!-- Ajouter des boutons pour modifier et supprimer une critique -->
