@@ -37,7 +37,6 @@
                                         <li><img src="{{ item.image.url }}" alt="{{ item.title }}" class="image-posts"></li>
                                     {% endif %}
                                 </ul>
-                                {% if item.user != request.user %}
                                     {% if not item.user_has_review %}
                                         <!-- Si l'utilisateur n'a pas encore posté de critique, afficher le bouton pour créer une critique -->
                                         <form method="post" action="{% url 'create_review' item.id %}">
@@ -46,7 +45,6 @@
                                             <input type="submit" class="fadeIn second" value="Créer une critique">
                                         </form>
                                     {% endif %}
-                                {% endif %}
                             </div>
                         {% elif item.type == 'review' %}
                             <div class="line review">

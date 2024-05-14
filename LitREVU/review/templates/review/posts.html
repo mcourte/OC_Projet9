@@ -22,7 +22,7 @@
                                     <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
                                 </ul>
                                 <!-- Ajouter un bouton pour créer une critique -->
-                                {% if not ticket.has_review %}
+                                {% if not ticket.user_has_review %}
                                 <!-- Ajouter un bouton pour créer une critique seulement si le ticket n'a pas de critique -->
                                 <form method="get" action="{% url 'create_review' ticket.id %}">
                                     {% csrf_token %}
