@@ -28,7 +28,7 @@
                 {% for item in combined_list %}
                     {% if item.type == 'ticket' %}
                         <div class="line ticket">
-                            <h2 class="active"><strong>Ticket posté par : {{ item.user.username }}</strong></h2>
+                            <h2 class="active"><strong>Ticket posté par : {% if item.user == request.user %} Vous {% else %} {{ item.user.username }} {% endif %}</strong></h2>
                             <ul>
                                 <li><strong>Titre : </strong>{{ item.title }}</li>
                                 <li><strong>Description : </strong>{{ item.description }}</li>
@@ -38,13 +38,13 @@
                                 {% endif %}
                             </ul>
                             {% if not item.user_has_review %}
-                                <!-- Si l'utilisateur n'a pas encore posté de critique, afficher le bouton pour créer une critique -->
-                                <form method="post" action="{% url 'create_review' item.id %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="ticket_id" value="{{ item.id }}">
-                                    <input type="submit" class="fadeIn second" value="Créer une critique">
-                                </form>
-                            {% endif %}
+                            <!-- Si l'utilisateur n'a pas encore posté de critique ET s'il ne s'agit pas de son propre ticket, afficher le bouton pour créer une critique -->
+                            <form method="post" action="{% url 'create_review' item.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="ticket_id" value="{{ item.id }}">
+                                <input type="submit" class="fadeIn second" value="Créer une critique">
+                            </form>
+                        {% endif %}
                             <!-- Afficher toutes les critiques associées à ce ticket -->
                             {% for review in item.reviews.all %}
                                 <div class="line review review-ticket">

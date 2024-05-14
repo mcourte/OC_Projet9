@@ -111,7 +111,7 @@ class TicketView(LoginRequiredMixin, View):
         context = {
             'combined_list': combined_list
         }
-
+        print(combined_list)
         return render(request, 'ticket_review.html', context=context)
 
     def post(self, request):

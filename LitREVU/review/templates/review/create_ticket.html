@@ -2,16 +2,16 @@
 {% block content %}
 {% load static %}
 <link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
+<link href="{% static 'css/ticket-review.css' %}" rel="stylesheet">
 <main class="main-content">
     <div class="container">
-        <div id="formTRContent" class="ticket-column">
+        <div id="formTRContent" class="review-column">
                 <div class="fadeIn first">
                     <h1 class="active">Publier un Ticket</h1>
                     <div class="line ticket">
                         <form method="post" enctype="multipart/form-data">
                             <div>
                             {% csrf_token %}
-                            <h2>Ticket</h2>
                             <div class="form-group">
                                 <label for="{{ form.title.id_for_label }}">Titre:</label>
                                 {{ form.title }}

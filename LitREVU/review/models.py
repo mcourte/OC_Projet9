@@ -48,7 +48,7 @@ class Review(models.Model):
         """
         Vérifie si l'utilisateur a déjà posté une critique pour ce ticket.
         """
-        return Review.objects.filter(user=user, ticket=self.ticket).exists()
+        return Review.objects.filter(user=user, ticket_id=self.ticket_id).exists()
 
 
 class TicketReview(models.Model):
