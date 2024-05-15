@@ -7,7 +7,7 @@
         <div class="follow-grid">
             <div class="follow-column">
                     <div>
-                        <h2 class="active"> Utilisateurs à suivre </h2>
+                        <h1 class="active"> Utilisateurs à suivre </h1>
                         <form method="post" action="{% url 'following' %}">
                             {% csrf_token %}
                             <div>
@@ -25,7 +25,7 @@
                 <!-- Colonne vide -->
             </div>
             <div class="follower-column">
-                <h2 class="active">Utilisateurs que vous suivez</h2>
+                <h1 class="active">Utilisateurs que vous suivez</h1>
                 <ul>
                   {% for followed_user in followed_users %}
                   <li class="follower-item">
@@ -38,7 +38,7 @@
                   </li>
                   {% endfor %}
                 </ul>
-                <h2 class="active">Utilisateurs qui vous suivent</h2>
+                <h1 class="active">Utilisateurs qui vous suivent</h1>
                 <ul>
                   {% for user_following in users_following %}
                   <li>{{ user_following.user.username }}</li>
