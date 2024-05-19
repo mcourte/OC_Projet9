@@ -39,6 +39,7 @@ class HomeReviewView(LoginRequiredMixin, View):
         for ticket in following_tickets:
             ticket.type = 'ticket'
             ticket.user_has_review = ticket.user_has_review(request.user)
+            ticket.sorted_reviews = ticket.reviews.order_by('-time_created')
         for review in following_reviews:
             review.type = 'review'
             review.user_has_review = True
@@ -47,6 +48,7 @@ class HomeReviewView(LoginRequiredMixin, View):
         for ticket in user_tickets:
             ticket.type = 'ticket'
             ticket.user_has_review = ticket.user_has_review(request.user)
+            ticket.sorted_reviews = ticket.reviews.order_by('-time_created')
         for review in user_reviews:
             review.type = 'review'
             review.user_has_review = True

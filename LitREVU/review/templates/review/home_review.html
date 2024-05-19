@@ -32,21 +32,21 @@
                             <ul>
                                 <li><strong>Titre : </strong>{{ item.title }}</li>
                                 <li><strong>Description : </strong>{{ item.description }}</li>
-                                <li><strong>Date de création :</strong> {% if item.time_created %}{{ item.time_created }}{% else %}{{ item.ticket.time_created }}{% endif %}</li>
+                                <li><strong>Date de création :</strong> {{ item.time_created }}</li>
                                 {% if item.image %}
                                     <li><img src="{{ item.image.url }}" alt="{{ item.title }}" class="image-posts"></li>
                                 {% endif %}
                             </ul>
                             {% if not item.user_has_review %}
-                            <!-- Si l'utilisateur n'a pas encore posté de critique ET s'il ne s'agit pas de son propre ticket, afficher le bouton pour créer une critique -->
-                            <form method="post" action="{% url 'create_review' item.id %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="ticket_id" value="{{ item.id }}">
-                                <input type="submit" class="fadeIn second" value="Créer une critique">
-                            </form>
-                        {% endif %}
-                            <!-- Afficher toutes les critiques associées à ce ticket -->
-                            {% for review in item.reviews.all %}
+                                <!-- Si l'utilisateur n'a pas encore posté de critique ET s'il ne s'agit pas de son propre ticket, afficher le bouton pour créer une critique -->
+                                <form method="post" action="{% url 'create_review' item.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="ticket_id" value="{{ item.id }}">
+                                    <input type="submit" class="fadeIn second" value="Créer une critique">
+                                </form>
+                            {% endif %}
+                            <!-- Afficher toutes les critiques associées à ce ticket en ordre antéchronologique -->
+                            {% for review in item.sorted_reviews %}
                                 <div class="line review review-ticket">
                                     <ul>
                                         <li><strong>Critique écrite par {% if review.user == request.user %} Vous {% else %} {{ review.user.username }} {% endif %}</strong></li>
