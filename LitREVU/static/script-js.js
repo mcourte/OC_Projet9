@@ -122,51 +122,64 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Fonction pour afficher une page de tickets et de critiques
-    const tickets = document.querySelectorAll('.ticket');
-    const reviews = document.querySelectorAll('.review');
-    const itemsPerPage = 5;
-    let currentPage = 1;
-
-    function showPage(page) {
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-
-        tickets.forEach((ticket, index) => {
-            ticket.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fonction pour afficher une page de tickets et de critiques
+        const tickets = document.querySelectorAll('.ticket');
+        const itemsPerPage = 5;
+        let currentPage = 1;
+    
+        function showPage(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+    
+            tickets.forEach((ticket, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    ticket.style.display = 'block';
+    
+                    // Afficher toutes les critiques associées à ce ticket
+                    const reviews = ticket.querySelectorAll('.review');
+                    reviews.forEach(review => {
+                        review.style.display = 'block';
+                    });
+                } else {
+                    ticket.style.display = 'none';
+    
+                    // Masquer toutes les critiques associées à ce ticket
+                    const reviews = ticket.querySelectorAll('.review');
+                    reviews.forEach(review => {
+                        review.style.display = 'none';
+                    });
+                }
+            });
+    
+            const totalPages = Math.ceil(tickets.length / itemsPerPage);
+            const prevButton = document.getElementById('prevPage');
+            const nextButton = document.getElementById('nextPage');
+    
+            prevButton.style.display = (currentPage === 1) ? 'none' : 'block';
+            nextButton.style.display = (currentPage === totalPages) ? 'none' : 'block';
+        }
+    
+        document.getElementById('prevPage').addEventListener('click', function() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
         });
-
-        reviews.forEach((review, index) => {
-            review.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+    
+        document.getElementById('nextPage').addEventListener('click', function() {
+            const totalPages = Math.ceil(tickets.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
         });
-
-        const totalPages = Math.ceil(Math.max(tickets.length, reviews.length) / itemsPerPage);
-        const prevButton = document.getElementById('prevPage');
-        const nextButton = document.getElementById('nextPage');
-
-        prevButton.style.display = (currentPage === 1) ? 'none' : 'block';
-        nextButton.style.display = (currentPage === totalPages) ? 'none' : 'block';
-    }
-
-    document.getElementById('prevPage').addEventListener('click', function() {
-        if (currentPage > 1) {
-            currentPage--;
-            showPage(currentPage);
+    
+        showPage(currentPage);
+    
+        if (isScreenReaderActive()) {
+            // Ajoutez une classe CSS pour afficher le champ de description de l'image
+            document.querySelector('.image-description').classList.remove('sr-only');
         }
     });
-
-    document.getElementById('nextPage').addEventListener('click', function() {
-        const totalPages = Math.ceil(Math.max(tickets.length, reviews.length) / itemsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            showPage(currentPage);
-        }
-    });
-
-    showPage(currentPage);
-
-    if (isScreenReaderActive()) {
-        // Ajoutez une classe CSS pour afficher le champ de description de l'image
-        document.querySelector('.image-description').classList.remove('sr-only');
-    }
-});
+})
