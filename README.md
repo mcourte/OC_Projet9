@@ -18,14 +18,6 @@ Pour les utilisateurs de Windows : [démarche à suivre ](https://support.kasper
 Pour les utilisateurs de Mac OS : [démarche à suivre ](https://support.apple.com/fr-fr/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac)  
 Pour les utilisateurs de Linux : ouvrez directement le terminal de commande   
 
-Dans le terminal, taper la commande suivante :
-```
-pip install -r requierements.txt
-```
-
-## Etape 3 :  Mise en route du serveur
-
-
 Dans le terminal, placez-vous dans le dossier où vous avez télécharger le code.  
 
 ```
@@ -36,6 +28,9 @@ Puis installer les packages nécessaires :
 ```
 pip install -r requierements.txt
 ```
+
+## Etape 3 :  Mise en route du serveur
+
 
 Puis exécutez la commande suivante :  
 
