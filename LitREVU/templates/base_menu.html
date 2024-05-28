@@ -8,14 +8,14 @@
   <title>Bienvenue sur LitREVU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="{% static 'css/base.css' %}" rel="stylesheet">
-  <script src="{% static 'script-js.js' %}"></script>
+  <script src="{% static 'script-js.js' %}" defer></script>
 </head>
 
 <body>
-    <header class = "header" role="banner">
+    <header class="header" role="banner">
         <div class="navbar">
             <img src="{% static 'images/logoWBG.png' %}" alt="Logo de LITRevu." class="logo">
-            <div class ="username">
+            <div class="username">
             {% if user.is_authenticated %}
                 <p>{{ user.username }}</p>
             {% endif %}

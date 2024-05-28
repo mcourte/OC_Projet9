@@ -8,28 +8,25 @@
             <div class="review-column">
                 <div id="formContent-posts">
                     <div class="fadeIn first">
-                        <h1 class="active"> Mes tickets </h1>
+                        <h1 class="active">Mes tickets</h1>
                         <div class="ticket_posts">
                             {% for ticket in tickets %}
                             <div class="line ticket"> <!-- Ajout de la classe "line ticket" ici -->
-                                <h2 class="active" enctype="multipart/form-data"><strong> Ticket  - ID : {{ ticket.id }} </strong></h2>
+                                <h2 class="active" enctype="multipart/form-data"><strong>Ticket - ID : {{ ticket.id }}</strong></h2>
                                 <ul>
-                                    <li><strong>Titre : </strong>{{ ticket.title }}</li>
+                                    <li><strong>Titre :</strong> {{ ticket.title }}</li>
                                     <li><strong>Description :</strong> {{ ticket.description }}</li>
                                     {% if ticket.image %}
                                     <li><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="image-posts"></li>
                                     {% endif %}
                                     <li><strong>Date de création :</strong> {{ ticket.time_created }}</li>
                                 </ul>
-                                <!-- Ajouter un bouton pour créer une critique -->
                                 {% if not ticket.user_has_review %}
-                                <!-- Ajouter un bouton pour créer une critique seulement si le ticket n'a pas de critique -->
                                 <form method="get" action="{% url 'create_review' ticket.id %}">
                                     {% csrf_token %}
                                     <input type="submit" class="fadeIn second" value="Ajouter une critique">
                                 </form>
                                 {% endif %}
-                                <!-- Ajouter des boutons pour modifier et supprimer un ticket -->
                                 <form method="get" action="{% url 'edit_ticket' ticket.id %}">
                                     {% csrf_token %}
                                     <input type="submit" class="fadeIn second" value="Modifier le ticket">
@@ -44,11 +41,11 @@
                         </div>
                     </div>
                 </div>
-            </div>        
+            </div>
             <div class="review-column">
                 <div id="formContent-posts">
                     <div class="fadeIn first">
-                        <h1 class="active"> Mes critiques </h1>
+                        <h1 class="active">Mes critiques</h1>
                         <div class="review_posts">
                             {% for review in reviews %}
                             <div class="line review"> <!-- Ajout de la classe "line review" ici -->
@@ -64,12 +61,12 @@
                                             <span class="star">&#9734;</span>
                                         {% endfor %}
                                     </div></li>
-                                    <li><strong>Description :</strong>{{ review.body }}</li>
+                                    <li><strong>Description :</strong> {{ review.body }}</li>
                                     <li><strong>Date de création :</strong> {{ review.time_created }}</li>
                                 </ul>
                                 <div class="line review review-ticket">
                                 <ul>
-                                    <li><strong> Critique pour le ticket "{{ review.ticket.title }}"</strong>  - ID: {{ review.ticket.id }} </li>
+                                    <li><strong> Critique pour le ticket "{{ review.ticket.title }}"</strong> - ID: {{ review.ticket.id }}</li>
                                 </ul>
                                 <ul>
                                     <li><strong>Titre :</strong> {{ review.ticket.title }}</li>
@@ -81,7 +78,6 @@
                                     <li><strong>Date de création :</strong> {{ review.ticket.time_created }}</li>
                                 </ul>
                                 </div>
-                                <!-- Ajouter des boutons pour modifier et supprimer une critique -->
                                 <form method="get" action="{% url 'update_review' review.id %}">
                                     {% csrf_token %}
                                     <input type="submit" class="fadeIn fourth" value="Modifier la critique">
@@ -93,7 +89,7 @@
                                 </form>
                             </div>
                             {% endfor %}
-                        </div>    
+                        </div>
                     </div>
                 </div>
             </div>
