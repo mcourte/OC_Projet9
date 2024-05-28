@@ -13,25 +13,27 @@ Extraire l'ensemble des éléments dans le dossier dans lequel vous voulez stock
 
 ## Etape 2 : Télécharger les packages nécessaires au bon fonctionnement du programme
 
-Dans le terminal, taper la commande suivante :
-```
-pip install -r requierements.txt
-```
-
-## Etape 3 :  Mise en route du serveur
- 
-
 Pour lancer le serveur, ouvrez le terminal de commande :   
 Pour les utilisateurs de Windows : [démarche à suivre ](https://support.kaspersky.com/fr/common/windows/14637#block0)  
 Pour les utilisateurs de Mac OS : [démarche à suivre ](https://support.apple.com/fr-fr/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac)  
 Pour les utilisateurs de Linux : ouvrez directement le terminal de commande   
 
+Dans le terminal, placez-vous dans le dossier où vous avez télécharger le code.  
+
 ```
 cd home/magali/OpenClassrooms/Formation/Projet_9/LitREVU
 ```
+Puis installer les packages nécessaires :  
+  
+```
+pip install -r requierements.txt
+```
+
+## Etape 3 :  Mise en route du serveur
 
 
-Dans le terminal de commande, executer la commande suivante :
+Puis exécutez la commande suivante :  
+
 ```
 python3 manage.py runserver
 ```
