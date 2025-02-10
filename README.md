@@ -20,6 +20,22 @@ Pour les utilisateurs de Linux : ouvrez directement le terminal de commande
 
 Dans le terminal, placez-vous dans le dossier où vous avez télécharger le code.  
 
+
+Dans le terminal de commande, executer la commande suivante :
+```
+python3 -m venv env
+```
+
+
+Activez l'environnement virtuel
+```
+source env/bin/activate
+```
+> Pour les utilisateurs de Windows, la commande est la suivante : 
+> ``` env\Scripts\activate.bat ```
+
+Déplacez vous dans le dossier LitREVU
+
 ```
 cd home/magali/OpenClassrooms/Formation/Projet_9/LitREVU
 ```
